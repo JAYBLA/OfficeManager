@@ -8,6 +8,11 @@ verify_ssl = true
 [packages]
 django = "*"
 django-xhtml2pdf = "*"
+python-decouple = "*"
+gunicorn = "*"
+dj-database-url = "*"
+whitenoise = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.8"
