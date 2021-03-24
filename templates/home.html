@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="row py-3">
+    <div class="col-12">
+            {% if customers %}
+        <h2 class="py-2">Registered Customers</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">S/N</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Physical Address</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        
+                        {% for customer in customers %}
+                        <tbody>
+                        <tr>
+                            <th>{{forloop.counter}}</th>
+                            <td>{{customer.name}}</td>
+                            <td>{{customer.phone}}</td>
+                            <td>{{customer.email}}</td>
+                            <td>{{customer.physical_address}}</td>
+                            <td class="d-inline-flex justify-content-end">
+                                <a href="{% url 'invoice:customer-detail' customer.id %}" style="color:orange;font-size: 20px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>                               
+                            </td>
+                        </tr>              
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="row py-2">
+    <div class="col-sm-12">
+        {% if invoice_list %}
+        
+            <h2 class="py-2">Created Invoices</h2>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Invoice</th>
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col" class="text-center">Actions</th>
+                        
+                                </tr>
+                            </thead>
+                            
+                            {% for invoice in invoice_list %}
+                            <tbody>
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>{{ invoice.customer }}</td>
+                                    <td>{{ invoice.date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    <td>{{ invoice.status }}</td>                                
+                                    <td class="text-center">
+                                        <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> 
+                                    </td>
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                          </table>
+                    </div>
+                </div>
+            </div>       
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+    

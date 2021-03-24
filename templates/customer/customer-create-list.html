@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row py-5">
+        <div class="col-sm-3">
+            <h2 class="py-2">Register Customer</h2>
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                          <label class="form-label">Full Name</label>
+                          <input type="text" class="form-control" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="text" class="form-control" name="phone">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email address</label>
+                            <input type="email" class="form-control" name="email">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Physical Address</label>
+                            <input type="text" class="form-control" name="physical_address">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                      </form>
+                </div>
+            </div>
+        </div>
+
+
+     {% if customers %}
+    <div class="col-sm-9">
+        <h2 class="py-2">Customers List</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">S/N</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Physical Address</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        
+                        {% for customer in customers %}
+                        <tbody>
+                          <tr>
+                            <th>{{forloop.counter}}</th>
+                            <td>{{customer.name}}</td>
+                            <td>{{customer.phone}}</td>
+                            <td>{{customer.email}}</td>
+                            <td>{{customer.physical_address}}</td>
+                            <td class="d-inline-flex justify-content-end">
+                                <a href="{% url 'invoice:customer-detail' customer.id %}" style="color:orange;font-size: 20px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                <form action="{% url 'invoice:delete-customer' customer.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class=" px-2" type="submit" style="color:red;font-size: 20px;text-decoration: none;border: none;background-color: #fff;"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                </form>                                
+                            </td>
+                          </tr>              
+                        </tbody>
+                        {% endfor %}
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
+    

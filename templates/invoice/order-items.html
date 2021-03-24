@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>INVOICE ITEMS</h2>
+            <form action="{% url 'invoice:add-item' invoice.id %}" method="post">
+                {% csrf_token %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-condensed mb-none">
+                        <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Description</th>
+                            <th>Cost(Tsh)</th>
+                            <th>Qty</th>
+                            <th>Total(Tsh)</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in invoice.invoiceitem_set.all %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{ item.description }}</td>
+                            <td>{{ item.cost }}</td>
+                            <td>{{ item.qty }}</td>
+                            <td>{{ item.total }}</td>
+                            <td>
+                                <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmdelete" data-object-name="{{ item.description }}" data-delete-url="{% url 'invoice:delete-item' invoice.id item.id %}">Delete</button>
+                            </td>								
+                        </tr>
+                        {% endfor  %}
+                        <tr>
+                            <td><input type="text" name="description" class="form-control"></td>
+                            <td>
+                                <input type="text" name="cost" class="form-control"/></div>
+                            </td>
+                            <td><input type="text" name="qty" class="form-control"></td>
+                            <td>&nbsp;</td>
+                            <td class="text-right">
+                                <input type="submit" class="btn btn-xs btn-primary" value="Add Item">
+                            </td>
+                            </tr>
+                        </tbody>
+                        <div class="panel-footer text-right"><strong>Total: Tsh{{ invoice.total_items }}</strong></div>
+                    </table>
+                </div>						  
+            </form>	
+        </div>
+    </div>
+{% endblock content %}
+    
