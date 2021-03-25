@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'ayrx5!-s7h5zay1=m28o_h70$=su+b720ptg3o#()45h-5iix_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool, default=False)
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -144,21 +144,18 @@ MEDIA_ROOT = 'media/'
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-if not DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = config('EMAIL_HOST')
-    EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-    EMAIL_PORT = config('PORT', cast=int)
-    EMAIL_USE_SSL = config('PORT', cast=bool, default=True)
-    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-else:
-    EMAIL_HOST_USER = 'noreply@jaybla.com'
-    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    EMAIL_FILE_PATH = BASE_DIR / 'sent_mails'
+# if not DEBUG:
+#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#     EMAIL_HOST = config('EMAIL_HOST')
+#     EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+#     EMAIL_PORT = config('PORT', cast=int)
+#     EMAIL_USE_SSL = config('PORT', cast=bool, default=True)
+#     EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# else:
+#     EMAIL_HOST_USER = 'noreply@jaybla.com'
+#     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+#     EMAIL_FILE_PATH = BASE_DIR / 'sent_mails'
 
 
 #Base URL
-if not DEBUG:
-    BASE_URL = config('BASE_URL')
-else:
-    BASE_URL = 'http://127.0.0.1:8000'
+BASE_URL = ''
