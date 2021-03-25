@@ -12,6 +12,7 @@ python-decouple = "*"
 gunicorn = "*"
 dj-database-url = "*"
 psycopg2 = "*"
+whitenoise = "==3.3.1"
 
 [requires]
 python_version = "3.8"
