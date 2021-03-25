@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a1ada2154ff7d61164bc5f95b500bb9823283aaf2e5752fc66705eb3e59bc67c"
+            "sha256": "7c73442416e13a32038de5796942475fca44dc6b213e1f011579be72480ec437"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -218,7 +218,7 @@
             ],
             "version": "==0.5.1"
         },
-       "xhtml2pdf": {
+        "xhtml2pdf": {
             "hashes": [
                 "sha256:6797e974fac66f0efbe927c1539a2756ca4fe8777eaa5882bac132fc76b39421"
             ],
