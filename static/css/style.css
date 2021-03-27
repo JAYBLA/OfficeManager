@@ -3,6 +3,10 @@
     color:#fff;
 }
 
+.light-color{
+    background-color:#34495e;
+}
+
 .btn-primary{
     background-color:#34495e;
     border-color:#95a5a6;
@@ -23,4 +27,20 @@ a{
 
 .bottom-clearfix {
     height:100px
+}
+
+main .card {
+    background-color: #3475;
+  }
+
+  .btn-secondary:hover {
+    color: #fff;
+    background-color: #34495e;
+    border-color: #95a5a6;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #34495e;
+    border-color: #95a5a6;
 }

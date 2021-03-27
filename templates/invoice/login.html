@@ -1,0 +1,23 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+
+<main class="container my-5">
+  <div class="row">
+    <section class="col-md-6 my-5 offset-md-3">
+
+      <div class="card shadow p-5">
+        <form>
+          <h3 class="text-center text-uppercase mb-4">Login</h3>
+          <hr>
+          {% include 'includes/b5_form.html' with form=form %}
+
+          <div class="d-grid">
+            <button class="btn btn-block btn-secondary rounded-pill mt-3">Login</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</main>
+{% endblock content %}

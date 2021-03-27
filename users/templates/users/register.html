@@ -1,0 +1,22 @@
+{% extends "base2.html" %}
+{% block content %}
+    <main class="container my-5">
+        <div class="row">
+          <section class="col-md-6 my-5 offset-md-3">
+      
+            <div class="card shadow p-5">
+              <form method="POST">
+                  {% csrf_token %}
+                <h3 class="text-center text-uppercase mb-4">Sign Up</h3>
+                <hr>
+                {% include 'includes/bs5_form.html' with form=form %}
+      
+                <div class="d-grid">
+                  <button class="btn btn-block btn-secondary rounded-pill mt-3">Sign Up</button>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+      </main>
+{% endblock content %}

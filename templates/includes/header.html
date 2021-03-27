@@ -1,9 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark dark-color">
     <div class="container-fluid py-2">
       <a class="navbar-brand" href="/">OfficeManager</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">            
@@ -14,5 +11,19 @@
           </li>
         </ul>
       </div>
+      {% if request.user %}
+      <div class="btn-group dropstart">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          {{request.user.username}}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark light-color" aria-labelledby="navbarDarkDropdownMenuLink">
+          <li><a class="dropdown-item" href="{% url 'users:profile' %}"><i class="fa fa-user" aria-hidden="true"></i>Profile</a></li>
+          <li><a class="dropdown-item" href="{% url 'users:logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
+        </ul>
+      </div>
+      {% endif %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </div>
   </nav>

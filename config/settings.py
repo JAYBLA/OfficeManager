@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'ayrx5!-s7h5zay1=m28o_h70$=su+b720ptg3o#()45h-5iix_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     #My_Apps
     'invoice',
+    'users',
+    'widget_tweaks',
     
     
     #Django_Apps
@@ -86,17 +88,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': config('DB_NAME'),
-#         'USER': config('DB_USER'),
-#         'PASSWORD': config('DB_PASSWORD'),
-#         'HOST': config('DB_HOST', default='127.0.0.1'),
-#         'PORT': config('DB_PORT', cast=int),
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -142,20 +133,25 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media/'
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
-# if not DEBUG:
-#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#     EMAIL_HOST = config('EMAIL_HOST')
-#     EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-#     EMAIL_PORT = config('PORT', cast=int)
-#     EMAIL_USE_SSL = config('PORT', cast=bool, default=True)
-#     EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-# else:
-#     EMAIL_HOST_USER = 'noreply@jaybla.com'
-#     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-#     EMAIL_FILE_PATH = BASE_DIR / 'sent_mails'
+if not DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = config('EMAIL_HOST')
+    EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+    EMAIL_PORT = config('PORT', cast=int)
+    EMAIL_USE_SSL = config('PORT', cast=bool, default=True)
+    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+else:
+    EMAIL_HOST_USER = 'noreply@jaybla.com'
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = BASE_DIR / 'sent_mails'
 
 
 #Base URL
-BASE_URL = ''
+if not DEBUG:
+    BASE_URL = config('BASE_URL')
+else:
+    BASE_URL = 'http://127.0.0.1:8000'
+
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL ='invoice:app-home'
+LOGOUT_REDIRECT_URL = 'users:login'

@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from io import BytesIO
 from django.core.files import File
+from django.contrib.auth.decorators import login_required
 
 
 from .models import *
@@ -14,6 +15,7 @@ from datetime import datetime,timedelta,date
 base_url = settings.BASE_URL
 
 # Create your views here.
+@login_required()
 def home(request):
     invoices = Invoice.objects.order_by('-date')
     customers = Customer.objects.order_by('name')
@@ -24,7 +26,7 @@ def home(request):
     }
     return render(request,template,context)
 
-
+@login_required()
 def customer_create(request):
     template = 'customer/customer-create-list.html'
     if request.method =='POST':
@@ -50,6 +52,7 @@ def customer_create(request):
         
         return render(request,template,data)
 
+@login_required()
 def delete_customer(request, customer_id):
     template = 'customer/customer-create-list.html'
     customer = get_object_or_404(Customer, pk=customer_id)
@@ -66,6 +69,8 @@ def delete_customer(request, customer_id):
         }
         return render(request, template, context)
 
+
+@login_required()
 def customer_detail(request,customer_id):
     template = 'customer/customer-detail.html'    
     customer = get_object_or_404(Customer, pk =customer_id)
@@ -78,6 +83,7 @@ def customer_detail(request,customer_id):
     return render(request, template,context)
 
 
+@login_required()
 def update_customer(request, customer_id):
     template = 'customer/customer-create-list.html'
     c = get_object_or_404(Customer, pk=customer_id)
@@ -95,6 +101,8 @@ def update_customer(request, customer_id):
 
     return render(request, template,context)
 
+
+@login_required()
 def invoice_create(request):
     template = 'invoice/invoice-create-list.html'
     # If no customer_id is defined, create a new invoice
@@ -129,6 +137,8 @@ def invoice_create(request):
         }
         return render(request, template, context)
 
+
+@login_required()
 def update_invoice(request, invoice_id):
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     template = 'invoice/invoice-detail.html'
@@ -144,7 +154,8 @@ def update_invoice(request, invoice_id):
     else:
         return redirect(to='invoice:invoice-detail',id=invoice_id)
 
-    
+
+@login_required() 
 def delete_item(request, invoiceitem_id, invoice_id):
 
     item = get_object_or_404(OrderItem, pk=invoiceitem_id)
@@ -161,7 +172,7 @@ def delete_item(request, invoiceitem_id, invoice_id):
         return redirect(to='invoice:invoice-detail',id=invoice_id)
 
 
-
+@login_required()
 def invoice_detail(request, id):
     template = 'invoice/invoice-detail.html'
     invoice = get_object_or_404(Invoice, pk=id)
@@ -172,6 +183,7 @@ def invoice_detail(request, id):
     return render(request, template, context)
 
 
+@login_required()
 def add_order_item(request, id):
     invoice = get_object_or_404(Invoice, pk=id)
     try:
@@ -186,6 +198,7 @@ def add_order_item(request, id):
         return redirect('invoice:invoice-detail',id=id)
     
 
+@login_required()
 def printable_invoice(request, invoice_id):
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     email = invoice.customer.email
@@ -219,3 +232,4 @@ def printable_invoice(request, invoice_id):
         messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
 
     return redirect(to='invoice:app-home')
+
