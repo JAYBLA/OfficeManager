@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/jayblaco/officemanager/
+    - /bin/cp -R officemanager $DEPLOYPATH
