@@ -124,8 +124,8 @@
                     <td style="width: 35px;">{{forloop.counter}}</td>
                     <td><strong>{{ item.description }}</strong></td>
                     <td>{{ item.qty }}</td>
-                    <td>{{ item.cost }}/=</td>
-                    <td>{{ item.total }}/=</td>
+                    <td>{{ item.cost | intcomma }}/=</td>
+                    <td>{{ item.total | intcomma }}/=</td>
                 </tr>
                 {% endfor  %}
             </tbody>
@@ -135,7 +135,7 @@
                     <td style="width: 400px; border: none;"></td>
                     <td style="width: 50px; border: none;"></td>
                     <td><b>TOTAL</b></td>
-                    <td>{{ invoice.total_items }}/=</td>
+                    <td>{{ invoice.total_items | intcomma }}/=</td>
                 </tr>
             </tfoot>
         </table>
