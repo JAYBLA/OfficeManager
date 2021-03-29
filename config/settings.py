@@ -142,8 +142,8 @@ if not DEBUG:
         BASE_DIR / "static",
     ]
 
-    MEDIA_ROOT = '/home/jayblaco/public_html/media'
-    STATIC_ROOT = '/home/jayblaco/public_html/static'
+    MEDIA_ROOT = '/home/jayblaco/officemanager.jaybla.com/public_html/media'
+    STATIC_ROOT = '/home/jayblaco/officemanager.jaybla.com/public_html/static'
 
 if not DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
