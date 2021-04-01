@@ -9,6 +9,8 @@ verify_ssl = true
 django = "*"
 django-xhtml2pdf = "*"
 django-widget-tweaks = "*"
+python-decouple = "*"
+mysqlclient = "*"
 
 [requires]
 python_version = "3.8"

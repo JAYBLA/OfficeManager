@@ -2,15 +2,21 @@
     <div class="container-fluid py-2">
       <a class="navbar-brand" href="/">OfficeManager</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
           <li class="nav-item">            
-            <a href="{% url 'invoice:customer-create-list' %}"><button type="button" class="btn btn-primary">Register New Customer</button></a>
+            <a href="{% url 'invoice:customer-create-list' %}"><button type="button" class="btn btn-primary">Register Customer</button></a>
           </li>
-          <li class="nav-item px-3">
-            <a href="{% url 'invoice:new-invoice' %}"><button type="button" class="btn btn-primary">New Invoice/Quotation</button></a>
+          <li class="nav-item">
+            <a href="{% url 'invoice:new-invoice' %}"><button type="button" class="btn btn-primary">New Invoice</button></a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'quotation:new-quotation' %}"><button type="button" class="btn btn-primary">New Quotation</button></a>
           </li>
         </ul>
       </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
       {% if request.user %}
       <div class="btn-group dropstart">
         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -22,8 +28,5 @@
         </ul>
       </div>
       {% endif %}
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
     </div>
   </nav>

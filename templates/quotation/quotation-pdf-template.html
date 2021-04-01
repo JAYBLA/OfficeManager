@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+    {% load humanize %}
+<head>
+    <meta charset="utf-8">
+<style>
+
+@page {
+    size: 21cm 29.7cm;
+    margin: 30mm 45mm 30mm 45mm;
+    @frame brand_logo {           
+        -pdf-frame-content: logo;
+        left: 60pt;
+        width: 90pt;
+        top: 50pt;
+        height: 90pt;
+    }
+    @frame quotation_heading {  
+        -pdf-frame-content: quotation_heading;
+        left: 230pt;
+        width: 200pt;
+        top: 20pt;
+        height: 150pt;
+    }
+    @frame company_name {  
+        -pdf-frame-content: company_name;
+        left: 40pt;
+        width: 200pt;
+        top: 125pt;
+        height: 150pt;
+    }
+    @frame company_info {  
+        -pdf-frame-content: company_info;
+        left: 40pt;
+        width: 200pt;
+        top: 145pt;
+        height: 150pt;
+    }
+    @frame customer_info {  
+        -pdf-frame-content: customer_info;
+        left: 400pt;
+        width: 200pt;
+        top: 70pt;
+        height: 150pt;
+    }
+
+    @frame upper_line { 
+        -pdf-frame-content: upper_line; 
+        left: 0pt; width: 700pt; top: 200pt; height: 1pt;
+    }
+
+    @frame quote_info {  
+        -pdf-frame-content: quote_info;
+        left: 40pt;
+        width: 500pt;
+        top: 220pt;
+        height: 150pt;
+    }
+    @frame quote_content_table{                                /* Content Frame */
+        left: 40pt;
+        width: 512pt;
+        top: 320pt;
+        height: 300pt;
+    }
+    @frame payment_terms_heading { 
+        -pdf-frame-content: payment_terms_heading; 
+        left: 50pt; width: 512pt; top: 660pt; height: 80pt;
+    }
+    @frame payment_terms_content { 
+        -pdf-frame-content: payment_terms_content; 
+        left: 50pt; width: 512pt; top: 680pt; height: 80pt;
+    }
+    @frame line { 
+        -pdf-frame-content: line; 
+        left: 0pt; width: 700pt; top: 750pt; height: 5pt;
+    }
+
+    @frame footer_frame {           /* Static frame */
+        -pdf-frame-content: footer_content;
+        left: 50pt; width: 512pt; top: 760pt; height: 80pt;
+    }
+}
+    .invoice-box {
+        font-size: 14px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+
+    .footer{
+        font-size: 14px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+
+    table{
+        font-size: 14px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table thead tr{
+        text-align: left;
+        color: #fff;
+        background: rgb(255,0,0);
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 4px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .footer{
+        text-align: center;
+    }
+    h1{
+        font-size: 32px;
+    }
+    h2{
+        font-size: 28px;
+    }
+    h3{
+        font-size: 24px;
+    }
+    h4{
+        font-size: 20px;
+    }
+    h5{
+        font-size: 16px;
+    }
+    h6{
+        font-size: 14px;
+    }
+
+    </style>
+</head>
+
+<body>
+    <div id="quotation_heading">
+            <h1><strong>QUOTATION</strong></h1>
+    </div>
+    <div class="invoice-box">
+        <div id="logo">
+            <img src="{{base_url}}/static/img/main-logo.png" alt="logo">
+        </div>
+        <div id="company_name">
+            <h3>JAYBLA GROUP</h3>
+        </div>
+        <div id="company_info" class="company_info">
+            <h6> 
+                P.O BOX 2124 MOROGORO <br>
+             Website: https://jaybla.com <br>
+             Email: jayblagroup@gmail.com
+            </h6>            
+        </div>
+        <div id="customer_info">
+            <h6>QUOTE TO:<br>
+            <span style="color:red;">{{quotation.customer.name|upper}}</span><br>
+            QUOTE NO:<br>
+            <span style="color:red;">{{quotation_no}}</span><br>
+            CREATED DATE:<br>
+            <span style="color:red;">{{quotation.date}}</span><br>
+            DUE DATE:<br>
+            <span style="color:red;">{{due_date}}</span>
+            </h6>
+        </div>
+        <div id="upper_line">
+            <hr>
+        </div>
+        <div id="quote_info">
+            <h6>QUOTE TITLE:
+            <span style="color:red;">{{quotation.quote_title|upper}}</span><br>
+            QUOTE DESCRIPTION:<br>
+            <span style="color:rgb(75, 74, 74);font-size: 13px;">{{quotation.quote_description}}</span>
+            </h6>
+        </div>
+
+        <div class="table" id="quote_content_table">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 35px;">No.</th>
+                        <th style="width: 400px;">DESCRIPTION</th>
+                        <th style="width: 50px;">QTY</th>
+                        <th style="width: 110px;">UNIT PRICE</th>
+                        <th style="width: 110px;">AMOUNT</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in quotation.orderitem_set.all %}
+                    <tr>
+                        <td style="width: 35px;">{{forloop.counter}}</td>
+                    <td><strong>{{ item.description }}</strong></td>
+                    <td>{{ item.qty }}</td>
+                    <td>{{ item.cost | intcomma }}/=</td>
+                    <td>{{ item.total | intcomma }}/=</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td style="width: 35px; border: none;"></td>
+                        <td style="width: 400px; border: none;"></td>
+                        <td style="width: 50px; border: none;"></td>
+                        <td><b>Subtotal</b></td>
+                        <td>{{ quotation.total_items | intcomma }}/=</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 35px; border: none;"></td>
+                        <td style="width: 400px; border: none;"></td>
+                        <td style="width: 50px; border: none;"></td>
+                        <td><b>VAT</b></td>
+                        <td>18%</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 35px; border: none;"></td>
+                        <td style="width: 400px; border: none;"></td>
+                        <td style="width: 50px; border: none;"></td>
+                        <td style="border-bottom: 2px solid #000;"><b>TOTAL</b></td>
+                        <td style="border-bottom: 2px solid #000;">{% widthratio 1.18 1 quotation.total_items as total_cost %}{{total_cost|intcomma}}/=</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div id="payment_terms_heading">
+            <h5>Payment Terms</h5>
+        </div>
+        <div id="payment_terms_content">
+            <p>
+                >>&nbsp;18% VAT is included whenever an EFD Machine Receipt is needed <br>
+                >>&nbsp;75% of payments should be done prior to commencement of the quoted tasks<br>
+                >>&nbsp;Whenever Accepted we will make a payment Invoice for you<br>
+                >>&nbsp;This is not the final prices but can be negotiated accordingly
+            </p>
+        
+        </div>
+
+
+    </div>
+    <div id="line">
+        <hr class='hrItem' />
+    </div>
+
+    <div class="footer" id="footer_content">
+        <div>If you have any Questions about this quotation, Please Contact Us!</div>
+        <div>Phone:+255 786 511 891 / +255 768 284 698 | Email: info@jaybla.com</div>
+        <div><strong>Thank You For Your Business!</strong></div>
+    </div>
+
+</body>
+</html>

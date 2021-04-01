@@ -24,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('invoice.urls', namespace='invoice')),
     path('users/', include('users.urls', namespace='users')),
+    path('quotation/', include('quotation.urls', namespace='quotation')),
 ]

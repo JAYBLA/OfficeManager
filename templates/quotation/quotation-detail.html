@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}{{quotation.quote_title}}{% endblock title %}
+{% block content %}
+
+{% if quotation %}
+<div class="row pt-4">
+        {% if error_message %}
+        <div class="alert alert-danger">{{ error_message }}</div>
+        {% endif %}
+		    <!-- Customer Information -->
+            <div class="col-sm-4 ">
+                <div class="card">
+                    <div class="card-body">
+                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="{% url 'quotation:update-quotation' quotation.id %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <p class="form-control-static"><a href="#" class=" text-decoration-none">{{ quotation.customer }}</a></p>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Quote Title</label>
+                                    <input type="text" class="form-control" name="quote_title" value="{{quotation.quote_title}}">
+                                </div>
+            
+                                <div class="form-group mb-3">
+                                    <label for="quotedescription" class="form-label">Quote Description</label>
+                                    <textarea class="form-control" id="quotedescription" rows="3" name="quote_description" >{{quotation.quote_description}}</textarea>
+                                </div>
+                                <div class="form-group py-3">
+                                    <div class="col-sm-12 d-flex d-inline">
+                                        <input type="submit" value="Update Invoice" class="btn btn-secondary">
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+    <!-- Invoice items -->
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-body">
+                
+                    <h2>ORDER ITEMS</h2>
+                            <form action="{% url 'quotation:add-item' quotation.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Description</th>
+                                            <th>Cost(Tsh)</th>
+                                            <th>Qty</th>
+                                            <th>Total(Tsh)</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in quotation.orderitem_set.all %}
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ item.description }}</td>
+                                            <td>{{ item.cost }}</td>
+                                            <td>{{ item.qty }}</td>
+                                            <td>{{ item.total }}</td>
+                                            <td>                                                
+                                                <a href="{% url 'quotation:delete-item' quotation.id item.id %}" style="color:red"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
+                                            </td>								
+                                        </tr>
+                                        {% endfor  %}
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="text" name="description" class="form-control"></td>
+                                                <td>
+                                                    <input type="text" name="cost" class="form-control"/></div>
+                                                </td>
+                                                <td><input type="text" name="qty" class="form-control"></td>
+                                                <td>&nbsp;</td>
+                                                <td class="text-right">
+                                                    <input type="submit" class="btn btn-xs btn-primary" value="Add Item">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <div class="d-flex justify-content-end mb-3"><strong>Total:{{ quotation.total_items }}</strong></div>
+                                    </table>
+                                </div>						  
+                            </form>	
+                            <div class="row py-3">
+                                <div class="col-sm-12">
+                                    <a href="./print"><button class="btn btn-primary btn-lg">Generate Quotation Attachment and Send a copy to Customer</button></a>
+                                </div>
+                            </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endif %}
+
+{% endblock content %}

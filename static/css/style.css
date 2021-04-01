@@ -44,3 +44,9 @@ main .card {
     background-color: #34495e;
     border-color: #95a5a6;
 }
+
+@media only screen and (min-width:768px){
+  .px{
+      padding-left:10px
+  }
+}

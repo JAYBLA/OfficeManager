@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row py-4">
+    <div class="col-sm-4 ">
+        <h2 class="py-2">New Quotation</h2>
+        <div class="card">
+            <div class="card-body">
+                {% if error_message %}
+                <div class="alert alert-danger">{{ error_message }}</div>
+                {% endif %}
+                <br />
+                {% if error_message %}
+                <div class="alert alert-success">{{ success_message }}</div>
+                {% endif %}
+                {% if customer_list %}
+                <form action="{% url 'invoice:new-quotation' %}" method='POST'>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <select class="form-control" name="customer_id">
+                                <option value="None">(Select Customer)</option>
+                                {% for customer in customer_list %}
+                                <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label"></label>                                                  
+                        <input type="submit" value="Create Quotation" class="btn btn-primary">                   
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>	
+    </div>
+
+    {% if invoice_list %}
+    <div class="col-sm-8">
+        <h2 class="py-2">Created Invoices</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Invoice</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" class="text-center">Actions</th>
+                    
+                            </tr>
+                        </thead>
+                        
+                        {% for invoice in invoice_list %}
+                        <tbody>
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{ invoice.customer }}</td>
+                                <td>{{ invoice.date|date:"SHORT_DATE_FORMAT" }}</td>
+                                <td>{{ invoice.status }}</td>                                
+                                <td class="text-center">
+                                    <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                    <a href="http://" style="color:red;font-size: 22px;text-decoration: none;border: none;background-color: #fff;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
+    

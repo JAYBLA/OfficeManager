@@ -46,6 +46,9 @@ class Invoice(models.Model):
     def draft(self):
         return self.status == 'Draft'
 
+     
+
+
 class OrderItem(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     description = models.TextField()

@@ -1,0 +1,38 @@
+from django.db import models
+from invoice.models import Invoice, Customer
+
+
+
+class Quotation(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    date = models.DateField()
+    quotation_file = models.FileField(upload_to='quotations/%Y/%m/%d/', blank=True, null=True)
+    quote_title = models.TextField(blank=False)
+    quote_description = models.TextField(blank=True)
+
+    def __str__(self):
+        return str(self.quote_title)
+
+    def total_items(self):
+        total = 0
+        items = self.orderitem_set.all()
+
+        for item in items:
+            total += item.cost * item.qty
+
+        return total
+
+
+    def total(self):
+        items = self.total_items()
+        return items
+
+
+class OrderItem(models.Model):
+    quotation = models.ForeignKey(Quotation, on_delete=models.CASCADE)
+    description = models.TextField()
+    cost = models.IntegerField()
+    qty = models.IntegerField()
+
+    def total(self):
+        return self.cost * self.qty

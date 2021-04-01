@@ -13,7 +13,7 @@
     }
     @frame header2_frame {           /* Static frame */
         -pdf-frame-content: header_content2;
-        left: 416pt; width: 200pt; top: 50pt; height: 70pt;
+        left: 416pt; width: 200pt; top: 100pt; height: 70pt;
     }
     @frame header0_frame {           /* Static frame */
         -pdf-frame-content: header_content0;
@@ -26,11 +26,20 @@
     }
     @frame header3_frame {           /* Static frame */
         -pdf-frame-content: header_content4;
-        left: 416pt; width: 200pt; top: 120pt; height: 100pt;
+        left: 350pt; width: 200pt; top: 80pt; height: 150pt;
     }
+    @frame header3_frame {           /* Static frame */
+        -pdf-frame-content: header_contentjobtitle;
+        left: 40pt; width: 780pt; top: 207pt; height: 150pt;
+    }
+    @frame header3_frame {           /* Static frame */
+        -pdf-frame-content: header_contentdescription;
+        left: 40pt; width: 500pt; top: 240pt; height: 200pt;
+    }
+
     @frame content_frame { 
                                 /* Content Frame */
-        left: 50pt; width: 512pt; top: 200pt; height: 300pt;
+        left: 50pt; width: 512pt; top: 350pt; height: 300pt;
     }
     @frame payment_frame { 
         -pdf-frame-content: payment_content ;/* Content Frame */
@@ -39,6 +48,14 @@
     @frame line { 
         -pdf-frame-content: line; 
         left: 50pt; width: 512pt; top: 740pt; height: 5pt;
+    }
+    @frame upperline { 
+        -pdf-frame-content: upperline; 
+        left: 0pt; width: 700pt; top: 200pt; height: 1pt;
+    }
+    @frame upperline2 { 
+        -pdf-frame-content: upperline; 
+        left: 0pt; width: 700pt; top: 230pt; height: 1pt;
     }
     @frame footer_frame {           /* Static frame */
         -pdf-frame-content: footer_content;
@@ -82,24 +99,21 @@
         text-align: center;
     }
     h1{
-        font-size: 38px;
+        font-size: 36px;
     }
+
     </style>
 </head>
 
 <body>
     <div id="header_content0">
-            <h1><strong>INVOICE</strong></h1>
+            <h1><strong>QUOTATION</strong></h1>
     </div>
     <div class="invoice-box">
         <div id="logo">
             <img src="{{base_url}}/static/img/main-logo.png" style="width: 180px; height: auto;" alt="logo">
         </div>
-        <div id="header_content2">            
-            <b>Invoice #:</b><strong>{{invoice_no}}</strong><br>
-            <b>Status:<strong style="color:red;font-size: 18px;">{{invoice.status}}</strong></b><br>
-            <b>Created Date:</b> {{invoice.date}}<br>
-            <b>Due Date:</b> {{due_date.date}}
+        <div id="header_content2">
         </div>
 
         <div id="header_content3">
@@ -110,13 +124,22 @@
         </div>
 
         <div id="header_content4">
-            <strong>CUSTOMER INFORMATIONS</strong><br>
-            <strong>{{invoice.customer.name}}</strong><br>
-            {{invoice.customer.email}}<br>
-            {{invoice.customer.phone}}
+            <strong>QUOTATION#</strong> <strong style="color: red;">{{quotation_no}}</strong><br>
+            <strong>TO:</strong> <strong style="color: red;">{{quotation.customer.name|upper}}</strong><br>
+            <strong> DATE:</strong><strong style="color: red;">{{quotation.date|upper}}</strong><br>
+            <strong>DUE DATE:</strong><strong style="color: red;">{{due_date.date|upper}}</strong>
         </div>
-
     </div>
+    <div id="upperline">
+        <hr class='upperhrItem' />
+    </div>
+    <div id="header_contentjobtitle">
+            <strong style="font-size: 28px;">JOB TITLE</strong>&nbsp;&nbsp;&nbsp;<strong style="font-size: 28px;color: red;"">{{quotation.quote_title}}</strong>
+    </div>
+    <div id="header_contentdescription">
+        <p style="font-size: 16px;">JOB DESCRIPTION &nbsp;&nbsp; {{quotation.quote_description}}</p>
+    </div>
+
 
     <div class="table" id="content_frame">
         <table>
@@ -150,31 +173,6 @@
                     <td>{{ invoice.total_items | intcomma }}/=</td>
                 </tr>
             </tfoot>
-        </table>
-    </div>
-
-    <div id="payment_content">
-        <table>
-            <thead>
-                <tr style="background:rgb(255,0,0); color:#fff;">
-                    <th style="width: 40px;">No.</th>
-                    <th style="width: 400px;">PAYMENT INFORMATIONS</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>AIRTEL MONEY --0786511891 JUMANNE JOSEPH</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>TIGO PESA --0713663234 JUMANNE JOSEPH</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>M-PESA --0768284698 JUMANNE JOSEPH</td>
-                </tr>
-            </tbody>
         </table>
     </div>
 

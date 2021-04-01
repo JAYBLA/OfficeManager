@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'invoice',
     'users',
     'widget_tweaks',
+    'quotation',
     
     
     #Django_Apps
@@ -154,8 +155,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = 'public_html/static/'
-MEDIA_URL = 'public_html/media/'
+
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 if not DEBUG:
     STATICFILES_DIRS = [
@@ -164,7 +166,14 @@ if not DEBUG:
 
     MEDIA_ROOT = '/home/jayblaco/officemanager.jaybla.com/public_html/media'
     STATIC_ROOT = '/home/jayblaco/officemanager.jaybla.com/public_html/static'
-
+else:
+    STATICFILES_DIRS = [
+        BASE_DIR / "static",
+    ]
+    MEDIA_ROOT = '/media'
+    STATIC_ROOT = '/static'
+    
+    
 if not DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = config('EMAIL_HOST')
