@@ -1,5 +1,11 @@
 {% extends 'base2.html' %}
 {% load static %}
+
+
+{% block title %}
+  Login Page
+{% endblock title %}
+  
 {% block content %}
 
 <main class="container my-5">
@@ -9,7 +15,9 @@
       <div class="card shadow p-5">
         <form method="POST" action="">
             {% csrf_token %}
-          <h3 class="text-center text-uppercase mb-4">Login</h3>
+            <div class="d-flex justify-content-center">
+              <img src="{% static 'img/logo-with-name.png' %}" alt="logo" style="width:150pt;height:auto;">
+            </div>          
           <hr>
           {% include 'includes/bs5_form.html' with form=form %}
 
@@ -19,7 +27,7 @@
         </form>
         <div class="pt-3 text-center">
             <small class="text-light">
-                Don't Have An Account? <a class="ml-2" href="{% url 'users:register' %}">Sign Up</a>
+                Don't Have An Account? <a class="ml-2" href="{% url 'users:register' %}" style="color: #95a5a5;font-size: 16px;">Sign Up</a>
             </small>
         </div>
       </div>
