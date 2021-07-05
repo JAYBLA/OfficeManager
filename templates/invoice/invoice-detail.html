@@ -1,119 +1,120 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block title %}
+  {{invoice.customer.name}}
+{% endblock title %}
 
-{% if invoice %}
-<div class="row pt-4">
-        {% if error_message %}
-        <div class="alert alert-danger">{{ error_message }}</div>
-        {% endif %}
-		    <!-- Customer Information -->
-            <div class="col-sm-4 ">
-                <div class="card">
-                    <div class="card-body">
-        
-                            <h2>Customer Information</h2>
-                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="{% url 'invoice:update-invoice' invoice.id %}" method="POST">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <div class="col-md-6 col-sm-6 ">
-                                        <p class="form-control-static"><a href="#" class=" text-decoration-none">{{ invoice.customer }}</a></p>
+{% block content %} 
+    {% if invoice %}
+        <div class="row pt-4">
+            {% if error_message %}
+            <div class="alert alert-danger">{{ error_message }}</div>
+            {% endif %}
+                <!-- Customer Information -->
+                <div class="col-sm-4 ">
+                    <div class="card">
+                        <div class="card-body">
+            
+                                <h2>Customer Information</h2>
+                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="{% url 'invoice:update-invoice' invoice.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <p class="form-control-static"><a href="#" class=" text-decoration-none">{{ invoice.customer }}</a></p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 col-sm-3 label-align" for="last-name">Date: <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 ">
-                                        <input type="text" class="form-control" name="date" id="invoicedate" value="{{ invoice.date|date:"SHORT_DATE_FORMAT" }}">
-                                    </div>
-                                    <script type="text/javascript">
-                                        $(function () {
-                                            $('#invoicedate').datepicker({
-                                                todayBtn: "linked",
-                                                orientation: "bottom left",
-                                                autoclose: true
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 label-align" for="last-name">Date: <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <input type="text" class="form-control" name="date" id="invoicedate" value="{{ invoice.date|date:"SHORT_DATE_FORMAT" }}">
+                                        </div>
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                $('#invoicedate').datepicker({
+                                                    todayBtn: "linked",
+                                                    orientation: "bottom left",
+                                                    autoclose: true
+                                                });
                                             });
-                                        });
-                                    </script>
-                                </div>
-                                <div class="item form-group">
-                                    <label for="middle-name" class="col-md-3 col-sm-3 label-align">Status</label>
-                                    <div class="col-md-6 col-sm-6 ">
-                                        <select name="status" class="form-control">
-                                            <option value="Draft" {% if invoice.draft %}selected{% endif %}>Draft</option>
-                                            <option value="Paid" {% if invoice.paid %}selected{% endif %}>Paid</option>
-                                            <option value="Unpaid" {% if invoice.unpaid %}selected{% endif %}>Unpaid</option>
-                                        <select>
+                                        </script>
                                     </div>
-                                </div>
-                                <div class="form-group py-3">
-                                    <div class="col-sm-12 d-flex d-inline">
-                                        <input type="submit" value="Update Invoice" class="btn btn-secondary">
+                                    <div class="item form-group">
+                                        <label for="middle-name" class="col-md-3 col-sm-3 label-align">Status</label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <select name="status" class="form-control">
+                                                <option value="Draft" {% if invoice.draft %}selected{% endif %}>Draft</option>
+                                                <option value="Paid" {% if invoice.paid %}selected{% endif %}>Paid</option>
+                                                <option value="Unpaid" {% if invoice.unpaid %}selected{% endif %}>Unpaid</option>
+                                            <select>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                    <div class="form-group py-3">
+                                        <div class="col-sm-12 d-flex d-inline">
+                                            <input type="submit" value="Update Invoice" class="btn btn-secondary">
+                                        </div>
+                                    </div>
+                                </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-    <!-- Invoice items -->
-    <div class="col-sm-8">
-        <div class="card">
-            <div class="card-body">
-                
-                    <h2>ORDER ITEMS</h2>
-                            <form action="{% url 'invoice:add-item' invoice.id %}" method="post">
-                                {% csrf_token %}
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>S/N</th>
-                                            <th>Description</th>
-                                            <th>Cost(Tsh)</th>
-                                            <th>Qty</th>
-                                            <th>Total(Tsh)</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for item in invoice.orderitem_set.all %}
-                                        <tr>
-                                            <th scope="row">{{ forloop.counter }}</th>
-                                            <td>{{ item.description }}</td>
-                                            <td>{{ item.cost }}</td>
-                                            <td>{{ item.qty }}</td>
-                                            <td>{{ item.total }}</td>
-                                            <td>                                                
-                                                <a href="{% url 'invoice:delete-item' invoice.id item.id %}" style="color:red"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
-                                            </td>								
-                                        </tr>
-                                        {% endfor  %}
+        <!-- Invoice items -->
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    
+                        <h2>ORDER ITEMS</h2>
+                                <form action="{% url 'invoice:add-item' invoice.id %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
                                             <tr>
-                                                <td></td>
-                                                <td><input type="text" name="description" class="form-control"></td>
-                                                <td>
-                                                    <input type="text" name="cost" class="form-control"/></div>
-                                                </td>
-                                                <td><input type="text" name="qty" class="form-control"></td>
-                                                <td>&nbsp;</td>
-                                                <td class="text-right">
-                                                    <input type="submit" class="btn btn-xs btn-primary" value="Add Item">
-                                                </td>
+                                                <th>S/N</th>
+                                                <th>Description</th>
+                                                <th>Cost(Tsh)</th>
+                                                <th>Qty</th>
+                                                <th>Total(Tsh)</th>
+                                                <th>Actions</th>
                                             </tr>
-                                        </tbody>
-                                        <div class="d-flex justify-content-end mb-3"><strong>Total:{{ invoice.total_items }}</strong></div>
-                                    </table>
-                                </div>						  
-                            </form>	
-                            <div class="row py-3">
-                                <div class="col-sm-12">
-                                    <a href="./print"><button class="btn btn-primary btn-lg">Generate Invoice Attachment and Send a copy to Customer</button></a>
+                                            </thead>
+                                            <tbody>
+                                                {% for item in invoice.orderitem_set.all %}
+                                            <tr>
+                                                <th scope="row">{{ forloop.counter }}</th>
+                                                <td>{{ item.description }}</td>
+                                                <td>{{ item.cost }}</td>
+                                                <td>{{ item.qty }}</td>
+                                                <td>{{ item.total }}</td>
+                                                <td>                                                
+                                                    <a href="{% url 'invoice:delete-item' invoice.id item.id %}" style="color:red"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
+                                                </td>								
+                                            </tr>
+                                            {% endfor  %}
+                                                <tr>
+                                                    <td></td>
+                                                    <td><input type="text" name="description" class="form-control"></td>
+                                                    <td>
+                                                        <input type="text" name="cost" class="form-control"/></div>
+                                                    </td>
+                                                    <td><input type="text" name="qty" class="form-control"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td class="text-right">
+                                                        <input type="submit" class="btn btn-xs btn-primary" value="Add Item">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <div class="d-flex justify-content-end mb-3"><strong>Total:{{ invoice.total_items }}</strong></div>
+                                        </table>
+                                    </div>						  
+                                </form>	
+                                <div class="row py-3">
+                                    <div class="col-sm-12">
+                                        <a href="./print"><button class="btn btn-primary btn-lg">Send Printable Invoice</button></a>
+                                    </div>
                                 </div>
-                            </div>
+                </div>
             </div>
         </div>
-    </div>
     {% endif %}
-</div>
-
 {% endblock content %}

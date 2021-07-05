@@ -2,133 +2,222 @@
 {% load static %}
 
 {% block title %}
-    home
+    Home
 {% endblock title %}
     
 
+{% block stylesheet %}
+<style>
+    .table-buttons{
+        background-color: #fff !important;
+        padding: 5px;
+        border-radius: 2px;
+        font-size:18px;
+    }
+
+    div.dt-buttons {
+        float: right;
+        margin-left:10px;
+    }
+</style>
+{% endblock stylesheet %}
+    
 
 {% block content %}
-<div class="row py-3">
-    <div class="col-12">
-            {% if customers %}
-        <h2 class="py-2">Registered Customers</h2>
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">S/N</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Physical Address</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                        </thead>
-                        
-                        {% for customer in customers %}
-                        <tbody>
-                        <tr>
-                            <th>{{forloop.counter}}</th>
-                            <td>{{customer.name}}</td>
-                            <td>{{customer.phone}}</td>
-                            <td>{{customer.email}}</td>
-                            <td>{{customer.physical_address}}</td>
-                            <td class="d-inline-flex justify-content-end">
-                                <a href="{% url 'invoice:customer-detail' customer.id %}" style="color:orange;font-size: 20px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>                               
-                            </td>
-                        </tr>              
-                        </tbody>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
-<div class="row py-2">
-    <div class="col-sm-12">
-        {% if invoice_list %}
-        
-            <h2 class="py-2">Created Invoices</h2>
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Invoice</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col" class="text-center">Actions</th>
-                        
-                                </tr>
-                            </thead>
-                            
-                            {% for invoice in invoice_list %}
-                            <tbody>
-                                <tr>
-                                    <th scope="row">{{forloop.counter}}</th>
-                                    <td>{{ invoice.customer }}</td>
-                                    <td>{{ invoice.date|date:"SHORT_DATE_FORMAT" }}</td>
-                                    <td>{{ invoice.status }}</td>                                
-                                    <td class="text-center">
-                                        <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                        <a href="{% url 'invoice:download-invoice' invoice.id %}" style="color:green;font-size: 22px;"><i class="fa fa-download" aria-hidden="true"></i></a>  
-                                    </td>
-                                </tr>
-                            </tbody>
-                            {% endfor %}
-                          </table>
-                    </div>
-                </div>
-            </div>       
-        {% endif %}
-    </div>
-</div>
-<div class="row py-2">
-    <div class="col-sm-12">
-        {% if quotation_list %}
-        
-            <h2 class="py-2">Created Quotations</h2>
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
+<ul class="nav nav-tabs pt-5" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true"><h4 class="py-2">Customers</h4></button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false"><h4 class="py-2">Invoices</h4></button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false"><h4 class="py-2">Quotations</h4></button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="row py-3">
+            <div class="col-12">
+                    {% if customers %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table" id="customer-table">
+                                <thead>
                                 <tr>
                                     <th scope="col">S/N</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Quote Title</th>
-                                    <th scope="col" class="text-center">Actions</th>
-                        
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Physical Address</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
-                            </thead>
-                            
-                            {% for quotation in quotation_list %}
-                            <tbody>
+                                </thead>
+                                
+                                {% for customer in customers %}
+                                <tbody>
                                 <tr>
-                                    <th scope="row">{{forloop.counter}}</th>
-                                    <td>{{ quotation.customer }}</td>
-                                    <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
-                                    <td>{{ quotation.quote_title }}</td>                                
+                                    <th>{{forloop.counter}}</th>
+                                    <td>{{customer.name}}</td>
+                                    <td>{{customer.phone}}</td>
+                                    <td>{{customer.email}}</td>
+                                    <td>{{customer.physical_address}}</td>
                                     <td class="text-center">
-                                        <a href="{% url 'quotation:quotation-detail' quotation.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                        <a href="{% url 'quotation:download-quotation' quotation.id %}" style="color:green;font-size: 22px;"><i class="fa fa-download" aria-hidden="true"></i></a>  
+                                        <a href="{% url 'invoice:customer-detail' customer.id %}" style="color:orange;font-size: 20px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>                               
                                     </td>
-                                </tr>
-                            </tbody>
-                            {% endfor %}
-                          </table>
+                                </tr>              
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>       
-        {% endif %}
+                {% endif %}
+            </div>
+        </div>
     </div>
-</div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="row py-2">
+            <div class="col-sm-12">
+                {% if invoice_list %}                    
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="invoice-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Invoice</th>
+                                            <th scope="col">Customer</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col" class="text-center">Actions</th>
+                                
+                                        </tr>
+                                    </thead>
+                                    
+                                    {% for invoice in invoice_list %}
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">{{forloop.counter}}</th>
+                                            <td>{{ invoice.customer }}</td>
+                                            <td>{{ invoice.date|date:"SHORT_DATE_FORMAT" }}</td>
+                                            <td><span class="badge {% if invoice.status == 'Paid' %}bg-success{% elif invoice.status == 'Unpaid' %} bg-danger {% else %} bg-warning {% endif %}">{{ invoice.status }}</span></td>                                
+                                            <td class="text-center">
+                                                <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    {% endfor %}
+                                  </table>
+                            </div>
+                        </div>
+                    </div>       
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        <div class="row py-2">
+            <div class="col-sm-12">
+                {% if quotation_list %}
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="quotation-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">S/N</th>
+                                            <th scope="col">Customer</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Quote Title</th>
+                                            <th scope="col" class="text-center">Actions</th>
+                                
+                                        </tr>
+                                    </thead>
+                                    
+                                    {% for quotation in quotation_list %}
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">{{forloop.counter}}</th>
+                                            <td>{{ quotation.customer }}</td>
+                                            <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
+                                            <td>{{ quotation.quote_title }}</td>                                
+                                            <td class="text-center">
+                                                <a href="{% url 'quotation:quotation-detail' quotation.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>  
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    {% endfor %}
+                                  </table>
+                            </div>
+                        </div>
+                    </div>       
+                {% endif %}
+            </div>
+        </div>
+    </div>
+  </div>
+
+
 {% endblock content %}
+
+
+{% block javascript %}
+    <script>
+        $(document).ready(function() {
+            var table = $('#customer-table').DataTable( {
+            dom: 'Bfrtip',
+                buttons: ['excel', 'pdf','print'],
+                initComplete: function() {
+                $('.buttons-excel').html('<i class="fa table-buttons fa-file-excel-o text-success"/>')
+                $('.buttons-pdf').html('<i class="fa table-buttons fa-file-pdf-o text-danger"/>')
+                $('.buttons-print').html('<i class="fa table-buttons fa-print text-dark"/>')
+                }
+            } );
+        
+            table.buttons().container()
+                .appendTo( '#customer-table_wrapper .col-md-6:eq(0)' );
+    
+            
+        } );
+    </script>
+    <script>
+        $(document).ready(function() {
+            var table = $('#invoice-table').DataTable( {
+            dom: 'Bfrtip',
+                buttons: ['excel', 'pdf','print'],
+                initComplete: function() {
+                $('.buttons-excel').html('<i class="fa table-buttons fa-file-excel-o text-success"/>')
+                $('.buttons-pdf').html('<i class="fa table-buttons fa-file-pdf-o text-danger"/>')
+                $('.buttons-print').html('<i class="fa table-buttons fa-print text-dark"/>')
+                }
+            } );
+        
+            table.buttons().container()
+                .appendTo( '#invoice-table_wrapper .col-md-6:eq(0)' );
+    
+            
+        } );
+    </script>
+    <script>
+        $(document).ready(function() {
+            var table = $('#quotation-table').DataTable( {
+            dom: 'Bfrtip',
+                buttons: ['excel', 'pdf','print'],
+                initComplete: function() {
+                $('.buttons-excel').html('<i class="fa table-buttons fa-file-excel-o text-success"/>')
+                $('.buttons-pdf').html('<i class="fa table-buttons fa-file-pdf-o text-danger"/>')
+                $('.buttons-print').html('<i class="fa table-buttons fa-print text-dark"/>')
+                }
+            } );
+        
+            table.buttons().container()
+                .appendTo( '#quotation-table_wrapper .col-md-6:eq(0)' );
+    
+            
+        } );
+    </script>
+{% endblock javascript %}
+    
     

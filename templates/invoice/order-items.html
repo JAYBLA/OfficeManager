@@ -10,14 +10,14 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-condensed mb-none">
                         <thead>
-                        <tr>
-                            <th>S/N</th>
-                            <th>Description</th>
-                            <th>Cost(Tsh)</th>
-                            <th>Qty</th>
-                            <th>Total(Tsh)</th>
-                            <th>Actions</th>
-                        </tr>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Description</th>
+                                <th>Cost(Tsh)</th>
+                                <th>Qty</th>
+                                <th>Total(Tsh)</th>
+                                <th>Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {% for item in invoice.invoiceitem_set.all %}
@@ -32,16 +32,16 @@
                             </td>								
                         </tr>
                         {% endfor  %}
-                        <tr>
-                            <td><input type="text" name="description" class="form-control"></td>
-                            <td>
-                                <input type="text" name="cost" class="form-control"/></div>
-                            </td>
-                            <td><input type="text" name="qty" class="form-control"></td>
-                            <td>&nbsp;</td>
-                            <td class="text-right">
-                                <input type="submit" class="btn btn-xs btn-primary" value="Add Item">
-                            </td>
+                            <tr class="order-item-set">
+                                <td><input type="text" name="description" class="form-control"></td>
+                                <td>
+                                    <input type="text" name="cost" class="form-control"/></div>
+                                </td>
+                                <td><input type="text" name="qty" class="form-control"></td>
+                                <td>&nbsp;</td>
+                                <td class="text-right">
+                                    <input type="submit" class="btn btn-xs btn-primary" value="Add Item">
+                                </td>
                             </tr>
                         </tbody>
                         <div class="panel-footer text-right"><strong>Total: Tsh{{ invoice.total_items }}</strong></div>
@@ -51,4 +51,18 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'js/jquery.formset.js' %}"></script>
+<script>
+    $('.order-item-set').formset({
+        addText: '<i class="fa fa-plus-circle"></i>',
+        addCssClass: 'text-success m-2',
+        deleteCssClass: 'text-danger m-2',
+        deleteText: '<i class="fa fa-times-circle"></i>',
+        prefix: '{{ requirement_formset.prefix }}',
+    });
+</script>
+{% endblock javascript %}
+    
     

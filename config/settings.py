@@ -196,3 +196,8 @@ else:
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL ='invoice:app-home'
 LOGOUT_REDIRECT_URL = 'users:login'
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
