@@ -21,4 +21,5 @@ urlpatterns = [
     path('invoice/<int:invoice_id>/item/<int:invoiceitem_id>/delete/', delete_item, name='delete-item'),
     path('invoice/<int:invoice_id>/update/', update_invoice, name='update-invoice'),
     path('invoice/<int:invoice_id>/print/', printable_invoice, name='print-invoice'),
+    path('invoice/<int:invoice_id>/download/', GeneratePdf.as_view(), name='download-invoice'),  
 ]

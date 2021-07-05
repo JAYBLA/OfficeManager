@@ -148,3 +148,23 @@ def printable_quotation(request, quotation_id):
 
     return redirect(to='invoice:app-home')
 
+
+@method_decorator(login_required, name='dispatch')
+class GeneratePdf(View):
+    def get(self,request, quotation_id):
+        quotation = get_object_or_404(Quotation, pk=quotation_id)
+        customer = quotation.customer.name
+        c=customer.upper()
+        quotation_no = 'JG100' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2]) + 'Q')
+        due_date = datetime.today() + timedelta(days=5)
+
+
+        data = {
+            'quotation':quotation,
+            'quotation_no':quotation_no,
+            'created_at':quotation.date,
+            'due_date':due_date,
+            'base_url':base_url,
+        }
+        pdf = render_to_pdf('quotation/quotation-pdf-template.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')

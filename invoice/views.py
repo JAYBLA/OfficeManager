@@ -238,3 +238,22 @@ def printable_invoice(request, invoice_id):
         messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
 
     return redirect(to='invoice:app-home')
+
+@method_decorator(login_required, name='dispatch')
+class GeneratePdf(View):
+    def get(self,request, invoice_id):
+        invoice = get_object_or_404(Invoice, pk=invoice_id)
+        customer = invoice.customer.name
+        c=customer.upper()
+        invoice_no = 'JGM100' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
+        due_date = datetime.today() + timedelta(days=5)
+
+        data = {
+            'invoice':invoice,
+            'invoice_no':invoice_no,
+            'created_at':invoice.date,
+            'due_date':due_date,
+            'base_url':base_url,
+        }
+        pdf = render_to_pdf('invoice/pdf-template.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
