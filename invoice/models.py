@@ -18,6 +18,7 @@ class Invoice(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField()
     status = models.CharField(max_length=10)
+    due_date = models.DateField()
     invoice_file = models.FileField(upload_to='invoices/%Y/%m/%d/', blank=True, null=True)
 
     def __str__(self):

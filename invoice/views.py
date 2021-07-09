@@ -211,7 +211,7 @@ def printable_invoice(request, invoice_id):
     customer = invoice.customer.name
     c=customer.upper()
     invoice_no = 'JGM100' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
-    due_date = datetime.today() + timedelta(days=5)
+    due_date = invoice.due_date
       
     data = {
         'invoice':invoice,
