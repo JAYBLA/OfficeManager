@@ -28,6 +28,10 @@
                                     <label for="quotedescription" class="form-label">Quote Description</label>
                                     <textarea class="form-control" id="quotedescription" rows="3" name="quote_description" >{{quotation.quote_description}}</textarea>
                                 </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Due Date</label>                                                  
+                                    <input type="text" name="due_date" class="form-control" value="{{quotation.due_date|date:"SHORT_DATE_FORMAT"}}">                  
+                                </div>
                                 <div class="form-group py-3">
                                     <div class="col-sm-12 d-flex d-inline">
                                         <input type="submit" value="Update Invoice" class="btn btn-secondary">

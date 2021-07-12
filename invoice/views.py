@@ -148,6 +148,7 @@ def update_invoice(request, invoice_id):
     template = 'invoice/invoice-detail.html'
     try:
         invoice.date = datetime.strptime(request.POST['date'], "%m/%d/%Y")
+        invoice.due_date = datetime.strptime(request.POST['due_date'], "%m/%d/%Y")
         invoice.status = request.POST['status']
         invoice.save()
     except (KeyError, Invoice.DoesNotExist):
@@ -250,7 +251,7 @@ class GeneratePdf(View):
         customer = invoice.customer.name
         c=customer.upper()
         invoice_no = 'JGM100' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
-        due_date = datetime.today() + timedelta(days=5)
+        due_date = invoice.due_date
 
         data = {
             'invoice':invoice,

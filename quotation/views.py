@@ -81,6 +81,7 @@ def update_quotation(request, id):
     try:        
         quotation.quote_title = request.POST['quote_title']
         quotation.quote_description = request.POST['quote_description']
+        quotation.due_date = datetime.strptime(request.POST['due_date'], "%m/%d/%Y")
         quotation.save()
     except (KeyError, Quotation.DoesNotExist):
         return render(request, template, {
@@ -140,12 +141,14 @@ def printable_quotation(request, quotation_id):
     customer = quotation.customer.name
     c=customer.upper()
     quotation_no = 'JG100' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2])+"Q")
+    due_date = quotation.due_date
           
     data = {
         'quotation':quotation,
         'quotation_no':quotation_no,
         'created_at':quotation.date,
         'base_url':base_url,
+        'due_date':due_date
     }
     
     pdf = render_to_pdf('quotation/quotation-pdf-template.html', data)
@@ -174,7 +177,7 @@ class GeneratePdf(View):
         customer = quotation.customer.name
         c=customer.upper()
         quotation_no = 'JG100' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2]) + 'Q')
-        due_date = datetime.today() + timedelta(days=5)
+        due_date = quotation.due_date
 
 
         data = {
