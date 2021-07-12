@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'widget_tweaks',
     'quotation',
+    'bootstrap_modal_forms',
     
     
     #Django_Apps

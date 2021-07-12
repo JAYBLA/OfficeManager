@@ -5,6 +5,11 @@
 {% block title %}
     New Invoice
 {% endblock title %}
+
+
+{% block stylesheet %}
+    
+{% endblock stylesheet %}
     
 
 {% block content %}
@@ -32,6 +37,10 @@
                                 {% endfor %}
                             </select>
                         </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Due Date</label>                                                  
+                        <input type="date" name="due_date" class="form-control" id="date-picker-example">                  
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label"></label>                                                  
@@ -70,7 +79,9 @@
                                 <td>{{ invoice.status }}</td>                                
                                 <td class="text-center">
                                     <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                    <a href="http://" style="color:red;font-size: 22px;text-decoration: none;border: none;background-color: #fff;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a class="delete-invoice bs-modal mr-2" data-form-url="{% url 'invoice:delete_invoice' invoice.id %}">
+                                        <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -82,5 +93,32 @@
     </div>
     {% endif %}
 </div>
+
+<!-- Modal 1 with id="create-book"-->
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal 2 with id="modal" -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"></div>
+    </div>
+  </div>
 {% endblock content %}
+
+
+{% block javascript %}
+<script>
+    $(function () {  
+      $(".delete-invoice").each(function () {
+          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+      });
+    });
+  </script>
+{% endblock javascript %}
+    
     

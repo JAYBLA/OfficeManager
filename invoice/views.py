@@ -8,6 +8,13 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import View  # pdf download
 from django.http import  HttpResponse
+from bootstrap_modal_forms.generic import (
+  BSModalDeleteView
+)
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin
+)
+from django.urls import reverse_lazy
 
 
 from .models import *
@@ -58,23 +65,13 @@ def customer_create(request):
         
         return render(request,template,data)
 
-@login_required()
-def delete_customer(request, customer_id):
-    template = 'customer/customer-create-list.html'
-    customer = get_object_or_404(Customer, pk=customer_id)
-    customers = Customer.objects.all()
-    if request.method=='POST':
-        customer.delete()
-        context = {        
-        'customers':customers
-        }
-        return render(request, template, context)
-    else:
-        context = {
-            'customers':customers
-        }
-        return render(request, template, context)
-
+class CustomerDeleteView(LoginRequiredMixin,BSModalDeleteView):
+    model = Customer
+    template_name = 'customer/delete.html'
+    success_message = 'Success: Customer was deleted.'
+    context_object_name = 'customer'
+    success_url = reverse_lazy('invoice:customer-create-list')
+    
 
 @login_required()
 def customer_detail(request,customer_id):
@@ -114,7 +111,8 @@ def invoice_create(request):
     # If no customer_id is defined, create a new invoice
     if request.method=='POST':
         customer_id = request.POST['customer_id']
-        
+        due_date = request.POST['due_date']
+                
         if customer_id=='None':
             customers = Customer.objects.order_by('name')
             context = {
@@ -124,7 +122,7 @@ def invoice_create(request):
             return render(request, template, context)
         else:
             customer = get_object_or_404(Customer, pk=customer_id)
-            invoice = Invoice(customer=customer, date=date.today(), status='Unpaid')
+            invoice = Invoice(customer=customer, date=date.today(), status='Unpaid', due_date=due_date)
             invoice.save()
             
             invoices = Invoice.objects.order_by('-date')
@@ -160,7 +158,13 @@ def update_invoice(request, invoice_id):
     else:
         return redirect(to='invoice:invoice-detail',id=invoice_id)
 
-
+class InvoiceDeleteView(LoginRequiredMixin,BSModalDeleteView):
+    model = Invoice
+    template_name = 'invoice/delete.html'
+    success_message = 'Success: Invoice was deleted.'
+    context_object_name = 'invoice'
+    success_url = reverse_lazy('invoice:new-invoice')
+    
 @login_required() 
 def delete_item(request, invoiceitem_id, invoice_id):
 

@@ -54,24 +54,24 @@
                           </tr>
                         </thead>
                         
-                        {% for customer in customers %}
+                        
                         <tbody>
+                            {% for customer in customers %}
                           <tr>
                             <th>{{forloop.counter}}</th>
                             <td>{{customer.name}}</td>
                             <td>{{customer.phone}}</td>
                             <td>{{customer.email}}</td>
                             <td>{{customer.physical_address}}</td>
-                            <td class="d-inline-flex justify-content-end">
+                            <td class="text-center">
                                 <a href="{% url 'invoice:customer-detail' customer.id %}" style="color:orange;font-size: 20px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <form action="{% url 'invoice:delete-customer' customer.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button class=" px-2" type="submit" style="color:red;font-size: 20px;text-decoration: none;border: none;background-color: #fff;"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                </form>                                
+                                <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'invoice:delete_customer' customer.id %}">
+                                    <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
+                                </a>                               
                             </td>
-                          </tr>              
-                        </tbody>
-                        {% endfor %}
+                          </tr>     
+                          {% endfor %}         
+                        </tbody>                        
                       </table>
                 </div>
             </div>
@@ -79,5 +79,31 @@
     </div>
     {% endif %}
 </div>
+<!-- Modal 1 with id="create-book"-->
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal 2 with id="modal" -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"></div>
+    </div>
+  </div>
 {% endblock content %}
+
+
+{% block javascript %}
+<script>
+    $(function () {  
+      $(".delete-customer").each(function () {
+          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+      });
+    });
+  </script>
+{% endblock javascript %}
+    
     

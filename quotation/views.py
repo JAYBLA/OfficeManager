@@ -9,6 +9,14 @@ from django.utils.decorators import method_decorator
 from django.views.generic import View  # pdf download
 from django.http import  HttpResponse
 
+from bootstrap_modal_forms.generic import (
+  BSModalDeleteView
+)
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin
+)
+from django.urls import reverse_lazy
+
 
 from .models import *
 from invoice.models import Customer
@@ -26,6 +34,7 @@ def quotation_create(request):
         customer_id = request.POST['customer_id']
         quote_title = request.POST['quote_title']
         quote_description = request.POST['quote_description']
+        due_date = request.POST['due_date']
         
         if customer_id=='None':
             customers = Customer.objects.order_by('name')
@@ -36,7 +45,7 @@ def quotation_create(request):
             return render(request, template, context)
         else:
             customer = get_object_or_404(Customer, pk=customer_id)
-            quotation = Quotation(customer=customer, date=date.today(),quote_title=quote_title,quote_description=quote_description)
+            quotation = Quotation(customer=customer, date=date.today(),quote_title=quote_title,quote_description=quote_description, due_date=due_date)
             quotation.save()
             
             quotations = Quotation.objects.order_by('-date')
@@ -54,6 +63,15 @@ def quotation_create(request):
             'customer_list' : customers,			
         }
         return render(request, template, context)
+
+
+class QuotationDeleteView(LoginRequiredMixin,BSModalDeleteView):
+    model = Quotation
+    template_name = 'quotation/delete.html'
+    success_message = 'Success: Quotaion was deleted.'
+    context_object_name = 'quotation'
+    success_url = reverse_lazy('quotation:new-quotation')
+   
 
 
 @login_required()

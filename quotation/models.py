@@ -9,6 +9,7 @@ class Quotation(models.Model):
     quotation_file = models.FileField(upload_to='quotations/%Y/%m/%d/', blank=True, null=True)
     quote_title = models.TextField(blank=False)
     quote_description = models.TextField(blank=True)
+    due_date = models.DateField()
 
     def __str__(self):
         return str(self.quote_title)
