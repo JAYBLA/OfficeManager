@@ -66,10 +66,9 @@
                             <td>{{customer.physical_address}}</td>
                             <td class="d-inline-flex justify-content-end">
                                 <a href="http://" style="color:orange;font-size: 22px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <form action="{% url 'invoice:delete-customer' customer.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" style="color:red;font-size: 22px;text-decoration: none;border: none;background-color: #fff;"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                </form>                                
+                                <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'invoice:delete_customer' customer.id %}">
+                                    <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
+                                </a>                               
                             </td>
                           </tr>              
                         </tbody>
