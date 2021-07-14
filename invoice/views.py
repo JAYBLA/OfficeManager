@@ -91,7 +91,7 @@ def update_customer(request, customer_id):
     template = 'customer/customer-create-list.html'
     c = get_object_or_404(Customer, pk=customer_id)
 
-    c.name = request.POST['name']
+    c.full_name = request.POST['full_name']
     c.phone = request.POST['phone']
     c.email = request.POST['email']
     c.address = request.POST['physical_address']
