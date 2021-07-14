@@ -64,8 +64,7 @@
                             <td>{{customer.phone}}</td>
                             <td>{{customer.email}}</td>
                             <td>{{customer.physical_address}}</td>
-                            <td class="d-inline-flex justify-content-end">
-                                <a href="http://" style="color:orange;font-size: 22px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                            <td class="text-center">                            
                                 <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'invoice:delete_customer' customer.id %}">
                                     <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
                                 </a>                               
@@ -80,5 +79,28 @@
     </div>
     {% endif %}
 </div>
+
+    <!-- Modal 1 with id="create-book"-->
+    <div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal 2 with id="modal" -->
+      <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content"></div>
+        </div>
+      </div>
 {% endblock content %}
-    
+{% block javascript %}
+    <script>
+        $(function () {  
+        $(".delete-customer").each(function () {
+            $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+        });
+        });
+    </script>
+{% endblock javascript %}
