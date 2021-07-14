@@ -251,13 +251,11 @@ class GeneratePdf(View):
         customer = invoice.customer.name
         c=customer.upper()
         invoice_no = 'JGM100' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
-        due_date = invoice.due_date
 
         data = {
             'invoice':invoice,
             'invoice_no':invoice_no,
             'created_at':invoice.date,
-            'due_date':due_date,
             'base_url':base_url,
         }
         pdf = render_to_pdf('invoice/pdf-template.html', data)

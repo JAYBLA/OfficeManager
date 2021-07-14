@@ -141,14 +141,12 @@ def printable_quotation(request, quotation_id):
     customer = quotation.customer.name
     c=customer.upper()
     quotation_no = 'JG100' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2])+"Q")
-    due_date = quotation.due_date
           
     data = {
         'quotation':quotation,
         'quotation_no':quotation_no,
         'created_at':quotation.date,
         'base_url':base_url,
-        'due_date':due_date
     }
     
     pdf = render_to_pdf('quotation/quotation-pdf-template.html', data)
