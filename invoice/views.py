@@ -150,6 +150,7 @@ def update_invoice(request, invoice_id):
     try:
         invoice.date = datetime.strptime(request.POST['date'], "%m/%d/%Y")
         invoice.due_date = datetime.strptime(request.POST['due_date'], "%m/%d/%Y")
+        invoice.title = request.POST['title']
         invoice.status = request.POST['status']
         invoice.save()
     except (KeyError, Invoice.DoesNotExist):
