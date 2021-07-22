@@ -112,6 +112,7 @@ def invoice_create(request):
     if request.method=='POST':
         customer_id = request.POST['customer_id']
         due_date = request.POST['due_date']
+        title = request.POST['title']
                 
         if customer_id=='None':
             customers = Customer.objects.order_by('name')
@@ -122,7 +123,7 @@ def invoice_create(request):
             return render(request, template, context)
         else:
             customer = get_object_or_404(Customer, pk=customer_id)
-            invoice = Invoice(customer=customer, date=date.today(), status='Unpaid', due_date=due_date)
+            invoice = Invoice(customer=customer, date=date.today(), status='Unpaid', due_date=due_date, title=title)
             invoice.save()
             
             invoices = Invoice.objects.order_by('-date')
