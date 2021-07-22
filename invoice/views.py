@@ -44,7 +44,7 @@ def customer_create(request):
     template = 'customer/customer-create-list.html'
     if request.method =='POST':
         customer = Customer(
-            name = request.POST['name'],
+            name = request.POST['full_name'],
             phone = request.POST['phone'],
             email = request.POST['email'],
             physical_address = request.POST['physical_address']

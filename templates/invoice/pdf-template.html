@@ -19,6 +19,10 @@
         -pdf-frame-content: header_content0;
         left: 220pt; width: 600pt; top: 20pt; height: 70pt;
     }
+    @frame header0_frame {           /* Static frame */
+        -pdf-frame-content: header_content_sub;
+        left: 225pt; width: 600pt; top: 50pt; height: 30pt;
+    }
 
     @frame header4_frame {           /* Static frame */
         -pdf-frame-content: header_content3;
@@ -84,12 +88,19 @@
     h1{
         font-size: 38px;
     }
+    h4{
+        font-size:18px;
+        color: #333;
+    }
     </style>
 </head>
 
 <body>
     <div id="header_content0">
             <h1><strong>INVOICE</strong></h1>
+    </div>
+    <div id="header_content_sub">
+            <h4>First Remainder</h4>
     </div>
     <div class="invoice-box">
         <div id="logo">
@@ -103,9 +114,8 @@
         </div>
 
         <div id="header_content3">
-            <strong>JAYBLA GROUP MANAGEMENT</strong><br>
+            <strong style="font-size: 18px;">JAYBLA GROUP</strong><br>
             UHURU STREET-MOROGORO,<br>
-            Phone:+255 786 511 891 / +255 768 284 698<br>
             Email: info@jaybla.com
         </div>
 
