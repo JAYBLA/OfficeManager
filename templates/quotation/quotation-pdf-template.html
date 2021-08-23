@@ -206,20 +206,6 @@
                         <td style="width: 35px; border: none;"></td>
                         <td style="width: 400px; border: none;"></td>
                         <td style="width: 50px; border: none;"></td>
-                        <td><b>Subtotal</b></td>
-                        <td>{{ quotation.total_items | intcomma }}/=</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 35px; border: none;"></td>
-                        <td style="width: 400px; border: none;"></td>
-                        <td style="width: 50px; border: none;"></td>
-                        <td><b>VAT</b></td>
-                        <td>18%</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 35px; border: none;"></td>
-                        <td style="width: 400px; border: none;"></td>
-                        <td style="width: 50px; border: none;"></td>
                         <td style="border-bottom: 2px solid #000;"><b>TOTAL</b></td>
                         <td style="border-bottom: 2px solid #000;">{% widthratio 1.18 1 quotation.total_items as total_cost %}{{total_cost|intcomma}}/=</td>
                     </tr>
@@ -231,12 +217,9 @@
         </div>
         <div id="payment_terms_content">
             <p>
-                >>&nbsp;18% VAT is included whenever an EFD Machine Receipt is needed <br>
                 >>&nbsp;75% of payments should be done prior to commencement of the quoted tasks<br>
-                >>&nbsp;Whenever Accepted we will make a payment Invoice for you<br>
-                >>&nbsp;This is not the final prices but can be negotiated accordingly
-            </p>
-        
+                >>&nbsp;Whenever Accepted we will make a payment Invoice for you
+            </p>        
         </div>
 
 
@@ -244,7 +227,6 @@
     <div id="line">
         <hr class='hrItem' />
     </div>
-
     <div class="footer" id="footer_content">
         <div>If you have any Questions about this quotation, Please Contact Us!</div>
         <div>Phone:+255 786 511 891 / +255 768 284 698 | Email: info@jaybla.com</div>
