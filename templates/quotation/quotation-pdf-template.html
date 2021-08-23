@@ -207,7 +207,7 @@
                         <td style="width: 400px; border: none;"></td>
                         <td style="width: 50px; border: none;"></td>
                         <td style="border-bottom: 2px solid #000;"><b>TOTAL</b></td>
-                        <td style="border-bottom: 2px solid #000;">{% widthratio 1.18 1 quotation.total_items as total_cost %}{{total_cost|intcomma}}/=</td>
+                        <td style="border-bottom: 2px solid #000;">{{quotation.total_items|intcomma}}/=</td>
                     </tr>
                 </tfoot>
             </table>
