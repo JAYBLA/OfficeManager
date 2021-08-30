@@ -2,82 +2,90 @@
 {% load static %}
 
 {% block title %}
-    register customer
+    Add Customer
 {% endblock title %}
     
 {% block content %}
-<div class="row py-5">
-        <div class="col-sm-3">
-            <h2 class="py-2">Register Customer</h2>
-            <div class="card">
-                <div class="card-body">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                          <label class="form-label">Full Name</label>
-                          <input type="text" class="form-control" name="full_name">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Phone</label>
-                            <input type="text" class="form-control" name="phone">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email address</label>
-                            <input type="email" class="form-control" name="email">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Physical Address</label>
-                            <input type="text" class="form-control" name="physical_address">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Create</button>
-                      </form>
-                </div>
-            </div>
-        </div>
 
-
-     {% if customers %}
-    <div class="col-sm-9">
-        <h2 class="py-2">Customers List</h2>
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">S/N</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Physical Address</th>
-                            <th scope="col">Actions</th>
-                          </tr>
-                        </thead>
-                        
-                        
-                        <tbody>
-                            {% for customer in customers %}
-                          <tr>
-                            <th>{{forloop.counter}}</th>
-                            <td>{{customer.name}}</td>
-                            <td>{{customer.phone}}</td>
-                            <td>{{customer.email}}</td>
-                            <td>{{customer.physical_address}}</td>
-                            <td class="text-center">
-                                <a href="{% url 'invoice:customer-detail' customer.id %}" style="color:orange;font-size: 20px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'invoice:delete_customer' customer.id %}">
-                                    <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
-                                </a>                               
-                            </td>
-                          </tr>     
-                          {% endfor %}         
-                        </tbody>                        
-                      </table>
-                </div>
-            </div>
+<div class="row mt-5">
+  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          Create Customer
+        </h3>
+        <div class="card-options">
+          <a href="javascript:void0;" class="btn btn-sm btn-primary">View All</a>
         </div>
+      </div>
+      <div class="card-body p-3">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" name="full_name">
+          </div>
+          <div class="mb-3">
+              <label class="form-label">Phone</label>
+              <input type="text" class="form-control" name="phone">
+          </div>
+          <div class="mb-3">
+              <label class="form-label">Email address</label>
+              <input type="email" class="form-control" name="email">
+          </div>
+          <div class="mb-3">
+              <label class="form-label">Physical Address</label>
+              <input type="text" class="form-control" name="physical_address">
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">Create</button>
+        </form>
+      </div>
     </div>
-    {% endif %}
+  </div>
+  <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Customers List</h3>
+      </div>
+      <div class="card-body pt-0">
+        <div class="chart-wrapper">
+          <div class="table-responsive">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">S/N</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Physical Address</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                
+                
+                <tbody>
+                    {% for customer in customers %}
+                  <tr>
+                    <th>{{forloop.counter}}</th>
+                    <td>{{customer.name}}</td>
+                    <td>{{customer.phone}}</td>
+                    <td>{{customer.email}}</td>
+                    <td>{{customer.physical_address}}</td>
+                    <td class="text-center">
+                        <a href="{% url 'invoice:customer-detail' customer.id %}" style="color:orange;font-size: 20px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'invoice:delete_customer' customer.id %}">
+                            <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
+                        </a>                               
+                    </td>
+                  </tr>     
+                  {% endfor %}         
+                </tbody>                        
+              </table>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- Modal 1 with id="create-book"-->
 <div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">

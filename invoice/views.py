@@ -87,6 +87,17 @@ def customer_detail(request,customer_id):
 
 
 @login_required()
+def customer_list(request):
+    template = 'customer/customer-list.html'    
+    customers = Customer.objects.order_by('-modified_at')
+    context = {        
+        'customers':customers,
+    }
+    
+    return render(request, template,context)
+
+
+@login_required()
 def update_customer(request, customer_id):
     template = 'customer/customer-create-list.html'
     c = get_object_or_404(Customer, pk=customer_id)
@@ -142,6 +153,51 @@ def invoice_create(request):
         }
         return render(request, template, context)
 
+
+@login_required()
+def invoice_list(request):
+    template = 'invoice/invoice-list.html'    
+    invoices = Invoice.objects.all().order_by('-date')
+    title = 'All Invoices'
+    context = {			
+        'invoice_list' : invoices,
+        'title':title,		
+    }
+    return render(request, template,context)
+
+
+@login_required()
+def invoice_unpaid(request):
+    template = 'invoice/invoice-list.html'    
+    invoices = Invoice.objects.filter(status='Unpaid').order_by('-date')
+    title = 'Unpaid Invoice'
+    context = {			
+        'invoice_list' : invoices,
+        'title':title,		
+    }
+    return render(request, template,context)
+
+@login_required()
+def invoice_paid(request):
+    template = 'invoice/invoice-list.html'    
+    invoices = Invoice.objects.filter(status='Paid').order_by('-date')
+    title = 'Paid Invoice'
+    context = {			
+        'invoice_list' : invoices,
+        'title':title,		
+    }
+    return render(request, template,context)
+
+@login_required()
+def invoice_draft(request):
+    template = 'invoice/invoice-list.html'    
+    invoices = Invoice.objects.filter(status='Draft').order_by('-date')
+    title = 'Draft Invoice'
+    context = {			
+        'invoice_list' : invoices,
+        'title':title,		
+    }
+    return render(request, template,context)
 
 @login_required()
 def update_invoice(request, invoice_id):

@@ -9,14 +9,19 @@ urlpatterns = [
     path('',home,name = 'app-home'),
     
     #CUSTOMER
-    path('customer', customer_create, name='customer-create-list') ,
+    path('customer', customer_create, name='customer-create') ,
     path('customer/<int:customer_id>/', customer_detail, name='customer-detail'),
+    path('customers', customer_list, name='customer-list'),
     path('customer/<int:customer_id>/update/', update_customer, name='update-customer'),
     path('customer/<int:pk>/delete/', CustomerDeleteView.as_view(), name='delete_customer'),
     
     #INVOICE
     path('invoice/new/', invoice_create, name='new-invoice'),    
     path('invoice/<int:id>/', invoice_detail, name='invoice-detail'),
+    path('Unpaid-invoices', invoice_unpaid, name='invoice-unpaid'),
+    path('Paid-invoices', invoice_paid, name='invoice-paid'),
+    path('invoices', invoice_list, name='invoice-list'),
+    path('Draft-invoices', invoice_draft, name='invoice-draft'),
     path('invoice/<int:id>/item/add/', add_order_item, name='add-item'),
     path('invoice/<int:invoice_id>/item/<int:invoiceitem_id>/delete/', delete_item, name='delete-item'),
     path('invoice/<int:invoice_id>/update/', update_invoice, name='update-invoice'),

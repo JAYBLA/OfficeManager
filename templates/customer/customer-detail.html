@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    {{customer.name}}
+{{customer.name}}
 {% endblock title %}
     
 {% block content %}
@@ -80,20 +80,20 @@
     {% endif %}
 </div>
 
-    <!-- Modal 1 with id="create-book"-->
-    <div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-          </div>
+  <!-- Modal 1 with id="create-book"-->
+  <div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
         </div>
       </div>
-      
-      <!-- Modal 2 with id="modal" -->
-      <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content"></div>
-        </div>
+    </div>
+    
+    <!-- Modal 2 with id="modal" -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
       </div>
+    </div>
 {% endblock content %}
 {% block javascript %}
     <script>

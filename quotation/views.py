@@ -118,6 +118,15 @@ def quotation_detail(request, id):
     }
     return render(request, template, context)
 
+@login_required()
+def quotation_list(request):
+    template = 'quotation/quotation-list.html'
+    quotations=Quotation.objects.all().order_by('-date')
+    context = {			
+        'quotation_list':quotations,		
+    }
+    return render(request, template, context)
+
 
 @login_required()
 def add_order_item(request, id):
