@@ -28,10 +28,10 @@ base_url = settings.BASE_URL
 # Create your views here.
 @login_required()
 def home(request):
+    template = 'home.html'
     invoices = Invoice.objects.all().order_by('-date')
     customers = Customer.objects.all().order_by('name')
-    quotations = Quotation.objects.all().order_by('-date')
-    template = 'home.html'
+    quotations = Quotation.objects.all().order_by('-date')    
     customer_count = customers.count()
     invoice_count = invoices.count()
     quotation_count = quotations.count()

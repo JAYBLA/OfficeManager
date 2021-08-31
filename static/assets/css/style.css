@@ -34060,9 +34060,9 @@ a.icon:hover {
 
 .card-title {
     line-height: 1.2;
-    text-transform: capitalize;
+    text-transform: uppercase;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 24px;
 }
 
 .reg {
