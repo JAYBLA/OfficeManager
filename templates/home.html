@@ -127,7 +127,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for invoice in invoice_list %}
+                                {% for invoice in invoices %}
                                 <tr>
                                     <th scope="row">{{forloop.counter}}</th>
                                     <td>{{ invoice.customer }}</td>
@@ -165,7 +165,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for quotation in quotation_list %}
+                                {% for quotation in quotations %}
                                 <tr>
                                     <th scope="row">{{forloop.counter}}</th>
                                     <td>{{ quotation.customer }}</td>
