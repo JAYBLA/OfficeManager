@@ -8,9 +8,12 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import View  # pdf download
 from django.http import  HttpResponse
+from .forms import *
 
 from bootstrap_modal_forms.generic import (
-  BSModalDeleteView
+  BSModalDeleteView,
+  BSModalUpdateView,
+  BSModalCreateView,
 )
 from django.contrib.auth.mixins import (
     LoginRequiredMixin
@@ -128,20 +131,39 @@ def quotation_list(request):
     return render(request, template, context)
 
 
-@login_required()
-def add_order_item(request, id):
-    quotation = get_object_or_404(Quotation, pk=id)
-    try:
-        order_item = quotation.orderitem_set.create(description=request.POST['description'], cost=request.POST['cost'], qty=request.POST['qty'])
-        order_item.save()
-    except (KeyError, Quotation.DoesNotExist):
-        return render(request, 'quotation/quotation-detail.html', {
-            'quotation': quotation,
-            'error_message': 'Not all fields were completed.',
-        })
-    else:
-        return redirect('quotation:quotation-detail',id=id)
+class OrderItemCreateView(LoginRequiredMixin, BSModalCreateView):
+    template_name = 'quotation/add_order_item_form.html'
+    form_class = OrderItemForm
+    success_message = 'Added Successfully'
     
+    def get_success_url(self):
+        return reverse_lazy('quotation:quotation-detail', kwargs={ "id": self.kwargs['id'] })    
+    
+    
+    def form_valid(self, form):
+        quotation_id = self.kwargs['id']
+        form.instance.quotation_id = quotation_id
+        return super().form_valid(form)
+ 
+
+class OrderItemUpdateView(LoginRequiredMixin, BSModalUpdateView):
+    model = OrderItem
+    template_name = 'quotation/update_order_item_form.html'
+    form_class = OrderItemForm
+    success_message = 'Item Updated Successfully.'
+    
+    def get_success_url(self):
+        return reverse_lazy('quotation:quotation-detail', kwargs={ "id": self.kwargs['id'] })  
+   
+class OrderItemDeleteView(LoginRequiredMixin, BSModalDeleteView):
+    model = OrderItem
+    template_name = 'quotation/delete_item.html'
+    success_message = 'Success, Item was deleted.'
+    context_object_name = 'item'
+    
+    def get_success_url(self):
+        return reverse_lazy('quotation:quotation-detail', kwargs={ "id": self.kwargs['id'] })  
+
 
 @login_required()
 def printable_quotation(request, quotation_id):

@@ -23621,7 +23621,7 @@ a.chip:hover {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 999;
+    z-index: 9999;
     display: none;
     text-align: center;
     border-radius: 4px !important;

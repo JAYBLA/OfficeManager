@@ -22,10 +22,13 @@ urlpatterns = [
     path('Paid-invoices', invoice_paid, name='invoice-paid'),
     path('invoices', invoice_list, name='invoice-list'),
     path('Draft-invoices', invoice_draft, name='invoice-draft'),
-    path('invoice/<int:id>/item/add/', add_order_item, name='add-item'),
-    path('invoice/<int:invoice_id>/item/<int:invoiceitem_id>/delete/', delete_item, name='delete-item'),
+    
+    #ITEMS
+    path('invoice/<int:id>/item/add/', OrderItemCreateView.as_view(), name='create_item'),
+    path('invoice/<int:id>/<int:pk>/update/', OrderItemUpdateView.as_view(), name='update_item'),
+    path('invoice/<int:id>/<int:pk>/delete/', OrderItemDeleteView.as_view(), name='delete_item'),
     path('invoice/<int:invoice_id>/update/', update_invoice, name='update-invoice'),
     path('invoice/<int:pk>/delete/', InvoiceDeleteView.as_view(), name='delete_invoice'),
     path('invoice/<int:invoice_id>/print/', printable_invoice, name='print-invoice'),
-    path('invoice/<int:invoice_id>/download/', GeneratePdf.as_view(), name='download-invoice'),  
+    path('invoice/<int:invoice_id>/download/', GeneratePdf.as_view(), name='download-invoice'), 
 ]

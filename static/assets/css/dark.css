@@ -332,7 +332,7 @@
 }
 
 .dark-mode .avatar-blue {
-    background-color: #083dc1;
+    background-color: #1b75bc;
     color: #467fcf;
 }
 
@@ -1872,8 +1872,8 @@
 
 .dark-mode .btn-blue {
     color: #fff;
-    background-color: #083dc1;
-    border-color: #083dc1;
+    background-color: #1b75bc;
+    border-color: #1b75bc;
 }
 
 .dark-mode .btn-blue:hover {
@@ -3399,7 +3399,7 @@
 }
 
 .dark-mode .tag-blue {
-    background-color: #083dc1;
+    background-color: #1b75bc;
     color: #fff;
 }
 
@@ -9757,7 +9757,7 @@ a.bg-blue-dark:focus {
 }
 
 .dark-mode .bg-blue {
-    background-color: #083dc1 !important;
+    background-color: #1b75bc !important;
     color: #fff !important;
 }
 
@@ -9772,7 +9772,7 @@ a.bg-blue-dark:focus {
 }
 
 .dark-mode .text-blue {
-    color: #083dc1 !important;
+    color: #1b75bc !important;
 }
 
 .dark-mode .bg-indigo {

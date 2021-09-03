@@ -5,16 +5,16 @@
 {% endblock title %}
 
 {% block content %} 
+<div class="">
     {% if invoice %}
         <div class="row pt-4">
             {% if error_message %}
             <div class="alert alert-danger">{{ error_message }}</div>
             {% endif %}
                 <!-- Customer Information -->
-                <div class="col-sm-4 ">
+                <div class="col-lg-4 ">
                     <div class="card">
-                        <div class="card-body">
-            
+                        <div class="card-body">            
                                 <h2>Customer Information</h2>
                                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="{% url 'invoice:update-invoice' invoice.id %}" method="POST">
                                     {% csrf_token %}
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="form-group py-3">
                                         <div class="col-sm-12 d-flex d-inline">
-                                            <input type="submit" value="Update Invoice" class="btn btn-secondary">
+                                            <input type="submit" value="Update Invoice" class="btn btn-outline-primary btn-lg">
                                         </div>
                                     </div>
                                 </form>
@@ -67,63 +67,96 @@
                     </div>
                 </div>
         <!-- Invoice items -->
-        <div class="col-sm-8">
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>ORDER ITEMS</h2>
+                </div>
+                <div class="col-md-4 d-flex justify-content-end mb-3">
+                    <button id="create-item" class="btn btn-primary btn-lg" type="button" name="button">Add Item</button>
+                </div>
+            </div>
             <div class="card">
-                <div class="card-body">
-                    
-                        <h2>ORDER ITEMS</h2>
-                                <form action="{% url 'invoice:add-item' invoice.id %}" method="post">
-                                    {% csrf_token %}
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th>S/N</th>
-                                                <th>Description</th>
-                                                <th>Cost(Tsh)</th>
-                                                <th>Qty</th>
-                                                <th>Total(Tsh)</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for item in invoice.orderitem_set.all %}
-                                            <tr>
-                                                <th scope="row">{{ forloop.counter }}</th>
-                                                <td>{{ item.description }}</td>
-                                                <td>{{ item.cost }}</td>
-                                                <td>{{ item.qty }}</td>
-                                                <td>{{ item.total }}</td>
-                                                <td>                                                
-                                                    <a href="{% url 'invoice:delete-item' invoice.id item.id %}" style="color:red"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
-                                                </td>								
-                                            </tr>
-                                            {% endfor  %}
-                                                <tr>
-                                                    <td></td>
-                                                    <td><input type="text" name="description" class="form-control"></td>
-                                                    <td>
-                                                        <input type="text" name="cost" class="form-control"/></div>
-                                                    </td>
-                                                    <td><input type="text" name="qty" class="form-control"></td>
-                                                    <td>&nbsp;</td>
-                                                    <td class="text-right">
-                                                        <input type="submit" class="btn btn-xs btn-primary" value="Add Item">
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <div class="d-flex justify-content-end mb-3"><strong>Total:{{ invoice.total_items }}</strong></div>
-                                        </table>
-                                    </div>						  
-                                </form>	
-                                <div class="row py-3">
-                                    <div class="col-sm-12">
-                                        <a href="./print"><button class="btn btn-primary btn-lg">Send Printable Invoice</button></a>
-                                    </div>
-                                </div>
+                <div class="card-body"> 
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Description</th>
+                                    <th>Cost(Tsh)</th>
+                                    <th>Qty</th>
+                                    <th>Total(Tsh)</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in invoice.orderitem_set.all %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ item.description }}</td>
+                                    <td>{{ item.cost }}</td>
+                                    <td>{{ item.qty }}</td>
+                                    <td>{{ item.total }}</td>
+                                    <td class="d-inline">
+                                        <a class="update-item bs-modal mr-2" data-form-url="{% url 'invoice:update_item' invoice.id item.id %}" style="cursor:pointer">
+                                            <i class="fa fa-edit text-warning fa-2x"></i>
+                                        </a>
+                                        <a class="delete-item bs-modal ms-2" data-form-url="{% url 'invoice:delete_item' invoice.id item.id %}" style="cursor:pointer">
+                                            <i class="fa fa-trash text-danger fa-2x"></i>
+                                        </a>
+                                    </td>								
+                                </tr>
+                                {% endfor  %}
+                                </tbody>
+                                <div class="d-flex justify-content-end mb-3"><strong>Total:{{ invoice.total_items }}</strong></div>
+                            </table>                                
+                        <div class="row py-3">
+                            <div class="col-sm-12">
+                                <a href="./print"><button type="button" class="btn btn-outline-primary btn-lg">Email Invoice</button></a>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
     {% endif %}
+
+    <!-- Modal 1 with id="create-book"-->
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal 2 with id="modal" -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
 
+{% block javascript %}
+<script>
+    $(function () {
+  
+      $(".delete-item").each(function () {
+          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+      });
+  
+      $("#create-item").modalForm({
+          formURL: "{% url 'invoice:create_item' invoice.id %}",
+          modalID: "#create-modal"
+      });
+
+      $(".update-item").each(function () {
+        $(this).modalForm({
+            formURL: $(this).data('form-url')
+        });
+      });
+  
+    });
+  </script>
+ {% endblock javascript %}

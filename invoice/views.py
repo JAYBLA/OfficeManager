@@ -9,7 +9,9 @@ from django.utils.decorators import method_decorator
 from django.views.generic import View  # pdf download
 from django.http import  HttpResponse
 from bootstrap_modal_forms.generic import (
-  BSModalDeleteView
+  BSModalDeleteView,
+  BSModalUpdateView,
+  BSModalCreateView,
 )
 from django.contrib.auth.mixins import (
     LoginRequiredMixin
@@ -22,6 +24,7 @@ from quotation.models import Quotation
 from .utils import render_to_pdf
 
 from datetime import datetime,timedelta,date
+from .forms import *
 
 base_url = settings.BASE_URL
 
@@ -98,6 +101,7 @@ def customer_list(request):
     customers = Customer.objects.order_by('-modified_at')
     context = {        
         'customers':customers,
+        'title':'All Customers'
     }
     
     return render(request, template,context)
@@ -118,7 +122,6 @@ def update_customer(request, customer_id):
     context = {
         'customers' : customers,
     }
-
     return render(request, template,context)
 
 
@@ -230,22 +233,6 @@ class InvoiceDeleteView(LoginRequiredMixin,BSModalDeleteView):
     context_object_name = 'invoice'
     success_url = reverse_lazy('invoice:new-invoice')
     
-@login_required() 
-def delete_item(request, invoiceitem_id, invoice_id):
-
-    item = get_object_or_404(OrderItem, pk=invoiceitem_id)
-    invoice = get_object_or_404(Invoice, pk=invoice_id)
-    template = 'invoice/invoice-detail.html'
-    try:
-        item.delete()
-    except (KeyError, InvoiceItem.DoesNotExist):
-        return render(request, template, {
-            'invoice': invoice,
-            'error_message': 'Item does not exist.',
-        })
-    else:
-        return redirect(to='invoice:invoice-detail',id=invoice_id)
-
 
 @login_required()
 def invoice_detail(request, id):
@@ -257,21 +244,41 @@ def invoice_detail(request, id):
     }
     return render(request, template, context)
 
-
-@login_required()
-def add_order_item(request, id):
-    invoice = get_object_or_404(Invoice, pk=id)
-    try:
-        order_item = invoice.orderitem_set.create(description=request.POST['description'], cost=request.POST['cost'], qty=request.POST['qty'])
-        order_item.save()
-    except (KeyError, Invoice.DoesNotExist):
-        return render(request, 'invoice/invoice-detail.html', {
-            'invoice': invoice,
-            'error_message': 'Not all fields were completed.',
-        })
-    else:
-        return redirect('invoice:invoice-detail',id=id)
     
+class OrderItemCreateView(LoginRequiredMixin, BSModalCreateView):
+    template_name = 'invoice/add_order_item_form.html'
+    form_class = OrderItemForm
+    success_message = 'Added Successfully'
+    
+    def get_success_url(self):
+        return reverse_lazy('invoice:invoice-detail', kwargs={ "id": self.kwargs['id'] })    
+    
+    
+    def form_valid(self, form):
+        invoice_id = self.kwargs['id']
+        form.instance.invoice_id = invoice_id
+        return super().form_valid(form)
+ 
+
+class OrderItemUpdateView(LoginRequiredMixin, BSModalUpdateView):
+    model = OrderItem
+    template_name = 'invoice/update_order_item_form.html'
+    form_class = OrderItemForm
+    success_message = 'Item Updated Successfully.'
+    
+    def get_success_url(self):
+        return reverse_lazy('invoice:invoice-detail', kwargs={ "id": self.kwargs['id'] })  
+   
+class OrderItemDeleteView(LoginRequiredMixin, BSModalDeleteView):
+    model = OrderItem
+    template_name = 'invoice/delete_item.html'
+    success_message = 'Success, Item was deleted.'
+    context_object_name = 'item'
+    
+    def get_success_url(self):
+        return reverse_lazy('invoice:invoice-detail', kwargs={ "id": self.kwargs['id'] })  
+
+
 
 @login_required()
 def printable_invoice(request, invoice_id):
