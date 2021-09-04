@@ -79,7 +79,7 @@ class CustomerDeleteView(LoginRequiredMixin,BSModalDeleteView):
     template_name = 'customer/delete.html'
     success_message = 'Success: Customer was deleted.'
     context_object_name = 'customer'
-    success_url = reverse_lazy('invoice:customer-create-list')
+    success_url = reverse_lazy('invoice:customer-create')
     
 
 @login_required()
