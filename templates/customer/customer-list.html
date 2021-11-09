@@ -30,9 +30,11 @@
   
     
 {% block content %}
-<div class="row">
-  <h2 class="py-2">Customers List</h2>
-  <div class="card">
+<div class="row mt-5">
+  <div class="card"> 
+      <div class="card-header d-flex  justify-content-end">
+        <button id="create-customer" class="btn btn-outline-primary btn-lg" type="button" name="button">Add Customer</button>
+      </div>
       <div class="card-body">
           <div class="table-responsive">
               <table class="table" id="customer-table">
@@ -57,7 +59,10 @@
                       <td>{{customer.email}}</td>
                       <td>{{customer.physical_address}}</td>
                       <td class="text-center">
-                          <a href="{% url 'invoice:customer-detail' customer.id %}" style="color:orange;font-size: 20px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                          <a class="update-customer bs-modal mr-2" data-form-url="{% url 'invoice:update-customer' customer.id %}" style="cursor:pointer;font-size: 22px">
+                            <i class="fa fa-edit text-warning"></i>
+                          </a>
+
                           <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'invoice:delete_customer' customer.id %}">
                               <i class="fa fa-trash text-danger" style="font-size: 22px; cursor:pointer;"></i>
                           </a>                               
@@ -113,6 +118,15 @@
           $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
       });
     });
+    $("#create-customer").modalForm({
+          formURL: "{% url 'invoice:customer_create' %}",
+          modalID: "#create-modal"
+      });
+      $(".update-customer").each(function () {
+        $(this).modalForm({
+            formURL: $(this).data('form-url')
+        });
+      });
   </script>
 {% endblock javascript %}
     

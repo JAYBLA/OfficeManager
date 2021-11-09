@@ -84,43 +84,26 @@
                 </div>
 
                 <ul class="side-menu app-sidebar3">
-                    <li class="side-item side-item-category">Main</li>
                     <li class="slide">
                         <a class="side-menu__item"  href="/">
                         <i class="fa fa-home  side-menu__icon"></i>
                         <span class="side-menu__label">Dashboard</span></a>
-                    </li>      
+                    </li>
                     <li class="slide">
-                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void0;">
+                        <a class="side-menu__item"  href="{% url 'invoice:customer-list' %}">
                         <i class="fe fe-users  side-menu__icon"></i>
-                        <span class="side-menu__label">Customer</span><i class="angle fe fe-chevron-right"></i></a>
-                        <ul class="slide-menu">
-                            <li><a href="{% url 'invoice:customer-create' %}" class="slide-item"> Create Customer</a></li>
-                            <li><a href="{% url 'invoice:customer-list' %}" class="slide-item"> All Customers</a></li>
-                        </ul>
-                    </li>
+                        <span class="side-menu__label">Customers</span></a>
+                    </li> 
                     <li class="slide">
-                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void0;">
+                        <a class="side-menu__item"  href="{% url 'invoice:invoice-list' %}">
                         <i class="fa fa-credit-card  side-menu__icon"></i>
-                        <span class="side-menu__label">Invoice</span><i class="angle fe fe-chevron-right"></i></a>
-                        <ul class="slide-menu">
-                            <li><a href="{% url 'invoice:new-invoice' %}" class="slide-item"> Create Invoice</a></li>
-                            <li><a href="{% url 'invoice:invoice-list' %}" class="slide-item"> All Invoices</a></li>
-                            <li><a href="{% url 'invoice:invoice-paid' %}" class="slide-item"> Paid Invoices</a></li>
-                            <li><a href="{% url 'invoice:invoice-unpaid' %}" class="slide-item"> Unpaid Invoices</a></li>
-                            <li><a href="{% url 'invoice:invoice-draft' %}" class="slide-item"> Draft Invoices</a></li>
-                        </ul>
+                        <span class="side-menu__label">Invoices</span></a>
                     </li>
                     <li class="slide">
-                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void0;">
+                        <a class="side-menu__item"  href="{% url 'quotation:quotation-list' %}">
                         <i class="fa fa-list-alt  side-menu__icon"></i>
-                        <span class="side-menu__label">Quotation</span><i class="angle fe fe-chevron-right"></i></a>
-                        <ul class="slide-menu">
-                            <li><a href="{% url 'quotation:new-quotation' %}" class="slide-item"> Create Quotation</a></li>
-                            <li><a href="{% url 'quotation:quotation-list' %}" class="slide-item"> All Quotations</a></li>
-                        </ul>
-                    </li>
-
+                        <span class="side-menu__label">Quotations</span></a>
+                    </li> 
                 </ul>
             </aside>
             <!--aside closed-->

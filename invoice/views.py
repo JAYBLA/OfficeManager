@@ -48,32 +48,14 @@ def home(request):
     }
     return render(request,template,context)
 
-@login_required()
-def customer_create(request):
-    template = 'customer/customer-create-list.html'
-    if request.method =='POST':
-        customer = Customer(
-            name = request.POST['full_name'],
-            phone = request.POST['phone'],
-            email = request.POST['email'],
-            physical_address = request.POST['physical_address']
-        )
-        
-        customer.save()
-        customers = Customer.objects.order_by('-created_at')
-        
-        data = {
-            'customers':customers
-        }
-        return render(request,template,data)
-    else:
-        customers = Customer.objects.order_by('-created_at')
-        data = {
-            'customers':customers
-        }
-        
-        return render(request,template,data)
-
+class CustomerCreateView(LoginRequiredMixin, BSModalCreateView):
+    template_name = 'customer/customer-create.html'
+    form_class = CustomerForm
+    success_message = 'Created Successfully'
+    
+    def get_success_url(self):
+        return reverse_lazy('invoice:customer-list') 
+    
 class CustomerDeleteView(LoginRequiredMixin,BSModalDeleteView):
     model = Customer
     template_name = 'customer/delete.html'
@@ -81,7 +63,16 @@ class CustomerDeleteView(LoginRequiredMixin,BSModalDeleteView):
     context_object_name = 'customer'
     success_url = reverse_lazy('invoice:customer-create')
     
-
+class CustomerUpdateView(LoginRequiredMixin, BSModalUpdateView):
+    model = Customer
+    template_name = 'customer/customer-update.html'
+    form_class = CustomerForm
+    success_message = 'Customer Updated Successfully.'
+    
+    def get_success_url(self):
+        return reverse_lazy('invoice:customer-list') 
+    
+    
 @login_required()
 def customer_detail(request,customer_id):
     template = 'customer/customer-detail.html'    
