@@ -55,7 +55,7 @@
                       <td><span class="badge {% if invoice.status == 'Paid' %}bg-success{% elif invoice.status == 'Unpaid' %} bg-danger {% else %} bg-warning {% endif %}">{{ invoice.status }}</span></td>                                
                       <td class="text-center">
                           <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                          <a href="{% url 'invoice:download-invoice' invoice.id %}" style="color:green;font-size: 22px;"><i class="fa fa-download" aria-hidden="true"></i></a>  
+                          <a href="{% url 'invoice:download-invoice' invoice.id %}" style="color:green;font-size: 22px;"><i class="fa fa-download" aria-hidden="true"></i></a>                       
                       </td>
                   </tr>
                   {% endfor %}
@@ -89,7 +89,6 @@
         
     } );
 </script>
-
 {% endblock javascript %}
     
     

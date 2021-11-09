@@ -10,7 +10,7 @@ django = "*"
 django-xhtml2pdf = "*"
 django-widget-tweaks = "*"
 python-decouple = "*"
-mysqlclient = "*"
+pillow = ">=8.3.2"
 
 [requires]
 python_version = "3.9"
