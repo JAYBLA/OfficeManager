@@ -28,6 +28,9 @@
 {% block content %}
     <h2 class="py-2">All Quotations</h2>
     <div class="card">
+        <div class="card-header d-flex  justify-content-end">
+            <a href="{% url 'quotation:new-quotation' %}"><button class="btn btn-outline-primary btn-lg" type="button" name="button">New Quotation</button></a>
+          </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table" id="quotation-table">
