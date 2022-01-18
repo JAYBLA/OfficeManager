@@ -1,5 +1,6 @@
 from django.db import models
-from invoice.models import Invoice, Customer
+from invoice.models import Invoice
+from customer.models import Customer
 
 
 

@@ -28,10 +28,13 @@ else:
 INSTALLED_APPS = [
     #My_Apps
     'invoice',
+    'customer',
     'users',
     'widget_tweaks',
     'quotation',
     'bootstrap_modal_forms',
+    'receipt',
+    'dashboard',
     
     
     #Django_Apps

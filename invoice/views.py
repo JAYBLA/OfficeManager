@@ -21,6 +21,7 @@ from django.urls import reverse_lazy
 
 from .models import *
 from quotation.models import Quotation
+from customer.models import Customer
 from .utils import render_to_pdf
 
 from datetime import datetime,timedelta,date

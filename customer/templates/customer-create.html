@@ -1,0 +1,60 @@
+{% load widget_tweaks %}
+<form method="post" action="" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="modal-header bg-blue text-light">
+    <h3 class="modal-title">Add Customer</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> 
+
+  <div class="modal-body">
+    <div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+      {% for error in form.non_field_errors %}
+        {{ error }}
+      {% endfor %}
+    </div>
+      <div class="form-group mb-3">
+        <label class="mb-2"><b>Name</b></label>
+        {% render_field form.name class="form-control" placeholder="Enter Customer Name" %}
+        <div class="{% if field.errors %} invalid{% endif %}">
+          {% for error in field.form.name.errors %}
+            <p class="help-block">{{ error }}</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <label class="mb-2"><b>Phone</b></label>
+        {% render_field form.phone class="form-control" placeholder="Phone Number"%}
+        <div class="{% if field.errors %} invalid{% endif %}">
+          {% for error in field.form.phone.errors %}
+            <p class="help-block">{{ error }}</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <label class="mb-2"><b>Email</b></label>
+        {% render_field form.email class="form-control" placeholder="Email"%}
+        <div class="{% if field.errors %} invalid{% endif %}">
+          {% for error in field.form.email.errors %}
+            <p class="help-block">{{ error }}</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <label class="mb-2"><b>Physical Address</b></label>
+        {% render_field form.physical_address class="form-control" placeholder="Physical Address"%}
+        <div class="{% if field.errors %} invalid{% endif %}">
+          {% for error in field.form.physical_address.errors %}
+            <p class="help-block">{{ error }}</p>
+          {% endfor %}
+        </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+
+</form>
+
+    

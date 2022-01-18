@@ -22,7 +22,9 @@ from users import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('invoice.urls', namespace='invoice')),
+    path('', include('dashboard.urls', namespace='dashboard')),
     path('users/', include('users.urls', namespace='users')),
     path('quotation/', include('quotation.urls', namespace='quotation')),
+    path('receipt/', include('receipt.urls', namespace='receipt')),
+    path('customer/', include('customer.urls', namespace='customer')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,71 @@
+{% load widget_tweaks %}
+
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+  
+    <div class="modal-header bg-blue text-light">
+      <h3 class="modal-title">New Receipt</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div> 
+  
+    <div class="modal-body">
+  
+      <div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+        {% for error in form.non_field_errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+      <div class="form-group mb-3">
+        <label class="mb-2"><b>Customer</b></label>
+        {% render_field form.customer class="form-control form-select" placeholder="Receipt Date" %}
+        <div class="{% if field.errors %} invalid{% endif %}">
+          {% for error in field.form.customer.errors %}
+            <p class="help-block">{{ error }}</p>
+          {% endfor %}
+        </div>
+      </div>
+        <div class="form-group mb-3">
+          <label class="mb-2"><b>Receipt Date</b></label>
+          {% render_field form.date class="form-control" placeholder="Receipt Date" type="date"%}
+          <div class="{% if field.errors %} invalid{% endif %}">
+            {% for error in field.form.date.errors %}
+              <p class="help-block">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label class="mb-2"><b>Description</b></label>
+          {% render_field form.description class="form-control" placeholder="description" rows="4" %}
+          <div class="{% if field.errors %} invalid{% endif %}">
+            {% for error in field.form.description.errors %}
+              <p class="help-block">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label class="mb-2"><b>Amount In Words</b></label>
+          {% render_field form.amount_inwords class="form-control" placeholder="Amount In Words"%}
+          <div class="{% if field.errors %} invalid{% endif %}">
+            {% for error in field.form.amount_inwords.errors %}
+              <p class="help-block">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label class="mb-2"><b>Cash Amount</b></label>
+          {% render_field form.amount_infigure class="form-control" placeholder="Cash Amount"%}
+          <div class="{% if field.errors %} invalid{% endif %}">
+            {% for error in field.form.amount_infigure.errors %}
+              <p class="help-block">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+    </div>
+  
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  
+  </form>

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}{{quotation.quote_title}}{% endblock title %}
+{% block content %}
+
+{% if quotation %}
+<div class="row pt-4">
+        {% if error_message %}
+        <div class="alert alert-danger">{{ error_message }}</div>
+        {% endif %}
+		    <!-- Customer Information -->
+            <div class="col-sm-4 ">
+                <div class="card">
+                    <div class="card-body">
+                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="{% url 'quotation:update-quotation' quotation.id %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <p class="form-control-static"><a href="#" class=" text-decoration-none">{{ quotation.customer }}</a></p>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Quote Title</label>
+                                    <input type="text" class="form-control" name="quote_title" value="{{quotation.quote_title}}">
+                                </div>
+            
+                                <div class="form-group mb-3">
+                                    <label for="quotedescription" class="form-label">Quote Description</label>
+                                    <textarea class="form-control" id="quotedescription" rows="3" name="quote_description" >{{quotation.quote_description}}</textarea>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Due Date</label>                                                  
+                                    <input type="text" name="due_date" class="form-control" value="{{quotation.due_date|date:"SHORT_DATE_FORMAT"}}">                  
+                                </div>
+                                <div class="form-group py-3">
+                                    <div class="col-sm-12 d-flex d-inline">
+                                        <input type="submit" value="Update Quotation" class="btn btn-outline-primary btn-lg">
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+    <!-- Invoice items -->
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h2>ORDER ITEMS
+                    <a id="create-item" class="btn btn-primary btn-lg float-right text-light" type="button" name="button">Add Item</a>
+                </h2>
+            </div>
+            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Description</th>
+                                            <th>Cost(Tsh)</th>
+                                            <th>Qty</th>
+                                            <th>Total(Tsh)</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in quotation.orderitem_set.all %}
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ item.description }}</td>
+                                            <td>{{ item.cost }}</td>
+                                            <td>{{ item.qty }}</td>
+                                            <td>{{ item.total }}</td>
+                                            <td> 
+                                                <a class="update-item bs-modal mr-2" data-form-url="{% url 'quotation:update_item' quotation.id item.id %}" style="cursor:pointer">
+                                                    <i class="fa fa-edit text-warning fa-2x"></i>
+                                                </a>
+                                                <a class="delete-item bs-modal ms-2" data-form-url="{% url 'quotation:delete_item' quotation.id item.id %}" style="cursor:pointer">
+                                                    <i class="fa fa-trash text-danger fa-2x"></i>
+                                                </a>
+                                            </td>								
+                                        </tr>
+                                        {% endfor  %}
+                                        </tbody>
+                                        <div class="d-flex justify-content-end mb-3"><strong>Total: {{ quotation.total_items }}</strong></div>
+                                    </table>
+                                </div>						  	
+                            <div class="row py-3">
+                                <div class="col-sm-12">
+                                    <a href="./print"><button type="button" class="btn btn-outline-primary btn-lg">Email Quotation</button></a>
+                                </div>
+                            </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endif %}
+    <!-- Modal 1 with id="create-book"-->
+    <div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal 2 with id="modal" -->
+      <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content"></div>
+        </div>
+      </div>
+{% endblock content %}
+{% block javascript %}
+<script>
+    $(function () {
+  
+      $(".delete-item").each(function () {
+          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+      });
+  
+      $("#create-item").modalForm({
+          formURL: "{% url 'quotation:create_item' quotation.id %}",
+          modalID: "#create-modal"
+      });
+
+      $(".update-item").each(function () {
+        $(this).modalForm({
+            formURL: $(this).data('form-url')
+        });
+      });
+  
+    });
+  </script>
+ {% endblock javascript %}

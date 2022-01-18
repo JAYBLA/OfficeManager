@@ -18,10 +18,10 @@ urlpatterns = [
     #INVOICE
     path('invoice/new/', invoice_create, name='new-invoice'),    
     path('invoice/<int:id>/', invoice_detail, name='invoice-detail'),
-    path('Unpaid-invoices', invoice_unpaid, name='invoice-unpaid'),
-    path('Paid-invoices', invoice_paid, name='invoice-paid'),
+    path('unpaid-invoices', invoice_unpaid, name='invoice-unpaid'),
+    path('paid-invoices', invoice_paid, name='invoice-paid'),
     path('invoices', invoice_list, name='invoice-list'),
-    path('Draft-invoices', invoice_draft, name='invoice-draft'),
+    path('draft-invoices', invoice_draft, name='invoice-draft'),
     
     #ITEMS
     path('invoice/<int:id>/item/add/', OrderItemCreateView.as_view(), name='create_item'),

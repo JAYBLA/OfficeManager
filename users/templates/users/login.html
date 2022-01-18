@@ -1,4 +1,4 @@
-{% extends 'base2.html' %}
+{% extends 'authbase.html' %}
 {% load static %}
 
 
@@ -8,30 +8,32 @@
   
 {% block content %}
 
-<main class="container my-5">
-  <div class="row d-flex align-items-center justify-content-center vh-100">
-    <section class="col-md-6">
-
-      <div class="card shadow p-5">
-        <form method="POST" action="">
-            {% csrf_token %}
-            <div class="d-flex justify-content-center">
-              <img src="{% static 'img/logo-with-name.png' %}" alt="logo" style="width:150pt;height:auto;">
-            </div>          
-          <hr>
-          {% include 'includes/bs5_form.html' with form=form %}
-
-          <div class="d-grid">
-            <button class="btn btn-block btn-secondary rounded-pill mt-3">Login</button>
+    <!-- ============================================================== -->
+    <!-- login page  -->
+    <!-- ============================================================== -->
+    <div class="splash-container">
+      <div class="card ">
+          <div class="card-header text-center"><a href="../index.html"><img class="logo-img" src="{% static 'assets/images/logo.png' %}" alt="logo"></a><span class="splash-description">Please enter your user information.</span></div>
+          <div class="card-body">
+            <form method="POST" action="">
+              {% csrf_token %}
+            {% include 'includes/bs5_form.html' with form=form %}  
+            <div class="d-grid">
+              <button class="btn btn-block btn-secondary rounded-pill mt-3">Login</button>
+            </div>
+          </form>
           </div>
-        </form>
-        <div class="pt-3 text-center">
-            <small class="text-light">
-                Don't Have An Account? <a class="ml-2" href="{% url 'users:register' %}" style="color: #95a5a5;font-size: 16px;">Sign Up</a>
-            </small>
-        </div>
+          <div class="card-footer bg-white p-0  ">
+              <div class="card-footer-item card-footer-item-bordered">
+                  <a href="{% url 'users:register' %}" class="footer-link">Create An Account</a></div>
+              <div class="card-footer-item card-footer-item-bordered">
+                  <a href="#" class="footer-link">Forgot Password</a>
+              </div>
+          </div>
       </div>
-    </section>
   </div>
-</main>
+
+  <!-- ============================================================== -->
+  <!-- end login page  -->
+  <!-- ============================================================== -->
 {% endblock content %}

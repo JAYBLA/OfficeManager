@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Quotation{% endblock title %}
+
+
+{% block stylesheet %}
+
+{% endblock stylesheet %}
+
+{% block content %}
+<div class="row py-4">
+    <div class="col-sm-4 ">        
+        <div class="card">
+            <div class="card-header">
+                <h2 class="py-2">New Quotation</h2>
+            </div>
+            <div class="card-body">
+                {% if error_message %}
+                <div class="alert alert-danger">{{ error_message }}</div>
+                {% endif %}
+                <br />
+                {% if error_message %}
+                <div class="alert alert-success">{{ success_message }}</div>
+                {% endif %}
+                {% if customer_list %}
+                <form action="{% url 'quotation:new-quotation' %}" method='POST'>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <select class="form-control" name="customer_id">
+                                <option value="None">(Select Customer)</option>
+                                {% for customer in customer_list %}
+                                <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Quote Title</label>
+                        <input type="text" class="form-control" name="quote_title">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="quotedescription" class="form-label">Quote Description</label>
+                        <textarea class="form-control" id="quotedescription" rows="3" name="quote_description" ></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Due Date</label>                                                  
+                        <input type="date" name="due_date" class="form-control" id="date-picker-example">                  
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label"></label>                                                  
+                        <input type="submit" value="Create Quotation" class="btn btn-primary">                   
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>	
+    </div>
+
+    
+    <div class="col-sm-8">       
+        <div class="card">
+            <div class="card-header">
+                <h2 class="py-2">Created Qoutes</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="quotation-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">S/N</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Quote Title</th>
+                                <th scope="col">Date</th>
+                                <th scope="col" class="text-center">Actions</th>
+                    
+                            </tr>
+                        </thead>
+                        {% if quotation_list %}
+                        {% for quotation in quotation_list %}
+                        <tbody>
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{ quotation.customer }}</td>
+                                <td>{{ quotation.quote_title }}</td> 
+                                <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
+                                <td class="text-center">
+                                    <a href="{% url 'quotation:quotation-detail' quotation.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                    <a class="delete-quotation bs-modal mr-2" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
+                                        <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                        {% endif %}
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<!-- Modal 1 with id="create Modal"-->
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal 2 with id="modal" -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="modal" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+{% endblock content %}
+
+
+{% block javascript %}
+<script>
+    $(function () {  
+      $(".delete-quotation").each(function () {
+          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+      });
+    });
+  </script>
+
+<script>
+    $(document).ready(function() {
+        var table = $('#quotation-table').DataTable( {
+        dom: 'Bfrtip',
+            buttons: ['excel', 'pdf','print'],
+            initComplete: function() {
+            $('.buttons-excel').html('<i class="fa table-buttons fa-file-excel-o text-success"/>')
+            $('.buttons-pdf').html('<i class="fa table-buttons fa-file-pdf-o text-danger"/>')
+            $('.buttons-print').html('<i class="fa table-buttons fa-print text-dark"/>')
+            }
+        } );
+    
+        table.buttons().container()
+            .appendTo( '#quotation-table_wrapper .col-md-6:eq(0)' );    
+        
+    } );
+  </script>
+{% endblock javascript %}
+    
+    

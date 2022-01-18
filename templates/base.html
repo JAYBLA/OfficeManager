@@ -2,268 +2,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta data -->
-    <meta charset="UTF-8">
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
-    <meta content="Azea - Admin Panel HTML template" name="description">
-    <meta content="Spruko Private Limited" name="author">
-    <meta name="keywords" content="admin, admin template, dashboard, admin dashboard, responsive, bootstrap, bootstrap 5, admin theme, admin themes, bootstrap admin template, scss, ui, crm, modern, flat">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <!-- Title -->
     <title>{% block title %}{% endblock title %} | OfficeManger</title>
 
-    <!--Favicon -->
-    <link rel="icon" href="{% static 'assets/images/brand/favicon.ico' %}" type="image/x-icon"/>
-
-    <!--Bootstrap css -->
-    <link href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Style css -->
-    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
-    <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" />
-    <link href="{% static 'assets/css/dark.css' %}" rel="stylesheet" />
-    <link href="{% static 'assets/css/skin-modes.css' %}" rel="stylesheet" />
-
-    <!-- Animate css -->
-    <link href="{% static 'assets/css/animated.css' %}" rel="stylesheet" />
-
-    <!--Sidemenu css -->
-   <link href="{% static 'assets/css/sidemenu.css' %}" rel="stylesheet">
-
-    <!-- P-scroll bar css-->
-    <link href="{% static 'assets/plugins/p-scrollbar/p-scrollbar.css' %}" rel="stylesheet" />
-
-    <!---Icons css-->
-    <link href="{% static 'assets/css/icons.css' %}" rel="stylesheet" />
-
-    <!-- Simplebar css -->
-    <link rel="stylesheet" href="{% static 'assets/plugins/simplebar/css/simplebar.css' %}">
-
-    <!-- INTERNAL Morris Charts css -->
-    <link href="{% static 'assets/plugins/morris/morris.css' %}" rel="stylesheet" />
-
-    <!-- INTERNAL Select2 css -->
-    <link href="{% static 'assets/plugins/select2/select2.min.css' %}" rel="stylesheet" />
-
-    <!-- Data table css -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css">    
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.bootstrap5.min.css">
-
-    <!-- Color Skin css -->
-    <link id="theme" href="{% static 'assets/colors/color1.css' %}" rel="stylesheet" type="text/css"/>
-
-    <!-- INTERNAL Switcher css -->
-    <link href="{% static 'assets/switcher/css/switcher.css' %}" rel="stylesheet"/>
-    <link href="{% static 'assets/switcher/demo.css' %}" rel="stylesheet"/>
-    {% block stylesheet %}
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  {% block stylesheet %}
         
-    {% endblock stylesheet %}  
-
+  {% endblock stylesheet %} 
 </head>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="index3.html" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Contact</a>
+      </li>
+    </ul>
 
-<body class="app sidebar-mini dark-mode">
-    <!---Global-loader-->
-    <div id="global-loader" >
-        <img src="{% static 'assets/images/brand/favicon1.svg' %}" alt="loader">
-    </div>
-    <!--- End Global-loader-->
-
-    <!-- Page -->
-    <div class="page">
-        <div class="page-main">
-
-            <!--aside open-->
-            <aside class="app-sidebar">
-                <div class="app-sidebar__logo">
-                    <a class="header-brand" href="/">
-                        <img src="{% static 'assets/images/brand/logo.svg' %}" class="header-brand-img desktop-lgo" alt="logo">
-                        <img src="{% static 'assets/images/brand/logo1.svg' %}" class="header-brand-img dark-logo" alt="logo">
-                        <img src="{% static 'assets/images/brand/favicon.svg' %}" class="header-brand-img mobile-logo" alt="logo">
-                        <img src="{% static 'assets/images/brand/favicon1.svg' %}" class="header-brand-img darkmobile-logo" alt="logo">
-                    </a>
-                </div>
-
-                <ul class="side-menu app-sidebar3">
-                    <li class="slide">
-                        <a class="side-menu__item"  href="/">
-                        <i class="fa fa-home  side-menu__icon"></i>
-                        <span class="side-menu__label">Dashboard</span></a>
-                    </li>
-                    <li class="slide">
-                        <a class="side-menu__item"  href="{% url 'invoice:customer-list' %}">
-                        <i class="fe fe-users  side-menu__icon"></i>
-                        <span class="side-menu__label">Customers</span></a>
-                    </li> 
-                    <li class="slide">
-                        <a class="side-menu__item"  href="{% url 'invoice:invoice-list' %}">
-                        <i class="fa fa-credit-card  side-menu__icon"></i>
-                        <span class="side-menu__label">Invoices</span></a>
-                    </li>
-                    <li class="slide">
-                        <a class="side-menu__item"  href="{% url 'quotation:quotation-list' %}">
-                        <i class="fa fa-list-alt  side-menu__icon"></i>
-                        <span class="side-menu__label">Quotations</span></a>
-                    </li> 
-                </ul>
-            </aside>
-            <!--aside closed-->
-
-            <!-- App-Content -->
-            <div class="app-content main-content">
-                <div class="side-app">
-                    <!--app header-->
-                    <div class="app-header header main-header1">
-                        <div class="container-fluid">
-                            <div class="d-flex">
-                                <a class="header-brand" href="/">
-                                    <img src="{% static 'assets/images/brand/logo.svg' %}" class="header-brand-img desktop-lgo" alt="Azea logo">
-                                    <img src="{% static 'assets/images/brand/logo1.svg' %}" class="header-brand-img dark-logo" alt="Azea logo">
-                                    <img src="{% static 'assets/images/brand/favicon.svg' %}" class="header-brand-img mobile-logo" alt="Azea logo">
-                                    <img src="{% static 'assets/images/brand/favicon1.svg' %}" class="header-brand-img darkmobile-logo" alt="Azea logo">
-                                </a>
-                                <div class="app-sidebar__toggle d-flex" data-bs-toggle="sidebar">
-                                    <a class="open-toggle" href="javascript:void0;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-align-left header-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 19h18v2H3zM3 7h12v2H3zm0-4h18v2H3zm0 12h12v2H3zm0-4h18v2H3z"/></svg>
-                                    </a>
-                                </div>
-                                <div class="d-flex order-lg-2 ms-auto main-header-end">
-                                    <button  class="navbar-toggler navresponsive-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="true" aria-label="Toggle navigation">
-                                        <i class="fe fe-more-vertical header-icons navbar-toggler-icon"></i>
-                                    </button>
-                                    <div class="navbar navbar-expand-lg navbar-collapse responsive-navbar p-0">
-                                        <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-                                            <div class="d-flex order-lg-2">
-                                                <div class="dropdown profile-dropdown d-flex">
-                                                    <a href="javascript:void0;" class="nav-link pe-0 leading-none" data-bs-toggle="dropdown">
-                                                        <span class="header-avatar1">
-                                                            <img src="{{request.user.profile.image.url}}" alt="img" class="avatar avatar-md brround">
-                                                        </span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow animated">
-                                                        <a class="dropdown-item d-flex" href="{% url 'users:profile' %}">
-                                                            <svg class="header-icon me-2" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.51.88 4.93 1.78C15.57 19.36 13.86 20 12 20s-3.57-.64-4.93-1.72zm11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33C4.62 15.49 4 13.82 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.49-1.64 4.83zM12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"/></svg>
-                                                            <div class="fs-13">Profile</div>
-                                                        </a>
-                                                        <a class="dropdown-item d-flex" href="{% url 'users:logout' %}">
-                                                            <svg class="header-icon me-2" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><path d="M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z"/></g></svg>
-                                                            <div class="fs-13">Sign Out</div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/app header-->
-
-                    {% block content %}
-        
-                    {% endblock content %}
-
-
-                </div>
-            </div>
-            <!-- End app-content-->
-
-
-            <!--Footer-->
-            <footer class="footer fixed-bottom mt-5">
-                <div class="container">
-                    <div class="row align-items-center flex-row-reverse">
-                        <div class="col-md-12 col-sm-12 text-center">
-                            &copy;<script>document.write(new Date().getFullYear())</script> - <a href="/" class="text-light">OfficeManager</a> || All rights reserved
-                        </div>
-                    </div>
-                </div>
-            </footer>
-            <!-- End Footer-->
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
+      </div>
+    </form>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Office Manager</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item has-treeview menu-open">
+            <a href="/" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard                
+              </p>
+            </a>
+          </li>
+          <li class="nav-header">CUSTOMERS</li>
+          <li class="nav-item">
+            <a href="{% url 'customer:customer-list' %}" class="nav-link">
+              <i class="nav-icon fa fa-list-alt  text-light"></i>
+              <p>
+                Customers List                
+              </p>
+            </a>
+          </li>
+          <li class="nav-header">Quotations</li>
+          <li class="nav-item">
+            <a href="{% url 'quotation:quotation-list' %}" class="nav-link">
+              <i class="nav-icon fa fa-list-alt  text-light"></i>
+              <p class="text">Quotations List</p>
+            </a>
+          </li>
+          <li class="nav-header">INVOICES</li>
+          <li class="nav-item">
+            <a href="{% url 'invoice:invoice-list' %}" class="nav-link">
+              <i class="nav-icon fa fa-list-alt text-light"></i>
+              <p class="text">Invoices List</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'invoice:invoice-unpaid' %}" class="nav-link">
+              <i class="nav-icon far fa-circle text-warning"></i>
+              <p>UnPaid Invoices</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'invoice:invoice-paid' %}" class="nav-link">
+              <i class="nav-icon far fa-circle text-success"></i>
+              <p>Paid Invoices</p>
+            </a>
+          </li>
+          <li class="nav-header">Receipts</li>
+          <li class="nav-item">
+            <a href="{% url 'receipt:receipt-list' %}" class="nav-link">
+              <i class="nav-icon fa fa-list-alt  text-light"></i>
+              <p class="text">Receipts List</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
     </div>
-    <!-- End Page -->
+    <!-- /.sidebar -->
+  </aside>
 
-    <!-- Back to top -->
-    <a href="#top" id="back-to-top"><i class="fe fe-chevron-up"></i></a>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-    <!-- Jquery js-->
-    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row mt-2">
+          <div class="col-md-12">
+            {% block content %}
+        
+            {% endblock content %}
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
 
-    <!-- Bootstrap5 js-->
-    <script src="{% static 'assets/plugins/bootstrap/popper.min.js' %}"></script>
-    <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+      </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
 
-    <!--Othercharts js-->
-    <script src="{% static 'assets/plugins/othercharts/jquery.sparkline.min.js' %}"></script>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
 
-    <!-- Circle-progress js-->
-    <script src="{% static 'assets/js/circle-progress.min.js' %}"></script>
+  <!-- Main Footer -->
+  <footer class="main-footer text-center">
+    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+  </footer>
+</div>
+<!-- ./wrapper -->
 
-    <!-- Jquery-rating js-->
-    <script src="{% static 'assets/plugins/rating/jquery.rating-stars.js' %}"></script>
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
 
-    <!--Sidemenu js-->
-    <script src="{% static 'assets/plugins/sidemenu/sidemenu.js' %}"></script>
+<!-- OPTIONAL SCRIPTS -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
 
-    <!-- P-scroll js-->
-    <script src="{% static 'assets/plugins/p-scrollbar/p-scrollbar.js' %}"></script>
-    <script src="{% static 'assets/plugins/p-scrollbar/p-scroll1.js' %}"></script>
-    <script src="{% static 'assets/plugins/p-scrollbar/p-scroll.js' %}"></script>
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="{% static 'plugins/jquery-mousewheel/jquery.mousewheel.js' %}"></script>
+<script src="{% static 'plugins/raphael/raphael.min.js' %}"></script>
+<script src="{% static 'plugins/jquery-mapael/jquery.mapael.min.js' %}"></script>
+<script src="{% static 'plugins/jquery-mapael/maps/usa_states.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
 
-    <!--INTERNAL Flot Charts js-->
-    <script src="{% static 'assets/plugins/flot/jquery.flot.js' %}"></script>
-    <script src="{% static 'assets/plugins/flot/jquery.flot.fillbetween.js' %}"></script>
-    <script src="{% static 'assets/plugins/flot/jquery.flot.pie.js' %}"></script>
-    <script src="{% static 'assets/js/dashboard.sampledata.js' %}"></script>
-    <script src="{% static 'assets/js/chart.flot.sampledata.js' %}"></script>
+<!-- PAGE SCRIPTS -->
+<script src="{% static 'dist/js/pages/dashboard2.js' %}"></script>
 
-    <!-- INTERNAL Chart js -->
-    <script src="{% static 'assets/plugins/chart/chart.bundle.js' %}"></script>
-    <script src="{% static 'assets/plugins/chart/utils.js' %}"></script>
+<!-- INTERNAL Data tables -->        
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>      
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
 
-    <!-- INTERNAL Apexchart js -->
-    <script src="{% static 'assets/js/apexcharts.js' %}"></script>
-
-    <!--INTERNAL Moment js-->
-    <script src="{% static 'assets/plugins/moment/moment.js' %}"></script>
-
-    <!--INTERNAL Index js-->
-    <script src="{% static 'assets/js/index1.js' %}"></script>
-
-    <!-- INTERNAL Data tables -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>    
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.bootstrap5.min.js"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>    
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>    
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>    
-    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"></script>
-
-    <!-- INTERNAL Select2 js -->
-    <script src="{% static 'assets/plugins/select2/select2.full.min.js' %}"></script>
-    <script src="{% static 'assets/js/select2.js' %}"></script>
-
-    <!-- Simplebar JS -->
-    <script src="{% static 'assets/plugins/simplebar/js/simplebar.min.js' %}"></script>
-
-    <!-- Rounded bar chart js-->
-    <script src="{% static 'assets/js/rounded-barchart.js' %}"></script>
-
-    <!-- Custom js-->
-    <script src="{% static 'assets/js/custom.js' %}"></script>
-
-    <!-- Switcher js -->
-    <script src="{% static 'assets/switcher/js/switcher.js' %}"></script>
-
-        <!-- bootstrap model form -->
-    <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
-    {% block javascript %}
-    {% endblock javascript %}
-
+<!-- bootstrap modal form -->
+<script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
+{% block javascript %}
+{% endblock javascript %}
 </body>
 </html>
