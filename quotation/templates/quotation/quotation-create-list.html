@@ -27,7 +27,7 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <div class="mb-3">
-                            <select class="form-control" name="customer_id">
+                            <select class="officemanager-customer-select form-control form-select" name="customer_id">
                                 <option value="None">(Select Customer)</option>
                                 {% for customer in customer_list %}
                                 <option value="{{ customer.id }}">{{ customer.name }}</option>
@@ -145,6 +145,11 @@
             .appendTo( '#quotation-table_wrapper .col-md-6:eq(0)' );    
         
     } );
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('.officemanager-customer-select').select2();
+  });
   </script>
 {% endblock javascript %}
     

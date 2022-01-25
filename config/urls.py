@@ -27,4 +27,5 @@ urlpatterns = [
     path('quotation/', include('quotation.urls', namespace='quotation')),
     path('receipt/', include('receipt.urls', namespace='receipt')),
     path('customer/', include('customer.urls', namespace='customer')),
+    path('invoice/', include('invoice.urls', namespace='invoice')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

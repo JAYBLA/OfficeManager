@@ -43,11 +43,11 @@
                       <td>{{customer.email}}</td>
                       <td>{{customer.physical_address}}</td>
                       <td class="text-center">
-                          <a class="update-customer bs-modal mr-2" data-form-url="{% url 'invoice:update-customer' customer.id %}" style="cursor:pointer;font-size: 22px">
+                          <a class="update-customer bs-modal mr-2" data-form-url="{% url 'customer:update-customer' customer.id %}" style="cursor:pointer;font-size: 22px">
                             <i class="fa fa-edit text-warning"></i>
                           </a>
 
-                          <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'invoice:delete_customer' customer.id %}">
+                          <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'customer:delete_customer' customer.id %}">
                               <i class="fa fa-trash text-danger" style="font-size: 22px; cursor:pointer;"></i>
                           </a>                               
                       </td>
@@ -102,7 +102,7 @@
       });
     });
     $("#create-customer").modalForm({
-          formURL: "{% url 'invoice:customer_create' %}",
+          formURL: "{% url 'customer:customer_create' %}",
           modalID: "#create-modal"
       });
       $(".update-customer").each(function () {

@@ -18,38 +18,39 @@ from quotation.models import Quotation
 
 from datetime import datetime,timedelta,date
 from .forms import *
+from django.conf import settings
 
 base_url = settings.BASE_URL
 
 # Create your views here.
 class CustomerCreateView(LoginRequiredMixin, BSModalCreateView):
-    template_name = 'customer-create.html'
+    template_name = 'customer/customer-create.html'
     form_class = CustomerForm
     success_message = 'Created Successfully'
     
     def get_success_url(self):
-        return reverse_lazy('invoice:customer-list') 
+        return reverse_lazy('customer:customer-list') 
     
 class CustomerDeleteView(LoginRequiredMixin,BSModalDeleteView):
     model = Customer
-    template_name = 'delete.html'
+    template_name = 'customer/delete.html'
     success_message = 'Success: Customer was deleted.'
     context_object_name = 'customer'
-    success_url = reverse_lazy('invoice:customer-create')
+    success_url = reverse_lazy('customer:customer-create')
     
 class CustomerUpdateView(LoginRequiredMixin, BSModalUpdateView):
     model = Customer
-    template_name = 'customer-update.html'
+    template_name = 'customer/customer-update.html'
     form_class = CustomerForm
     success_message = 'Customer Updated Successfully.'
     
     def get_success_url(self):
-        return reverse_lazy('invoice:customer-list') 
+        return reverse_lazy('customer:customer-list') 
     
     
 @login_required()
 def customer_detail(request,customer_id):
-    template = 'customer-detail.html'    
+    template = 'customer/customer-detail.html'    
     customer = get_object_or_404(Customer, pk =customer_id)
     customers = Customer.objects.order_by('-modified_at')
     context = {
@@ -62,7 +63,7 @@ def customer_detail(request,customer_id):
 
 @login_required()
 def customer_list(request):
-    template = 'customer-list.html'    
+    template = 'customer/customer-list.html'    
     customers = Customer.objects.order_by('-modified_at')
     context = {        
         'customers':customers,
@@ -74,7 +75,7 @@ def customer_list(request):
 
 @login_required()
 def update_customer(request, customer_id):
-    template = 'customer-create-list.html'
+    template = 'customer/customer-create-list.html'
     c = get_object_or_404(Customer, pk=customer_id)
 
     c.name = request.POST['name']

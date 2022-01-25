@@ -3,12 +3,13 @@ from django.contrib.auth.decorators import login_required
 from quotation.models import Quotation
 from customer.models import Customer
 from invoice.models import Invoice
+from django.conf import settings
 
 base_url = settings.BASE_URL
 
 # Create your views here.
 @login_required()
-def dahboard(request):
+def dashboard(request):
     template = 'home.html'
     invoices = Invoice.objects.all().order_by('-date')
     customers = Customer.objects.all().order_by('name')

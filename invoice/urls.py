@@ -6,15 +6,6 @@ from .views import *
 app_name = 'invoice'
 
 urlpatterns = [
-    path('',home,name = 'app-home'),
-    
-    #CUSTOMER
-    path('customer', CustomerCreateView.as_view(), name='customer_create') ,
-    path('customer/<int:customer_id>/', customer_detail, name='customer-detail'),
-    path('customers', customer_list, name='customer-list'),
-    path('customer/<int:pk>/update/', CustomerUpdateView.as_view(), name='update-customer'),
-    path('customer/<int:pk>/delete/', CustomerDeleteView.as_view(), name='delete_customer'),
-    
     #INVOICE
     path('invoice/new/', invoice_create, name='new-invoice'),    
     path('invoice/<int:id>/', invoice_detail, name='invoice-detail'),
