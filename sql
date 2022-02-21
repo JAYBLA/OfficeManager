@@ -1,0 +1,1 @@
+INSERT INTO jayblaco_officemanager.invoice_invoice SELECT * from jayblaco_management.invoice_invoice
