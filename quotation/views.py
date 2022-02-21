@@ -35,6 +35,7 @@ def quotation_create(request):
     # If no customer_id is defined, create a new invoice
     if request.method=='POST':
         customer_id = request.POST['customer_id']
+        print("customer_id:" )
         quote_title = request.POST['quote_title']
         quote_description = request.POST['quote_description']
         due_date = request.POST['due_date']
@@ -73,7 +74,7 @@ class QuotationDeleteView(LoginRequiredMixin,BSModalDeleteView):
     template_name = 'quotation/delete.html'
     success_message = 'Success: Quotaion was deleted.'
     context_object_name = 'quotation'
-    success_url = reverse_lazy('quotation:new-quotation')
+    success_url = reverse_lazy('quotation:quotation-list')
    
 
 

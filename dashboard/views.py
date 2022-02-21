@@ -10,7 +10,7 @@ base_url = settings.BASE_URL
 # Create your views here.
 @login_required()
 def dashboard(request):
-    template = 'home.html'
+    template = 'dashboard/home.html'
     invoices = Invoice.objects.all().order_by('-date')
     customers = Customer.objects.all().order_by('name')
     quotations = Quotation.objects.all().order_by('-date')    

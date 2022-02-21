@@ -19,7 +19,7 @@ urlpatterns = [
     path('invoice/<int:id>/<int:pk>/update/', OrderItemUpdateView.as_view(), name='update_item'),
     path('invoice/<int:id>/<int:pk>/delete/', OrderItemDeleteView.as_view(), name='delete_item'),
     path('invoice/<int:invoice_id>/update/', update_invoice, name='update-invoice'),
-    path('invoice/<int:pk>/delete/', InvoiceDeleteView.as_view(), name='delete_invoice'),
+    path('invoice/<int:pk>/delete/', InvoiceDeleteView.as_view(), name='invoice-delete'),
     path('invoice/<int:invoice_id>/print/', printable_invoice, name='print-invoice'),
     path('invoice/<int:invoice_id>/download/', GeneratePdf.as_view(), name='download-invoice'), 
 ]
