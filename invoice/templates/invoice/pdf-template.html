@@ -45,10 +45,6 @@
                                 /* Content Frame */
         left: 50pt; width: 512pt; top: 280pt; height: 300pt;
     }
-    @frame payment_frame { 
-        -pdf-frame-content: payment_content ;/* Content Frame */
-        left: 50pt; width: 512pt; top: 650pt; height: 150pt;
-    }
     @frame line { 
         -pdf-frame-content: line; 
         left: 50pt; width: 512pt; top: 680pt; height: 5pt;
@@ -61,11 +57,6 @@
     body{
         font-size: 14px;
     }
-    .invoice-box {
-        font-size: 14px;
-        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-    }
-
     .footer{
         font-size: 14px;
         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -108,33 +99,31 @@
 </head>
 
 <body>
-    <section>
-        <div id="document_heading" style="color:#ffffff;">
-                <h1><strong>INVOICE</strong></h1>
-        </div>
-        <div id="header_content_sub">
-                <h4 style="color:#ff0d33;">{{invoice.title}}</h4>
-        </div>
-        <div id="logo">
-            <img src="{{base_url}}/static/assets/img/logo.png" style="width: 180px; height: auto;" alt="logo">
-        </div>
-        <div id="invoice_info" style="color:#ffffff;">            
-            <b>Invoice #:</b><strong>{{invoice_no}}</strong><br>
-            <b>Status:<strong style="color:#ff0d33;font-size: 18px;">{{invoice.status}}</strong></b><br>
-            <b>Created Date:</b> {{invoice.date}}<br>
-            <b>Due Date:</b> {{invoice.due_date}}
-        </div>
-        <div id="company_info" style="color:#ffffff;">
-            <strong style="font-size: 18px;">JAYBLA GROUP</strong><br>
-            UHURU STREET-MOROGORO,<br>
-            Email: info@jayblagroup.com
-        </div>
-    </section>
+    <div id="document_heading" style="color:#ffffff;">
+            <h1><strong>INVOICE</strong></h1>
+    </div>
+    <div id="header_content_sub">
+            <h4 style="color:#ff0d33;">{{invoice.title}}</h4>
+    </div>
+    <div id="logo">
+        <img src="{{base_url}}/static/assets/img/logo.png" style="width: 180px; height: auto;" alt="logo">
+    </div>
+    <div id="invoice_info" style="color:#ffffff;">            
+        <b>Invoice #:</b><strong>{{invoice_no}}</strong><br>
+        <b>Status:<strong style="color:#ff0d33;font-size: 18px;">{{invoice.status}}</strong></b><br>
+        <b>Created Date:</b> {{invoice.date}}<br>
+        <b>Due Date:</b> {{invoice.due_date}}
+    </div>
+    <div id="company_info" style="color:#ffffff;">
+        <strong style="font-size: 18px;">JAYBLA GROUP</strong><br>
+        UHURU STREET-MOROGORO,<br>
+        Email: info@jayblagroup.com
+    </div>
     <div id="customer_info">
-                <strong style="color:#ff0d33;">INVOICE TO:</strong><br>
-                <strong>{{invoice.customer.name}}</strong><br>
-                {{invoice.customer.email}}<br>
-                {{invoice.customer.phone}}
+        <strong style="color:#ff0d33;">INVOICE TO:</strong><br>
+        <strong>{{invoice.customer.name}}</strong><br>
+        {{invoice.customer.email}}<br>
+        {{invoice.customer.phone}}
     </div>
     <div id="payment_info">
                 <strong style="color:#ff0d33;">PAYMENT METHOD:</strong><br>
@@ -180,7 +169,6 @@
     <div id="line">
         <hr class='hrItem' />
     </div>
-
     <div class="footer" id="footer_content">
         <div>If you have any Questions about this invoice, Please Contact Us!</div>
         <div>Call:+255 786 511 891 | Email: info@jayblagroup.com</div>
