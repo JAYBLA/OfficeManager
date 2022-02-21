@@ -184,7 +184,7 @@ else:
     BASE_URL = 'http://127.0.0.1:8000'
 
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL ='invoice:app-home'
+LOGIN_REDIRECT_URL ='dashboard:dashboard'
 LOGOUT_REDIRECT_URL = 'users:login'
 
 # Default primary key field type

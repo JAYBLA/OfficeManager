@@ -18,9 +18,6 @@ def dashboard(request):
     invoice_count = invoices.count()
     quotation_count = quotations.count()
     context = {			
-        'invoices' : invoices,
-        'customers' : customers,
-        'quotations':quotations,
         'invoice_count':invoice_count,
         'customer_count':customer_count,
         'quotation_count':quotation_count,		

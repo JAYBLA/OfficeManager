@@ -193,11 +193,11 @@ def printable_quotation(request, quotation_id):
 
         messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
 
-        return redirect(to='invoice:app-home')
+        return redirect(to='quotation:quotation-list')
     except:
         messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
 
-    return redirect(to='invoice:app-home')
+    return redirect(to='quotation:quotation-list')
 
 
 @method_decorator(login_required, name='dispatch')

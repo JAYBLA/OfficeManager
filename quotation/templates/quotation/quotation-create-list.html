@@ -21,17 +21,18 @@
                 <br />
                 {% if error_message %}
                 <div class="alert alert-success">{{ success_message }}</div>
-                {% endif %}
-                {% if customer_list %}
+                {% endif %}                
                 <form action="{% url 'quotation:new-quotation' %}" method='POST'>
                     {% csrf_token %}
                     <div class="form-group">
                         <div class="mb-3">
                             <select class="officemanager-customer-select form-control form-select" name="customer_id">
                                 <option value="None">(Select Customer)</option>
-                                {% for customer in customer_list %}
-                                <option value="{{ customer.id }}">{{ customer.name }}</option>
-                                {% endfor %}
+                                {% if customer_list %}
+                                    {% for customer in customer_list %}
+                                    <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                    {% endfor %}
+                                {% endif %}
                             </select>
                         </div>
                     </div>
@@ -52,8 +53,7 @@
                         <label class="form-label"></label>                                                  
                         <input type="submit" value="Create Quotation" class="btn btn-primary">                   
                     </div>
-                </form>
-                {% endif %}
+                </form>               
             </div>
         </div>	
     </div>
