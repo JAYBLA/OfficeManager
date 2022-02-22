@@ -7,7 +7,8 @@ app_name = 'invoice'
 
 urlpatterns = [
     #INVOICE
-    path('invoice/new/', invoice_create, name='new-invoice'),    
+    path('invoice/new/', invoice_create, name='new-invoice'),
+    path('invoice/new/<int:quotation_id>/', invoice_from_quotation, name='invoice-from-quotation'),    
     path('invoice/<int:id>/', invoice_detail, name='invoice-detail'),
     path('unpaid-invoices', invoice_unpaid, name='invoice-unpaid'),
     path('paid-invoices', invoice_paid, name='invoice-paid'),
@@ -21,5 +22,7 @@ urlpatterns = [
     path('invoice/<int:invoice_id>/update/', update_invoice, name='update-invoice'),
     path('invoice/<int:pk>/delete/', InvoiceDeleteView.as_view(), name='invoice-delete'),
     path('invoice/<int:invoice_id>/print/', printable_invoice, name='print-invoice'),
-    path('invoice/<int:invoice_id>/download/', GeneratePdf.as_view(), name='download-invoice'), 
+    path('invoice/<int:invoice_id>/download1/', GeneratePdf1.as_view(), name='download-invoice1'),
+    path('invoice/<int:invoice_id>/download2/', GeneratePdf2.as_view(), name='download-invoice2'), 
+    path('invoice/<int:invoice_id>/download3/', GeneratePdf3.as_view(), name='download-invoice3'),  
 ]

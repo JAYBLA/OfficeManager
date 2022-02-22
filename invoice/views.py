@@ -21,6 +21,7 @@ from django.urls import reverse_lazy
 
 from .models import *
 from quotation.models import Quotation
+from quotation.models import OrderItem as QuotationOrderItem
 from customer.models import Customer
 from .utils import render_to_pdf
 
@@ -211,7 +212,7 @@ def printable_invoice(request, invoice_id):
     email = invoice.customer.email
     customer = invoice.customer.name
     c=customer.upper()
-    invoice_no = 'JGM100' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
+    invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
     due_date = invoice.due_date
       
     data = {
@@ -241,12 +242,12 @@ def printable_invoice(request, invoice_id):
     return redirect(to='invoice:app-home')
 
 @method_decorator(login_required, name='dispatch')
-class GeneratePdf(View):
+class GeneratePdf1(View):
     def get(self,request, invoice_id):
         invoice = get_object_or_404(Invoice, pk=invoice_id)
         customer = invoice.customer.name
         c=customer.upper()
-        invoice_no = 'JGM100' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
+        invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
 
         data = {
             'invoice':invoice,
@@ -254,5 +255,54 @@ class GeneratePdf(View):
             'created_at':invoice.date,
             'base_url':base_url,
         }
-        pdf = render_to_pdf('invoice/pdf-template.html', data)
+        pdf = render_to_pdf('invoice/pdf-templaterare.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
+    
+@method_decorator(login_required, name='dispatch')
+class GeneratePdf2(View):
+    def get(self,request, invoice_id):
+        invoice = get_object_or_404(Invoice, pk=invoice_id)
+        customer = invoice.customer.name
+        c=customer.upper()
+        invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
+
+        data = {
+            'invoice':invoice,
+            'invoice_no':invoice_no,
+            'created_at':invoice.date,
+            'base_url':base_url,
+        }
+        pdf = render_to_pdf('invoice/pdf-templatejaybla.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+@method_decorator(login_required, name='dispatch')
+class GeneratePdf3(View):
+    def get(self,request, invoice_id):
+        invoice = get_object_or_404(Invoice, pk=invoice_id)
+        customer = invoice.customer.name
+        c=customer.upper()
+        invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
+
+        data = {
+            'invoice':invoice,
+            'invoice_no':invoice_no,
+            'created_at':invoice.date,
+            'base_url':base_url,
+        }
+        pdf = render_to_pdf('invoice/pdf-templatebafro.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+
+
+@login_required()
+def invoice_from_quotation(request,quotation_id):    
+    quotation=get_object_or_404(Quotation, id=quotation_id)
+    customer=get_object_or_404(Customer, name=quotation.customer.name)
+    invoice = Invoice(customer=customer, date=date.today(), status='Unpaid', due_date=quotation.due_date)
+    invoice.save()
+    quotation_items =QuotationOrderItem.objects.filter(quotation_id=quotation_id)
+    for item in quotation_items:
+        orderitem = OrderItem(description=item.description,cost=item.cost,qty=item.qty,invoice_id=invoice.id)
+        orderitem.save()
+    return redirect(to='invoice:invoice-list')
+    

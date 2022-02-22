@@ -55,11 +55,13 @@
                             <td>{{ quotation.quote_title }}</td> 
                             <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
                             <td class="text-center">
-                                <a href="{% url 'quotation:quotation-detail' quotation.id %}" style="color:orange;font-size: 22px;cursor:pointer;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                <a href="{% url 'quotation:quotation-detail' quotation.id %}" style="color:orange;font-size: 22px;cursor:pointer;"><i class="fa fa-edit mr-2" aria-hidden="true"></i></a>
                                 <a class="delete-quotation bs-modal mr-2" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
-                                    <i class="fa fa-trash text-danger" style="font-size: 22px;cursor:pointer;"></i>
+                                    <i class="fa fa-trash text-danger mr-2" style="font-size: 22px;cursor:pointer;"></i>
                                 </a>
-                                <a href="{% url 'quotation:download-quotation' quotation.id %}" style="color:green;font-size: 22px;" download><i class="fa fa-download" aria-hidden="true"></i></a>   
+                                <a href="{% url 'quotation:download-quotation1' quotation.id %}" style="color:green;font-size: 22px;" download><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
+                                <a href="{% url 'quotation:download-quotation2' quotation.id %}" style="color:#ff0d33;font-size: 22px;" download><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
+                                <a href="{% url 'quotation:download-quotation3' quotation.id %}" style="color:#1b75bb;font-size: 22px;"><i class="fa fa-download" aria-hidden="true"></i></a> 
                             </td>
                         </tr>
                     </tbody>

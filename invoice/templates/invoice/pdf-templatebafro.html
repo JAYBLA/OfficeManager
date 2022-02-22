@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+    {% load humanize %}
+<head>
+    <meta charset="utf-8">
+<style>
+
+@page {
+    size: A4 portrait;
+    background-image:url({{base_url}}/static/assets/img/document-backgroundbafro.png);
+    @frame parent_frame {           /* Static frame */
+        -pdf-frame-content: document_header_backgound;
+        left: 0pt; width: 200pt; top: 0pt; height: 100pt;
+    }
+    @frame header1_frame {           /* Static frame */
+        -pdf-frame-content: logo;
+        left: 50pt; width: 190pt; top: 5pt; height: 70pt;
+    }
+    @frame header2_frame {           /* Static frame */
+        -pdf-frame-content: invoice_info;
+        left: 416pt; width: 200pt; top: 60pt; height: 70pt;
+    }
+    @frame header0_frame {           /* Static frame */
+        -pdf-frame-content: document_heading;
+        left: 416pt; width: 600pt; top: 30pt; height: 70pt;
+    }
+    @frame header4_frame {           /* Static frame */
+        -pdf-frame-content: company_info;
+        left: 50pt; width: 392pt; top: 75pt; height: 100pt;
+    }
+    @frame header3_frame {           /* Static frame */
+        -pdf-frame-content: customer_info;
+        left: 50pt; width: 200pt; top: 180pt; height: 100pt;
+    }
+
+    @frame header3_frame {           /* Static frame */
+        -pdf-frame-content: payment_info;
+        left: 416pt; width: 200pt; top: 180pt; height: 100pt;
+    }
+    @frame header0_frame {           /* Static frame */
+        -pdf-frame-content: header_content_sub;
+        left: 225pt; width: 600pt; top: 50pt; height: 30pt;
+    }
+    @frame content_frame { 
+                                /* Content Frame */
+        left: 50pt; width: 512pt; top: 280pt; height: 300pt;
+    }
+    @frame line { 
+        -pdf-frame-content: line; 
+        left: 50pt; width: 512pt; top: 735pt; height: 5pt;
+    }
+    @frame footer_frame {           /* Static frame */
+        -pdf-frame-content: footer_content;
+        left: 50pt; width: 512pt; top: 755pt; height: 80pt;
+    }
+}
+    body{
+        font-size: 14px;
+    }
+    .footer{
+        font-size: 14px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+
+    table{
+        font-size: 14px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table thead tr{
+        text-align: left;
+        color: #fff;
+        background-color: #1b75bb;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 4px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .footer{
+        text-align: center;
+    }
+    h1{
+        font-size: 38px;
+    }
+    h4{
+        font-size:18px;
+        color: #333;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="document_heading" style="color:#1b75bb;">
+            <h1><strong>INVOICE</strong></h1>
+    </div>
+    <div id="header_content_sub">
+            <h4 style="color:#1b75bb;">{{invoice.title}}</h4>
+    </div>
+    <div id="logo">
+        <img src="{{base_url}}/static/assets/img/bafrologo.png" style="width: 180px; height: auto;" alt="logo">
+    </div>
+    <div id="invoice_info" style="color:#1b75bb;">            
+        <b>Invoice #:</b><strong>{{invoice_no}}</strong><br>
+        <b>Status:<strong style="color:#8bc53f;font-size: 18px;">{{invoice.status}}</strong></b><br>
+        <b>Created Date:</b> {{invoice.date}}<br>
+        <b>Due Date:</b> {{invoice.due_date}}
+    </div>
+    <div id="company_info" style="color:#1b75bb;">
+        <strong style="font-size: 18px;">BAFROCODES LIMITED</strong><br>
+        MOROGORO-TANZANIA,<br>
+        Email: info@jayblagroup.com
+    </div>
+    <div id="customer_info">
+        <strong style="color:#1b75bb;">INVOICE TO:</strong><br>
+        <strong>{{invoice.customer.name}}</strong><br>
+        {{invoice.customer.email}}<br>
+        {{invoice.customer.phone}}
+    </div>
+    <div id="payment_info">
+                <strong style="color:#1b75bb;">PAYMENT METHOD:</strong><br>
+                <strong style="color:#333333;">Account Number:</strong><b style="font-size:16px;"> 22110086142</b><br>
+                <strong style="color:#333333;">Account Name:</strong><b> JAYBLA GROUP</b><br>
+                <strong style="color:#333333;">Branch Name:</strong><b> NMB BANK</b>
+    </div>
+
+    <div class="table" id="content_frame">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 35px;">No.</th>
+                    <th style="width: 400px;">DESCRIPTION</th>
+                    <th style="width: 50px;">QTY</th>
+                    <th style="width: 110px;">UNIT PRICE</th>
+                    <th style="width: 110px;">AMOUNT</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in invoice.orderitem_set.all %}
+                <tr>
+                    <td style="width: 35px;">{{forloop.counter}}</td>
+                    <td><strong>{{ item.description }}</strong></td>
+                    <td>{{ item.qty }}</td>
+                    <td>{{ item.cost | intcomma }}/=</td>
+                    <td>{{ item.total | intcomma }}/=</td>
+                </tr>
+                {% endfor  %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td style="width: 35px; border: none;"></td>
+                    <td style="width: 400px; border: none;"></td>
+                    <td style="width: 50px; border: none;"></td>
+                    <td><b>TOTAL</b></td>
+                    <td>{{ invoice.total_items | intcomma }}/=</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div id="line">
+        <hr class='hrItem' />
+    </div>
+    <div class="footer" id="footer_content">
+        <div>If you have any Questions about this invoice, Please Contact Us!</div>
+        <div>Call:+255 713 663 234 | Email: info@bafrocodes.co.tz</div>
+        <div><strong>Thank You For Your Business!</strong></div>
+    </div>
+
+</body>
+</html>

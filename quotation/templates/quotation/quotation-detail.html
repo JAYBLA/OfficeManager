@@ -4,6 +4,11 @@
 {% block content %}
 
 {% if quotation %}
+<div class="row">
+    <div class="col-md-4 offset-md-8">
+        <a href="{% url 'invoice:invoice-from-quotation' quotation.id %}" class="btn btn-outline-primary">Convert To Invoice</a>
+    </div>
+</div>
 <div class="row pt-4">
         {% if error_message %}
         <div class="alert alert-danger">{{ error_message }}</div>
