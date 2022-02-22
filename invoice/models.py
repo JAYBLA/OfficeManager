@@ -3,7 +3,7 @@ from customer.models import Customer
 
 # Create your models here.
 class Invoice(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField()
     status = models.CharField(max_length=10)
     title = models.CharField(max_length=100)

@@ -5,7 +5,7 @@ from customer.models import Customer
 
 
 class Quotation(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE,null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField()
     quotation_file = models.FileField(upload_to='quotations/%Y/%m/%d/', blank=True, null=True)
     quote_title = models.TextField(blank=False)

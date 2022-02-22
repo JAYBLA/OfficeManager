@@ -6,7 +6,7 @@
 <style>
 
 @page {
-    size: letter portrait;
+    size: A4 portrait;
     background-image:url({{base_url}}/static/assets/img/document-background.png);
     @frame parent_frame {           /* Static frame */
         -pdf-frame-content: document_header_backgound;
@@ -47,11 +47,11 @@
     }
     @frame line { 
         -pdf-frame-content: line; 
-        left: 50pt; width: 512pt; top: 680pt; height: 5pt;
+        left: 50pt; width: 512pt; top: 735pt; height: 5pt;
     }
     @frame footer_frame {           /* Static frame */
         -pdf-frame-content: footer_content;
-        left: 50pt; width: 512pt; top: 700pt; height: 80pt;
+        left: 50pt; width: 512pt; top: 755pt; height: 80pt;
     }
 }
     body{
@@ -127,7 +127,7 @@
     </div>
     <div id="payment_info">
                 <strong style="color:#ff0d33;">PAYMENT METHOD:</strong><br>
-                <strong style="color:#333333;">Account Number:</strong><b> 22110086142</b><br>
+                <strong style="color:#333333;">Account Number:</strong><b style="font-size:16px;"> 22110086142</b><br>
                 <strong style="color:#333333;">Account Name:</strong><b> JAYBLA GROUP</b><br>
                 <strong style="color:#333333;">Branch Name:</strong><b> NMB BANK</b>
     </div>
