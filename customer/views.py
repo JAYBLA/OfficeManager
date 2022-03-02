@@ -36,7 +36,7 @@ class CustomerDeleteView(LoginRequiredMixin,BSModalDeleteView):
     template_name = 'customer/delete.html'
     success_message = 'Success: Customer was deleted.'
     context_object_name = 'customer'
-    success_url = reverse_lazy('customer:customer-create')
+    success_url = reverse_lazy('customer:customer-list')
     
 class CustomerUpdateView(LoginRequiredMixin, BSModalUpdateView):
     model = Customer
