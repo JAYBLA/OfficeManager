@@ -146,14 +146,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+
 
 if not DEBUG:
     STATICFILES_DIRS = [
         BASE_DIR / "static",
     ]
-
+    STATIC_URL = 'public_html/static/'
+    MEDIA_URL = 'public_html/media/'
     MEDIA_ROOT = '/home/jayblaco/officemanager.jaybla.com/public_html/media'
     STATIC_ROOT = '/home/jayblaco/officemanager.jaybla.com/public_html/static'
 else:
@@ -162,6 +162,8 @@ else:
     ]
     MEDIA_ROOT = '/media'
     STATIC_ROOT = '/static'
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
     
     
 if not DEBUG:
