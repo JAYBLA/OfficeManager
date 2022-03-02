@@ -7,7 +7,7 @@
 
 @page {
     size: A4 portrait;
-    background-image:url({{base_url}}/static/assets/img/document-backgroundrare.png);
+    background-image:url({{base_url}}static/assets/img/document-backgroundrare.png);
     @frame parent_frame {           /* Static frame */
         -pdf-frame-content: document_header_backgound;
         left: 0pt; width: 200pt; top: 0pt; height: 100pt;
@@ -106,7 +106,7 @@
             <h4 style="color:#008000;">{{invoice.title}}</h4>
     </div>
     <div id="logo">
-        <img src="{{base_url}}/static/assets/img/rarelogo.png" style="width: 180px; height: auto;" alt="logo">
+        <img src="{{base_url}}static/assets/img/rarelogo.png" style="width: 180px; height: auto;" alt="logo">
     </div>
     <div id="invoice_info" style="color:#000000;">            
         <b>Invoice #:</b><strong>{{invoice_no}}</strong><br>
