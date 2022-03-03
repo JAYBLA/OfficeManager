@@ -6,6 +6,10 @@ import os
 from xhtml2pdf import pisa
 
 def render_to_pdf(template_src, context_dict={}):
+    def fetch_resources(uri, rel):
+        path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
+
+        return path
     template = get_template(template_src)
     html  = template.render(context_dict)
     result = BytesIO()
@@ -14,8 +18,5 @@ def render_to_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
 
-    def fetch_resources(uri, rel):
-        path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
 
-        return path
 
