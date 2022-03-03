@@ -18,6 +18,8 @@ from django.contrib.auth.mixins import (
 )
 from django.urls import reverse_lazy
 
+from django_xhtml2pdf.utils import generate_pdf
+
 
 from .models import *
 from quotation.models import Quotation
@@ -242,8 +244,7 @@ def printable_invoice(request, invoice_id):
     return redirect(to='invoice:app-home')
 
 @method_decorator(login_required, name='dispatch')
-class GeneratePdf1(View):
-    
+class GeneratePdf1(View):    
     def get(self,request, invoice_id):
         invoice = get_object_or_404(Invoice, pk=invoice_id)
         customer = invoice.customer.name
