@@ -244,8 +244,7 @@ class GeneratePdf1(View):
         invoice = get_object_or_404(Invoice, pk=invoice_id)
         customer = invoice.customer.name
         c=customer.upper()
-        invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
-        print('base_url',base_url)
+        invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))       
         data = {
             'invoice':invoice,
             'invoice_no':invoice_no,
