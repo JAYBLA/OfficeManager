@@ -17,16 +17,11 @@ from django.contrib.auth.mixins import (
     LoginRequiredMixin
 )
 from django.urls import reverse_lazy
-
-from django_xhtml2pdf.utils import generate_pdf
-
-
 from .models import *
 from quotation.models import Quotation
 from quotation.models import OrderItem as QuotationOrderItem
 from customer.models import Customer
 from .utils import render_to_pdf
-
 from datetime import datetime,timedelta,date
 from .forms import *
 
