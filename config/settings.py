@@ -146,25 +146,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 
-
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 if not DEBUG:
-    STATICFILES_DIRS = [
-        BASE_DIR / "static",
-    ]
-    STATIC_URL = 'static/'
-    MEDIA_URL = 'media/'
     MEDIA_ROOT = '/home/jayblaco/officemanager.jaybla.com/media'
     STATIC_ROOT = '/home/jayblaco/officemanager.jaybla.com/static'
 else:
-    STATICFILES_DIRS = [
-        BASE_DIR / "static",
-    ]
-    MEDIA_ROOT = '/media'
-    STATIC_ROOT = '/static'
-    STATIC_URL = '/static/'
-    MEDIA_URL = '/media/'
-    
+    MEDIA_ROOT = 'media/'   
     
 if not DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
