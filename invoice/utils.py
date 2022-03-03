@@ -12,6 +12,7 @@ def render_to_pdf(template_src, context_dict={}):
         sRoot = settings.STATIC_ROOT    # Typically /home/userX/project_static/
         mUrl = settings.MEDIA_URL       # Typically /static/media/
         mRoot = settings.MEDIA_ROOT     # Typically /home/userX/project_static/media/
+        base_url = settings.BASE_URL     # Typically /home/userX/project_static/media/
 
         # convert URIs to absolute system paths
         if uri.startswith(mUrl):
