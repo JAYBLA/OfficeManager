@@ -242,7 +242,7 @@ def printable_invoice(request, invoice_id):
     return redirect(to='invoice:app-home')
 
 @method_decorator(login_required, name='dispatch')
-class GeneratePdf1(View):
+class GeneratePdf(View):
     def get(self,request, invoice_id):
         invoice = get_object_or_404(Invoice, pk=invoice_id)
         customer = invoice.customer.name
