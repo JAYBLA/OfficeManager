@@ -181,7 +181,7 @@ def printable_quotation(request, quotation_id):
         'base_url':base_url,
     }
     
-    pdf = render_to_pdf('quotation/quotation-pdf-template.html', data)
+    pdf = render_to_pdf('quotation/quotation-pdf-templatejaybla.html', data)
 
     quotation.quotation_file.save(str(datetime.now())+'quotation.pdf', File(BytesIO(pdf.content)))
     

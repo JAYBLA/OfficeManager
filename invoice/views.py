@@ -220,7 +220,7 @@ def printable_invoice(request, invoice_id):
         'base_url':base_url,
     }
     
-    pdf = render_to_pdf('invoice/pdf-template.html', data)
+    pdf = render_to_pdf('invoice/pdf-templatejaybla.html', data)
 
     invoice.invoice_file.save(str(datetime.now())+'invoice.pdf', File(BytesIO(pdf.content)))
     
