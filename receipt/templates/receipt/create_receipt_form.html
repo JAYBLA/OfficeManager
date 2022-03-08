@@ -36,8 +36,8 @@
           </div>
         </div>
         <div class="form-group mb-3">
-          <label class="mb-2"><b>Description</b></label>
-          {% render_field form.description class="form-control" placeholder="description" rows="4" %}
+          <label class="mb-2"><b>Being Payment For:</b></label>
+          {% render_field form.description class="form-control" placeholder="Payment For..." rows="4" %}
           <div class="{% if field.errors %} invalid{% endif %}">
             {% for error in field.form.description.errors %}
               <p class="help-block">{{ error }}</p>
@@ -45,19 +45,19 @@
           </div>
         </div>
         <div class="form-group mb-3">
-          <label class="mb-2"><b>Amount In Words</b></label>
-          {% render_field form.amount_inwords class="form-control" placeholder="Amount In Words"%}
+          <label class="mb-2"><b>Amount</b></label>
+          {% render_field form.amount class="form-control" placeholder="Amount Received" %}
           <div class="{% if field.errors %} invalid{% endif %}">
-            {% for error in field.form.amount_inwords.errors %}
+            {% for error in field.form.amount.errors %}
               <p class="help-block">{{ error }}</p>
             {% endfor %}
           </div>
         </div>
         <div class="form-group mb-3">
-          <label class="mb-2"><b>Cash Amount</b></label>
-          {% render_field form.amount_infigure class="form-control" placeholder="Cash Amount"%}
+          <label class="mb-2"><b>Cash/Cheque</b></label>
+          {% render_field form.status class="form-control" placeholder="enter Cheque Number if Cheque Used" %}
           <div class="{% if field.errors %} invalid{% endif %}">
-            {% for error in field.form.amount_infigure.errors %}
+            {% for error in field.form.status.errors %}
               <p class="help-block">{{ error }}</p>
             {% endfor %}
           </div>

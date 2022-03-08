@@ -46,15 +46,16 @@
                         </tr>
                     </thead>
                     
-                    {% for r in receipt_list %}
+                    {% for receipt in receipt_list %}
                     <tbody>
                         <tr>
                             <th scope="row">{{forloop.counter}}</th>
-                            <td>{{ r.customer }}</td>
-                            <td>{{ r.description }}</td> 
-                            <td>{{ r.date|date:"SHORT_DATE_FORMAT" }}</td>
+                            <td>{{ receipt.customer }}</td>
+                            <td>{{ receipt.description }}</td> 
+                            <td>{{ receipt.date|date:"SHORT_DATE_FORMAT" }}</td>
                             <td class="text-center">
                                 <a href="" style="color:orange;font-size: 22px;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                <a href="{% url 'receipt:download-receipt' receipt.id %}" style="color:#008000;font-size: 22px;"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
                                 <a class="delete-quotation bs-modal mr-2" data-form-url="">
                                     <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
                                 </a>

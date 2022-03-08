@@ -6,4 +6,4 @@ class ReceiptForm(BSModalModelForm):
 	
 	class Meta:
 		model = Receipt
-		fields = ['customer', 'date', 'description', 'amount_inwords', 'amount_infigure',]
+		fields = ['customer', 'date', 'description', 'amount','status',]

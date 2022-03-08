@@ -7,10 +7,10 @@ app_name = 'receipt'
 
 urlpatterns = [    
     path('new/', ReceiptCreateView.as_view(), name='new-receipt'),    
-    # path('quotation/<int:id>/', quotation_detail, name='quotation-detail'),
+    # path('receipt/<int:id>/', receipt_detail, name='receipt-detail'),
     path('list/', receipt_list, name='receipt-list'),    
-    # path('quotation/<int:id>/update/', update_quotation, name='update-quotation'),
-    # path('quotation/<int:pk>/delete/', QuotationDeleteView.as_view(), name='delete_quotation'),
-    # path('quotation/<int:quotation_id>/print/', printable_quotation, name='print-quotation'),
-    # path('quotation/<int:quotation_id>/download/', GeneratePdf.as_view(), name='download-quotation'),  
+    # path('receipt/<int:id>/update/', update_receipt, name='update-receipt'),
+    # path('receipt/<int:pk>/delete/', receiptDeleteView.as_view(), name='delete_receipt'),
+    # path('receipt/<int:receipt_id>/print/', printable_receipt, name='print-receipt'),
+    path('receipt/<int:receipt_id>/download/', DownloadableReceipt.as_view(), name='download-receipt'),  
 ]

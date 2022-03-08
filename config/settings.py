@@ -175,7 +175,7 @@ else:
 if not DEBUG:
     BASE_URL = config('BASE_URL')
 else:
-    BASE_URL = 'http://127.0.0.1:8000'
+    BASE_URL = 'http://127.0.0.1:8000/'
 
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL ='dashboard:dashboard'

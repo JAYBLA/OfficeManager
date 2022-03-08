@@ -22,7 +22,7 @@ from django.urls import reverse_lazy
 
 from .models import *
 from customer.models import Customer
-# from .utils import render_to_pdf
+from .utils import render_to_pdf
 
 from datetime import datetime,timedelta,date
 
@@ -49,49 +49,32 @@ class ReceiptCreateView(LoginRequiredMixin, BSModalCreateView):
         return reverse_lazy('receipt:receipt-list')    
 
  
-
-# class OrderItemUpdateView(LoginRequiredMixin, BSModalUpdateView):
-#     model = OrderItem
-#     template_name = 'quotation/update_order_item_form.html'
-#     form_class = OrderItemForm
-#     success_message = 'Item Updated Successfully.'
-    
-#     def get_success_url(self):
-#         return reverse_lazy('quotation:quotation-detail', kwargs={ "id": self.kwargs['id'] })  
-   
-# class OrderItemDeleteView(LoginRequiredMixin, BSModalDeleteView):
-#     model = OrderItem
-#     template_name = 'quotation/delete_item.html'
-#     success_message = 'Success, Item was deleted.'
-#     context_object_name = 'item'
-    
-#     def get_success_url(self):
-#         return reverse_lazy('quotation:quotation-detail', kwargs={ "id": self.kwargs['id'] })  
+ 
 
 
 # @login_required()
-# def printable_quotation(request, quotation_id):
-#     quotation = get_object_or_404(Quotation, pk=quotation_id)
-#     email = quotation.customer.email
-#     customer = quotation.customer.name
+# def printable_receipt(request, receipt_id):
+#     receipt = get_object_or_404(receipt, pk=receipt_id)
+#     email = receipt.customer.email
+#     customer = receipt.customer.name
 #     c=customer.upper()
-#     quotation_no = 'JG100' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2])+"Q")
+#     receipt_no = 'JG100' + str(receipt.customer.id)+str(c[0]+str(c[1])+str(c[2])+"Q")
           
 #     data = {
-#         'quotation':quotation,
-#         'quotation_no':quotation_no,
-#         'created_at':quotation.date,
+#         'receipt':receipt,
+#         'receipt_no':receipt_no,
+#         'created_at':receipt.date,
 #         'base_url':base_url,
 #     }
     
-#     pdf = render_to_pdf('quotation/quotation-pdf-template.html', data)
+#     pdf = render_to_pdf('receipt/receipt-pdf-template.html', data)
 
-#     quotation.quotation_file.save(str(datetime.now())+'quotation.pdf', File(BytesIO(pdf.content)))
+#     receipt.receipt_file.save(str(datetime.now())+'receipt.pdf', File(BytesIO(pdf.content)))
     
 #     try:
-#         mail = EmailMessage('JAYBLA GROUP MANAGEMENT', "Find the attachment of a quotation below", to=[email], from_email=settings.EMAIL_HOST_USER)
+#         mail = EmailMessage('JAYBLA GROUP MANAGEMENT', "Find the attachment of a receipt below", to=[email], from_email=settings.EMAIL_HOST_USER)
 #         mail.content_subtype = 'html'
-#         mail.attach('quotation.pdf', pdf.getvalue(), 'application/pdf')
+#         mail.attach('receipt.pdf', pdf.getvalue(), 'application/pdf')
 #         mail.send()
 
 #         messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
@@ -103,23 +86,20 @@ class ReceiptCreateView(LoginRequiredMixin, BSModalCreateView):
 #     return redirect(to='invoice:app-home')
 
 
-# @method_decorator(login_required, name='dispatch')
-# class GeneratePdf(View):
-#     def get(self,request, quotation_id):
-#         quotation = get_object_or_404(Quotation, pk=quotation_id)
-#         customer = quotation.customer.name
-#         c=customer.upper()
-#         quotation_no = 'JG100' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2]) + 'Q')
-#         due_date = quotation.due_date
-
-
-#         data = {
-#             'quotation':quotation,
-#             'quotation_no':quotation_no,
-#             'created_at':quotation.date,
-#             'due_date':due_date,
-#             'base_url':base_url,
-#         }
-#         pdf = render_to_pdf('quotation/quotation-pdf-template.html', data)
-#         return HttpResponse(pdf, content_type='application/pdf')
+@method_decorator(login_required, name='dispatch')
+class DownloadableReceipt(View):
+    def get(self,request, receipt_id):
+        receipt = get_object_or_404(Receipt, pk=receipt_id)
+        customer = receipt.customer.name
+        c=customer.upper()
+        receipt_no = 'JB100R' + str(receipt.customer.id)+str(c[0]+str(c[1])+str(c[2]) + 'Q')
+        
+        data = {
+            'receipt':receipt,
+            'receipt_no':receipt_no,
+            'created_at':receipt.date,
+            'base_url':base_url,
+        }
+        pdf = render_to_pdf('receipt/receipt-pdf-template.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
 
