@@ -48,8 +48,21 @@ class ReceiptCreateView(LoginRequiredMixin, BSModalCreateView):
     def get_success_url(self):
         return reverse_lazy('receipt:receipt-list')    
 
- 
- 
+
+class ReceiptDeleteView(LoginRequiredMixin,BSModalDeleteView):
+    model = Receipt
+    template_name = 'receipt/delete.html'
+    success_message = 'Success: Receipt was deleted.'
+    context_object_name = 'receipt'
+    success_url = reverse_lazy('receipt:receipt-list')
+   
+
+class ReceiptUpdateView(LoginRequiredMixin, BSModalUpdateView):
+    model = Receipt
+    template_name = 'receipt/update_receipt_form.html'
+    form_class = ReceiptForm
+    success_message = 'Receipt Updated Successfully.'
+    success_url = reverse_lazy('receipt:receipt-list')
 
 
 # @login_required()
