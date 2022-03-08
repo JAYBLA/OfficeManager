@@ -33,6 +33,7 @@
     <!-- Row-1 -->
     <div class="row mt-5">
         <div class="col-xl-4 col-lg-4 col-md-4 col-xm-12">
+            <a href="{% url'customer:customer-list' %}">
             <div class="card overflow-hidden dash1-card border-0 bg-primary-transparent">
                 <div class="card-body">
                     <div class="text-center">
@@ -41,8 +42,10 @@
                     </div>
                 </div>
             </div>
+        </a>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-4 col-xm-12">
+            <a href="{% url'invoice:invoice-list' %}"></a>
             <div class="card overflow-hidden dash1-card border-0 bg-success-transparent">
                 <div class="card-body">
                     <div class="text-center">
@@ -51,8 +54,10 @@
                     </div>
                 </div>
             </div>
+        </a>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-4 col-xm-12">
+            <a href="{% url'quotation:quotation-list' %}"></a>
             <div class="card overflow-hidden dash1-card border-0 bg-warning-transparent">
                 <div class="card-body">
                     <div class="text-center">
@@ -61,6 +66,7 @@
                     </div>
                 </div>
             </div>
+        </a>
         </div>
     </div>
     <!-- End Row-1 -->
