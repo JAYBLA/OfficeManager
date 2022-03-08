@@ -232,11 +232,11 @@ def printable_invoice(request, invoice_id):
 
         messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
 
-        return redirect(to='invoice:app-home')
+        return redirect(to='invoice:invoice-list')
     except:
         messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
 
-    return redirect(to='invoice:app-home')
+    return redirect(to='invoice:invoice-list')
 
 @method_decorator(login_required, name='dispatch')
 class GeneratePdf1(View):    
