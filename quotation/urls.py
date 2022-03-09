@@ -16,7 +16,14 @@ urlpatterns = [
     
     path('<int:id>/update/', update_quotation, name='update-quotation'),
     path('<int:pk>/delete/', QuotationDeleteView.as_view(), name='delete_quotation'),
-    path('<int:quotation_id>/print/', printable_quotation, name='print-quotation'),
+    
+                            #Sending Quotation
+    path('<int:quotation_id>/send1/', send_quotationjaybla, name='send-quotation1'),
+    path('<int:quotation_id>/send2/', send_quotationrare, name='send-quotation2'),
+    path('<int:quotation_id>/send3/', send_quotationbafro, name='send-quotation3'),
+    
+    
+                            #Downloading Quotation
     path('<int:quotation_id>/download1/', GeneratePdf1.as_view(), name='download-quotation1'),
     path('<int:quotation_id>/download2/', GeneratePdf2.as_view(), name='download-quotation2'),  
     path('<int:quotation_id>/download3/', GeneratePdf3.as_view(), name='download-quotation3'),    
