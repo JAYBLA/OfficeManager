@@ -21,7 +21,13 @@ urlpatterns = [
     path('invoice/<int:id>/<int:pk>/delete/', OrderItemDeleteView.as_view(), name='delete_item'),
     path('invoice/<int:invoice_id>/update/', update_invoice, name='update-invoice'),
     path('invoice/<int:pk>/delete/', InvoiceDeleteView.as_view(), name='invoice-delete'),
-    path('invoice/<int:invoice_id>/print/', printable_invoice, name='print-invoice'),
+    
+                        #SENDING INVOICE ATTACHMENTS
+    path('invoice/<int:invoice_id>/send1/', send_invoicejaybla, name='send-invoicejaybla'),
+    path('invoice/<int:invoice_id>/send2/', send_invoicerare, name='send-invoicerare'),
+    path('invoice/<int:invoice_id>/send3/', send_invoicebafro, name='send-invoicebafro'),
+    
+                        #DOWNLOAD INVOICE ATTACHMENTS
     path('invoice/<int:invoice_id>/download1/', GeneratePdf1.as_view(), name='download-invoice1'),
     path('invoice/<int:invoice_id>/download2/', GeneratePdf2.as_view(), name='download-invoice2'), 
     path('invoice/<int:invoice_id>/download3/', GeneratePdf3.as_view(), name='download-invoice3'),  
