@@ -58,6 +58,7 @@
                                     <i class="fa fa-edit text-warning"></i>
                                   </a>
                                 <a href="{% url 'receipt:download-receipt' receipt.id %}" style="color:#008000;font-size: 22px;" download><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
+                                <a href="{% url 'receipt:send-receipt' receipt.id %}" style="color:#ff0d33;font-size: 22px;"><i class="fa fa-envelope mr-2" aria-hidden="true"></i></a>
                                 <a class="delete-receipt bs-modal mr-2" data-form-url="{% url 'receipt:delete_receipt' receipt.id %}" style="cursor: pointer;">
                                     <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
                                 </a>

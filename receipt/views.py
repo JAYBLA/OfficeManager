@@ -65,40 +65,6 @@ class ReceiptUpdateView(LoginRequiredMixin, BSModalUpdateView):
     success_url = reverse_lazy('receipt:receipt-list')
 
 
-# @login_required()
-# def printable_receipt(request, receipt_id):
-#     receipt = get_object_or_404(receipt, pk=receipt_id)
-#     email = receipt.customer.email
-#     customer = receipt.customer.name
-#     c=customer.upper()
-#     receipt_no = 'JG100' + str(receipt.customer.id)+str(c[0]+str(c[1])+str(c[2])+"Q")
-          
-#     data = {
-#         'receipt':receipt,
-#         'receipt_no':receipt_no,
-#         'created_at':receipt.date,
-#         'base_url':base_url,
-#     }
-    
-#     pdf = render_to_pdf('receipt/receipt-pdf-template.html', data)
-
-#     receipt.receipt_file.save(str(datetime.now())+'receipt.pdf', File(BytesIO(pdf.content)))
-    
-#     try:
-#         mail = EmailMessage('JAYBLA GROUP MANAGEMENT', "Find the attachment of a receipt below", to=[email], from_email=settings.EMAIL_HOST_USER)
-#         mail.content_subtype = 'html'
-#         mail.attach('receipt.pdf', pdf.getvalue(), 'application/pdf')
-#         mail.send()
-
-#         messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
-
-#         return redirect(to='invoice:app-home')
-#     except:
-#         messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
-
-#     return redirect(to='invoice:app-home')
-
-
 @method_decorator(login_required, name='dispatch')
 class DownloadableReceipt(View):
     def get(self,request, receipt_id):
@@ -116,3 +82,35 @@ class DownloadableReceipt(View):
         pdf = render_to_pdf('receipt/receipt-pdf-template.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
 
+@login_required()
+def send_receipt(request, receipt_id):
+    receipt = get_object_or_404(Receipt, pk=receipt_id)
+    email = receipt.customer.email
+    customer = receipt.customer.name
+    c=customer.upper()
+    receipt_no = 'JB100R' + str(receipt.customer.id)+str(c[0]+str(c[1])+str(c[2])+"Q")
+          
+    data = {
+        'receipt':receipt,
+        'receipt_no':receipt_no,
+        'created_at':receipt.date,
+        'base_url':base_url,
+    }
+    
+    pdf = render_to_pdf('receipt/receipt-pdf-template.html', data)
+
+    receipt.receipt_file.save(str(datetime.now())+'receipt.pdf', File(BytesIO(pdf.content)))
+    
+    try:
+        mail = EmailMessage('JAYBLA GROUP', "Find the attachment of a receipt below", to=[email], from_email=settings.EMAIL_HOST_USER)
+        mail.content_subtype = 'html'
+        mail.attach('receipt.pdf', pdf.getvalue(), 'application/pdf')
+        mail.send()
+
+        messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
+
+        return redirect(to='receipt:receipt-list')
+    except:
+        messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
+
+    return redirect(to='receipt:receipt-list')
