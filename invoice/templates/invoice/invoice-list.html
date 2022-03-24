@@ -43,9 +43,9 @@
                             <i class="fa fa-trash text-danger mr-2" style="font-size: 22px; cursor:pointer;"></i>
                         </a>  
                           <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-edit mr-2" aria-hidden="true"></i></a>                          
-                          <a href="{% url 'invoice:download-invoice1' invoice.id %}" style="color:green;font-size: 22px;" download="Invoice to {{invoice.customer.name}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
-                          <a href="{% url 'invoice:download-invoice2' invoice.id %}" style="color:#ff0d33;font-size: 22px;" download="Invoice to {{invoice.customer.name}}-"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
-                          <a href="{% url 'invoice:download-invoice3' invoice.id %}" style="color:#1b75bb;font-size: 22px;" download="Invoice to {{invoice.customer.name}}-"><i class="fa fa-download" aria-hidden="true"></i></a>                                                                   
+                          <a href="{% url 'invoice:download-invoice1' invoice.id %}" style="color:green;font-size: 22px;" download="Invoice to {{invoice.customer.name}} Created on {{invoice.date}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
+                          <a href="{% url 'invoice:download-invoice2' invoice.id %}" style="color:#ff0d33;font-size: 22px;" download="Invoice to {{invoice.customer.name}} Created on {{invoice.date}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
+                          <a href="{% url 'invoice:download-invoice3' invoice.id %}" style="color:#1b75bb;font-size: 22px;" download="Invoice to {{invoice.customer.name}} Created on {{invoice.date}}"><i class="fa fa-download" aria-hidden="true"></i></a>                                                                   
                       </td>
                   </tr>
                   {% endfor %}
