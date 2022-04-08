@@ -5,8 +5,11 @@
 
 {% if quotation %}
 <div class="row">
-    <div class="col-md-4 offset-md-8">
+    <div class="col-md-4 offset-md-4">
         <a href="{% url 'invoice:invoice-from-quotation' quotation.id %}" class="btn btn-outline-primary">Convert To Invoice</a>
+    </div>   
+    <div class="col-md-4">
+        <a href="{% url 'quotation:quotation-copy' quotation.id %}" class="btn btn-outline-primary">Copy Quotation</a>
     </div>
 </div>
 <div class="row pt-4">
@@ -144,4 +147,9 @@
   
     });
   </script>
+    <script>
+        $(document).ready(function() {
+          $('.officemanager-customer-select').select2();
+      });
+      </script>
  {% endblock javascript %}

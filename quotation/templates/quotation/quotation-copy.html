@@ -12,7 +12,7 @@
     <div class="col-sm-4 ">        
         <div class="card">
             <div class="card-header">
-                <h2 class="py-2">New Quotation</h2>
+                <h2 class="py-2">Copy Quotation</h2>
             </div>
             <div class="card-body">
                 {% if error_message %}
@@ -22,7 +22,7 @@
                 {% if error_message %}
                 <div class="alert alert-success">{{ success_message }}</div>
                 {% endif %}                
-                <form action="{% url 'quotation:new-quotation' %}" method='POST'>
+                <form action="." method='POST'>
                     {% csrf_token %}
                     <div class="form-group">
                         <div class="mb-3">
@@ -37,21 +37,8 @@
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="form-label">Quote Title</label>
-                        <input type="text" class="form-control" name="quote_title">
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="quotedescription" class="form-label">Quote Description</label>
-                        <textarea class="form-control" id="quotedescription" rows="3" name="quote_description" ></textarea>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label">Due Date</label>                                                  
-                        <input type="date" name="due_date" class="form-control" id="date-picker-example">                  
-                    </div>
-                    <div class="form-group mb-3">
                         <label class="form-label"></label>                                                  
-                        <input type="submit" value="Create Quotation" class="btn btn-primary">                   
+                        <input type="submit" value="Copy Quotation" class="btn btn-primary">                   
                     </div>
                 </form>               
             </div>

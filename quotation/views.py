@@ -23,6 +23,7 @@ from django.urls import reverse_lazy
 
 from .models import *
 from customer.models import Customer
+from quotation.models import OrderItem as QuotationOrderItem
 from .utils import render_to_pdf
 
 from datetime import datetime,timedelta,date
@@ -34,8 +35,7 @@ def quotation_create(request):
     template = 'quotation/quotation-create-list.html'
     # If no customer_id is defined, create a new invoice
     if request.method=='POST':
-        customer_id = request.POST['customer_id']
-        print("customer_id:" )
+        customer_id = request.POST['customer_id']        
         quote_title = request.POST['quote_title']
         quote_description = request.POST['quote_description']
         due_date = request.POST['due_date']
@@ -116,9 +116,10 @@ def delete_item(request, quotationitem_id, invoice_id):
 @login_required()
 def quotation_detail(request, id):
     template = 'quotation/quotation-detail.html'
-    quotation = get_object_or_404(Quotation, pk=id)
+    quotation = get_object_or_404(Quotation, pk=id)   
+
     context = {      
-        'quotation' : quotation,
+        'quotation' : quotation,       
     }
     return render(request, template, context)
 
@@ -327,3 +328,28 @@ class GeneratePdf3(View):
         }
         pdf = render_to_pdf('quotation/quotation-pdf-templatebafro.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
+
+
+@login_required()
+def quotation_copy(request,quotation_id):
+    if request.method =='POST': 
+     
+        customer_id=request.POST.get('customer_id')    
+        customer=get_object_or_404(Customer, id=customer_id)
+        quotation = get_object_or_404(Quotation, pk=quotation_id)
+        copied_quotation = Quotation(customer=customer, date=date.today(),quote_title=quotation.quote_title,quote_description=quotation.quote_description, due_date=quotation.due_date)
+        copied_quotation.save()
+
+        quotation_items =QuotationOrderItem.objects.filter(quotation_id=quotation_id)    
+        for item in quotation_items:
+            orderitem = OrderItem(description=item.description,cost=item.cost,qty=item.qty,quotation_id=copied_quotation.id)
+            orderitem.save()
+        return redirect(to='quotation:quotation-list')
+    else:
+        quotations = Quotation.objects.order_by('-date')
+        customers = Customer.objects.order_by('name')
+        context = {			
+        'quotation_list' : quotations,
+        'customer_list' : customers,		
+        }
+        return render(request,'quotation/quotation-copy.html',context)
