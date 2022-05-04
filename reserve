@@ -1,0 +1,1 @@
+download="Receipt to {{receipt.customer.name}} on {{receipt.description}}"
