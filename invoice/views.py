@@ -56,6 +56,7 @@ def invoice_create(request):
         customer_id = request.POST['customer_id']
         due_date = request.POST['due_date']
         title = request.POST['title']
+        category = request.POST['category']
                 
         if customer_id=='None':
             customers = Customer.objects.order_by('name')
@@ -66,7 +67,7 @@ def invoice_create(request):
             return render(request, template, context)
         else:
             customer = get_object_or_404(Customer, pk=customer_id)
-            invoice = Invoice(customer=customer, date=date.today(), status='Unpaid', due_date=due_date, title=title)
+            invoice = Invoice(customer=customer, date=date.today(), status='Unpaid', due_date=due_date, title=title, category=category)
             invoice.save()
             
             invoices = Invoice.objects.order_by('-date')
@@ -140,6 +141,7 @@ def update_invoice(request, invoice_id):
         invoice.due_date = datetime.strptime(request.POST['due_date'], "%m/%d/%Y")
         invoice.title = request.POST['title']
         invoice.status = request.POST['status']
+        invoice.category = request.POST['category']
         invoice.save()
     except (KeyError, Invoice.DoesNotExist):
         return render(request, template, {
@@ -229,6 +231,8 @@ def send_invoicejaybla(request, invoice_id):
         mail.content_subtype = 'html'
         mail.attach('invoice.pdf', pdf.getvalue(), 'application/pdf')
         mail.send()
+        invoice.send_date = timezone.now()
+        invoice.save()
 
         messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
 

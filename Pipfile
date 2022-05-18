@@ -11,6 +11,7 @@ django-xhtml2pdf = "*"
 django-widget-tweaks = "*"
 python-decouple = "*"
 pillow = ">=8.3.2"
+django-crontab = "*"
 
 [requires]
 python_version = "3.9"

@@ -49,8 +49,7 @@
                
                 <form action="{% url 'invoice:new-invoice' %}" method='POST'>
                     {% csrf_token %}
-                    <div class="form-group">
-                        <div class="mb-3">
+                    <div class="form-group mb-3">                        
                             <select class="officemanager-customer-select form-control" name="customer_id">
                                 <option value="None">(Select Customer)</option>
                                 {% if customer_list %}
@@ -58,8 +57,7 @@
                                     <option value="{{ customer.id }}">{{ customer.name }}</option>
                                     {% endfor %}
                                 {% endif %}
-                            </select>
-                        </div>
+                            </select>                       
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Due Date</label>                                                  
@@ -68,6 +66,13 @@
                     <div class="form-group mb-3">
                         <label class="form-label">Invoice Title</label>                                                  
                         <input type="text" name="title" class="form-control">                  
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Invoice Category</label>                                                  
+                        <select class="form-control form-select" name="category">
+                            <option value="others" selected>Others</option>
+                            <option value="hosting">Hosting</option>                                    
+                        </select>    
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label"></label>                                                  

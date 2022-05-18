@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'bootstrap_modal_forms',
     'receipt',
     'dashboard',
+    'django_crontab',
     
     
     #Django_Apps
@@ -185,3 +186,9 @@ LOGOUT_REDIRECT_URL = 'users:login'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#Cron Job Settings
+CRONJOBS = [
+    ('0 0 * * 1-5', 'invoice.cron_job.my_scheduled_job')
+]

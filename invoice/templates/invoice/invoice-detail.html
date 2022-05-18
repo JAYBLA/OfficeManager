@@ -57,6 +57,14 @@
                                         <label class="form-label">Invoice Title</label>                                                  
                                         <input type="text" name="title" class="form-control" value="{{invoice.title}}">                  
                                     </div>
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Invoice Category</label>                                                  
+                                        <select class="form-control form-select" name="category">
+                                            <option value="{{invoice.category}}" selected>{{invoice.category}}</option>
+                                            <option value="others">Others</option>
+                                            <option value="hosting">Hosting</option>                                      
+                                        </select>    
+                                    </div>
                                     <div class="form-group py-3">
                                         <div class="col-sm-12 d-flex d-inline">
                                             <input type="submit" value="Update Invoice" class="btn btn-outline-primary btn-lg">
