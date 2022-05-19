@@ -332,6 +332,7 @@ class GeneratePdf1(View):
 class GeneratePdf2(View):
     def get(self,request, invoice_id):
         invoice = get_object_or_404(Invoice, pk=invoice_id)
+        print('Invoice:',invoice)
         customer = invoice.customer.name
         c=customer.upper()
         invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
@@ -342,6 +343,7 @@ class GeneratePdf2(View):
             'created_at':invoice.date,
             'base_url':base_url,
         }
+        print('data:',data)
         pdf = render_to_pdf('invoice/pdf-templatejaybla.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
 

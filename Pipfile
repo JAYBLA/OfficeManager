@@ -7,11 +7,13 @@ verify_ssl = true
 
 [packages]
 django = "3.2"
-django-xhtml2pdf = "*"
+django-xhtml2pdf = "0.0.4"
 django-widget-tweaks = "*"
 python-decouple = "*"
 pillow = ">=8.3.2"
 django-crontab = "*"
+xhtml2pdf = "==0.2.5"
+reportlab = "==3.6.6"
 
 [requires]
 python_version = "3.9"
