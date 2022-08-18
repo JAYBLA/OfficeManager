@@ -206,44 +206,24 @@ class OrderItemDeleteView(LoginRequiredMixin, BSModalDeleteView):
 
 
 @login_required()
-def send_invoicejaybla(request, invoice_id):
-    invoice = get_object_or_404(Invoice, pk=invoice_id)
-    email = invoice.customer.email
-    customer = invoice.customer.name
-    c=customer.upper()
-    invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
-    due_date = invoice.due_date
-      
-    data = {
-        'invoice':invoice,
-        'invoice_no':invoice_no,
-        'created_at':invoice.date,
-        'due_date':due_date,
-        'base_url':base_url,
-    }
-    
-    pdf = render_to_pdf('invoice/pdf-templatejaybla.html', data)
+def email_invoice(request,invoice_id):
+    if request.method == 'POST':
+        if 'rare' in request.POST:
+            template_name = 'invoice/pdf-templaterare.html'            
+            invoice = send_invoice(request, template_name, invoice_id)
+            return invoice           
+        elif 'bafro' in request.POST:
+            template_name = 'invoice/pdf-templatebafro.html'
+            invoice = send_invoice(request, template_name, invoice_id)
+            return invoice           
+        else:
+            template_name = 'invoice/pdf-templatejaybla.html'
+            invoice = send_invoice(request, template_name, invoice_id)
+            return invoice 
 
-    invoice.invoice_file.save(str(datetime.now())+'invoice.pdf', File(BytesIO(pdf.content)))
-    
-    try:
-        mail = EmailMessage('JAYBLA GROUP', "Find the invoice below", to=[email], from_email=settings.EMAIL_HOST_USER)
-        mail.content_subtype = 'html'
-        mail.attach('invoice.pdf', pdf.getvalue(), 'application/pdf')
-        mail.send()
-        invoice.send_date = timezone.now()
-        invoice.save()
-
-        messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
-
-        return redirect(to='invoice:invoice-list')
-    except:
-        messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
-
-    return redirect(to='invoice:invoice-list')
 
 @login_required()
-def send_invoicerare(request, invoice_id):
+def send_invoice(request,template_name, invoice_id):
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     email = invoice.customer.email
     customer = invoice.customer.name
@@ -259,7 +239,7 @@ def send_invoicerare(request, invoice_id):
         'base_url':base_url,
     }
     
-    pdf = render_to_pdf('invoice/pdf-templaterare.html', data)
+    pdf = render_to_pdf(template_name, data)
 
     invoice.invoice_file.save(str(datetime.now())+'invoice.pdf', File(BytesIO(pdf.content)))
     
@@ -276,94 +256,40 @@ def send_invoicerare(request, invoice_id):
         messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
 
     return redirect(to='invoice:invoice-list')
+
+
 
 @login_required()
-def send_invoicebafro(request, invoice_id):
+def download_invoice(request,invoice_id):
+    if request.method == 'POST':
+        if 'rare' in request.POST:
+            template_name = 'invoice/pdf-templaterare.html'            
+            invoice = generate_pdf(request, template_name, invoice_id)
+            return invoice           
+        elif 'bafro' in request.POST:
+            template_name = 'invoice/pdf-templatebafro.html'
+            invoice = generate_pdf(request, template_name, invoice_id)
+            return invoice           
+        else:
+            template_name = 'invoice/pdf-templatejaybla.html'
+            invoice = generate_pdf(request, template_name, invoice_id)
+            return invoice 
+
+@login_required()
+def generate_pdf(request,template_name,invoice_id):
+    print("template_name", template_name)
     invoice = get_object_or_404(Invoice, pk=invoice_id)
-    email = invoice.customer.email
     customer = invoice.customer.name
     c=customer.upper()
-    invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
-    due_date = invoice.due_date
-      
+    invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))       
     data = {
         'invoice':invoice,
         'invoice_no':invoice_no,
         'created_at':invoice.date,
-        'due_date':due_date,
         'base_url':base_url,
     }
-    
-    pdf = render_to_pdf('invoice/pdf-templatebafro.html', data)
-
-    invoice.invoice_file.save(str(datetime.now())+'invoice.pdf', File(BytesIO(pdf.content)))
-    
-    try:
-        mail = EmailMessage('JAYBLA GROUP', "Find the invoice below", to=[email], from_email=settings.EMAIL_HOST_USER)
-        mail.content_subtype = 'html'
-        mail.attach('invoice.pdf', pdf.getvalue(), 'application/pdf')
-        mail.send()
-
-        messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
-
-        return redirect(to='invoice:invoice-list')
-    except:
-        messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
-
-    return redirect(to='invoice:invoice-list')
-
-@method_decorator(login_required, name='dispatch')
-class GeneratePdf1(View):    
-    def get(self,request, invoice_id):
-        invoice = get_object_or_404(Invoice, pk=invoice_id)
-        customer = invoice.customer.name
-        c=customer.upper()
-        invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))       
-        data = {
-            'invoice':invoice,
-            'invoice_no':invoice_no,
-            'created_at':invoice.date,
-            'base_url':base_url,
-        }
-        pdf = render_to_pdf('invoice/pdf-templaterare.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
-    
-@method_decorator(login_required, name='dispatch')
-class GeneratePdf2(View):
-    def get(self,request, invoice_id):
-        invoice = get_object_or_404(Invoice, pk=invoice_id)
-        print('Invoice:',invoice)
-        customer = invoice.customer.name
-        c=customer.upper()
-        invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
-
-        data = {
-            'invoice':invoice,
-            'invoice_no':invoice_no,
-            'created_at':invoice.date,
-            'base_url':base_url,
-        }
-        print('data:',data)
-        pdf = render_to_pdf('invoice/pdf-templatejaybla.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
-
-@method_decorator(login_required, name='dispatch')
-class GeneratePdf3(View):
-    def get(self,request, invoice_id):
-        invoice = get_object_or_404(Invoice, pk=invoice_id)
-        customer = invoice.customer.name
-        c=customer.upper()
-        invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
-
-        data = {
-            'invoice':invoice,
-            'invoice_no':invoice_no,
-            'created_at':invoice.date,
-            'base_url':base_url,
-        }
-        pdf = render_to_pdf('invoice/pdf-templatebafro.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
-
+    pdf = render_to_pdf(template_name, data)
+    return HttpResponse(pdf, content_type='application/pdf')
 
 
 @login_required()

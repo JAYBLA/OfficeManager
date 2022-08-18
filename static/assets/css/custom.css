@@ -9,3 +9,18 @@
 .btn-outline-primary:hover{
     color: #ffffff !important;
 }
+
+.bafro-btn{
+    color:#1b75bb !important;
+    font-size: 22px;
+}
+
+.rare-btn{
+    color:green !important;
+    font-size: 22px;
+}
+
+.jaybla-btn{
+    color:#ff0d33 !important;
+    font-size: 22px;
+}

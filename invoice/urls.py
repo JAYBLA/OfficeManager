@@ -23,12 +23,8 @@ urlpatterns = [
     path('invoice/<int:pk>/delete/', InvoiceDeleteView.as_view(), name='invoice-delete'),
     
                         #SENDING INVOICE ATTACHMENTS
-    path('invoice/<int:invoice_id>/send1/', send_invoicejaybla, name='send-invoicejaybla'),
-    path('invoice/<int:invoice_id>/send2/', send_invoicerare, name='send-invoicerare'),
-    path('invoice/<int:invoice_id>/send3/', send_invoicebafro, name='send-invoicebafro'),
+    path('invoice/<int:invoice_id>/send/', email_invoice, name='email-invoice'),
     
                         #DOWNLOAD INVOICE ATTACHMENTS
-    path('invoice/<int:invoice_id>/download1/', GeneratePdf1.as_view(), name='download-invoice1'),
-    path('invoice/<int:invoice_id>/download2/', GeneratePdf2.as_view(), name='download-invoice2'), 
-    path('invoice/<int:invoice_id>/download3/', GeneratePdf3.as_view(), name='download-invoice3'),  
+    path('invoice/<int:invoice_id>/download/', download_invoice, name='download-invoice'),    
 ]
