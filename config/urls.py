@@ -28,4 +28,5 @@ urlpatterns = [
     path('receipt/', include('receipt.urls', namespace='receipt')),
     path('customer/', include('customer.urls', namespace='customer')),
     path('invoice/', include('invoice.urls', namespace='invoice')),
+    path('clientmailer/', include('clientmailer.urls', namespace='clientmailer')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

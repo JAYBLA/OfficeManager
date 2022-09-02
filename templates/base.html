@@ -107,11 +107,18 @@
               <p>Paid Invoices</p>
             </a>
           </li>
-          <li class="nav-header">Receipts</li>
+          <li class="nav-header text-uppercase">Receipts</li>
           <li class="nav-item">
             <a href="{% url 'receipt:receipt-list' %}" class="nav-link">
               <i class="nav-icon fa fa-list-alt  text-light"></i>
               <p class="text">Receipts List</p>
+            </a>
+          </li>
+          <li class="nav-header text-uppercase">Client Mails</li>
+          <li class="nav-item">
+            <a href="{% url 'clientmailer:clientmail-list' %}" class="nav-link">
+              <i class="nav-icon fa fa-list-alt  text-light"></i>
+              <p class="text">Mails List</p>
             </a>
           </li>
         </ul>

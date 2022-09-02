@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'receipt',
     'dashboard',
     'django_crontab',
+    'clientmailer',
     
     
     #Django_Apps
