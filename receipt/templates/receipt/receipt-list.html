@@ -4,17 +4,13 @@
 
 {% block stylesheet %}
 <style>
-    .table-buttons{
-        background-color: #fff !important;
-        padding: 5px;
-        border-radius: 2px;
-        font-size:18px;
-    }
 
-    div.dt-buttons {
-        float: right;
-        margin-left:10px;
-    }
+  @media screen and (min-width:768px){
+    #receipt-table_filter{
+    float: right !important;
+  }
+  }
+
     .page-item.active .page-link {
     z-index: 3;
     color: #fff;
@@ -34,7 +30,7 @@
           </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table" id="quotation-table">
+                <table class="table" id="receipt-table">
                     <thead>
                         <tr>
                             <th scope="col">S/N</th>
@@ -45,8 +41,9 @@
                 
                         </tr>
                     </thead>                    
-                    {% for receipt in receipt_list %}
+                    
                     <tbody>
+                        {% for receipt in receipt_list %}
                         <tr>
                             <th scope="row">{{forloop.counter}}</th>
                             <td>{{ receipt.customer }}</td>
@@ -63,8 +60,9 @@
                                 </a>
                             </td>
                         </tr>
+                        {% endfor %}
                     </tbody>
-                    {% endfor %}
+                   
                     </table>
             </div>
         </div>
@@ -89,14 +87,19 @@
 
 
 {% block javascript %}
-<script>
-    $(function () {  
-      $(".delete-receipt").each(function () {
-          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
-      });
-    });
+    <script>
+        $(document).ready(function () {
+            $('#receipt-table').DataTable();
+        });
+    </script>
+    <script>
+        $(function () {  
+        $(".delete-receipt").each(function () {
+            $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+        });
+        });
 
-    $("#create-receipt").modalForm({
+      $("#create-receipt").modalForm({
           formURL: "{% url 'receipt:new-receipt' %}",
           modalID: "#create-modal"
       });
@@ -106,26 +109,7 @@
             formURL: $(this).data('form-url')
         });
       });
-  </script>
-  
-
-<script>
-  $(document).ready(function() {
-      var table = $('#quotation-table').DataTable( {
-      dom: 'Bfrtip',
-          buttons: ['excel', 'pdf','print'],
-          initComplete: function() {
-          $('.buttons-excel').html('<i class="fa table-buttons fa-file-excel-o text-success"/>')
-          $('.buttons-pdf').html('<i class="fa table-buttons fa-file-pdf-o text-danger"/>')
-          $('.buttons-print').html('<i class="fa table-buttons fa-print text-dark"/>')
-          }
-      } );
-  
-      table.buttons().container()
-          .appendTo( '#quotation-table_wrapper .col-md-6:eq(0)' );    
-      
-  } );
-</script>
+    </script>
 {% endblock javascript %}
     
     

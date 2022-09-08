@@ -78,8 +78,9 @@
                             </tr>
                         </thead>
                         {% if quotation_list %}
-                        {% for quotation in quotation_list %}
                         <tbody>
+                           
+                            {% for quotation in quotation_list %}
                             <tr>
                                 <th scope="row">{{forloop.counter}}</th>
                                 <td>{{ quotation.customer }}</td>
@@ -92,8 +93,9 @@
                                     </a>
                                 </td>
                             </tr>
+                            {% endfor %}
                         </tbody>
-                        {% endfor %}
+                        
                         {% endif %}
                       </table>
                 </div>

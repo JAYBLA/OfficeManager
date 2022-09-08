@@ -47,8 +47,9 @@
                         </tr>
                     </thead>
                     
-                    {% for quotation in quotation_list %}
+                    
                     <tbody>
+                        {% for quotation in quotation_list %}
                         <tr>
                             <th scope="row">{{forloop.counter}}</th>
                             <td>{{ quotation.customer }}</td>
@@ -64,8 +65,9 @@
                                 <a href="{% url 'quotation:download-quotation3' quotation.id %}" style="color:#1b75bb;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.quote_title}}"><i class="fa fa-download" aria-hidden="true"></i></a> 
                             </td>
                         </tr>
+                        {% endfor %}
                     </tbody>
-                    {% endfor %}
+                   
                     </table>
             </div>
         </div>

@@ -6,6 +6,13 @@
 {% endblock title %}
 
 {% block stylesheet %}
+<style>
+  @media screen and (min-width:768px){
+    #invoice-table_filter{
+    float: right !important;
+  }
+  }
+</style>
 {% endblock stylesheet %}
     
 {% block content %}
@@ -78,22 +85,9 @@
 {% block javascript %}
 
 <script>
-    $(document).ready(function() {
-        var table = $('#invoice-table').DataTable( {
-        dom: 'Bfrtip',
-            buttons: ['excel', 'pdf','print'],
-            initComplete: function() {
-            $('.buttons-excel').html('<i class="fa table-buttons fa-file-excel-o text-success"/>')
-            $('.buttons-pdf').html('<i class="fa table-buttons fa-file-pdf-o text-danger"/>')
-            $('.buttons-print').html('<i class="fa table-buttons fa-print text-dark"/>')
-            }
-        } );
-    
-        table.buttons().container()
-            .appendTo( '#invoice-table_wrapper .col-md-6:eq(0)' );
-
-        
-    } );
+$(document).ready(function () {
+    $('#invoice-table').DataTable();
+});
 </script>
 <script>
     $(function () {  
