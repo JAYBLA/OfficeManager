@@ -4,17 +4,12 @@
 
 {% block stylesheet %}
 <style>
-    .table-buttons{
-        background-color: #fff !important;
-        padding: 5px;
-        border-radius: 2px;
-        font-size:18px;
+    @media screen and (min-width:768px){
+        #quotation-table_filter{
+        float: right !important;
+        }
     }
 
-    div.dt-buttons {
-        float: right;
-        margin-left:10px;
-    }
     .page-item.active .page-link {
     z-index: 3;
     color: #fff;
@@ -102,19 +97,7 @@
 
 <script>
   $(document).ready(function() {
-      var table = $('#quotation-table').DataTable( {
-      dom: 'Bfrtip',
-          buttons: ['excel', 'pdf','print'],
-          initComplete: function() {
-          $('.buttons-excel').html('<i class="fa table-buttons fa-file-excel-o text-success"/>')
-          $('.buttons-pdf').html('<i class="fa table-buttons fa-file-pdf-o text-danger"/>')
-          $('.buttons-print').html('<i class="fa table-buttons fa-print text-dark"/>')
-          }
-      } );
-  
-      table.buttons().container()
-          .appendTo( '#quotation-table_wrapper .col-md-6:eq(0)' );    
-      
+      var table = $('#quotation-table').DataTable();
   } );
 </script>
 {% endblock javascript %}
