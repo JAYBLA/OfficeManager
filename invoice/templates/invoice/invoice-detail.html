@@ -111,7 +111,7 @@
                                             <i class="fa fa-edit text-warning fa-2x"></i>
                                         </a>
                                         <a class="delete-item bs-modal ms-2" data-form-url="{% url 'invoice:delete_item' invoice.id item.id %}" style="cursor:pointer">
-                                            <i class="fa fa-trash text-danger fa-2x"></i>
+                                            <i class="fa fa-trash text-danger fa-2x "></i>
                                         </a>
                                     </td>								
                                 </tr>
@@ -122,9 +122,9 @@
                         <div class="row ml-3 py-3">
                             <form action="{% url 'invoice:email-invoice' invoice.id %}" method="post">
                                 {% csrf_token %}                     
-                                  <button class="btn" type='submit' name="rare"><i class="fa fa-2x fa-envelope mr-2" aria-hidden="true"></i></button>
-                                  <button class="btn" type='submit' name='jaybla'><i class="fa fa-2x fa-envelope mr-2" aria-hidden="true"></i></button>
-                                  <button class="btn" type='submit' name='bafro'><i class="fa fa-2x fa-envelope" aria-hidden="true"></i></button>
+                                  <button class="btn rare-btn" type='submit' name="rare"><i class="fa fa-2x fa-envelope mr-2" aria-hidden="true"></i></button>
+                                  <button class="btn jaybla-btn" type='submit' name='jaybla'><i class="fa fa-2x fa-envelope mr-2" aria-hidden="true"></i></button>
+                                  <button class="btn bafro-btn" type='submit' name='bafro'><i class="fa fa-2x fa-envelope" aria-hidden="true"></i></button>
                             </form> 
                         </div>
                 </div>
