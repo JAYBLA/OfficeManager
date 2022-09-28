@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Application Form</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    @page {
+    size: letter portrait;
+    @frame header1_frame {           /* Static frame */
+        -pdf-frame-content: header_content1;
+        left: 50pt; width: 60pt; top: 50pt; height: 80pt;
+    }
+    @frame header2_frame {           /* Static frame */
+        -pdf-frame-content: header_content2;
+        left: 200pt; width: 392pt; top: 70pt; height: 80pt;
+    }
+    @frame header3_frame {           /* Static frame */
+        -pdf-frame-content: header_content3;
+        left: 502pt; width: 60pt; top: 50pt; height: 80pt;
+    }
+    @frame line { 
+        -pdf-frame-content: line;       /* Content Frame */
+        left: 50pt; width: 512pt; top: 120pt; height: 5pt;
+    }
+    @frame school_name {
+        -pdf-frame-content: school_name;
+        left: 50pt; width: 452pt; top: 135pt; height: 80pt;
+    }
+    @frame passport {
+        -pdf-frame-content: passport;
+        left: 502pt; width: 60pt; top: 135pt; height: 140pt;
+    }
+    @frame content_frame { 
+                                /* Content Frame */
+        left: 50pt; width: 512pt; top: 220pt; height: 632pt;
+    }
+    @frame footer_frame {           /* Static frame */
+        -pdf-frame-content: footer_content;
+        left: 120pt; width: 512pt; top: 772pt; height: 60pt;
+    }
+}
+h1{
+    font-size: 16px;
+}
+p{
+    font-size: 14px;
+}
+.hrItem {
+    border: none;
+    height: 1px;
+    color: #333;
+    background-color: #fff;
+}
+table {
+  width:100%;
+}
+table, th, td {
+  /* border: 1px solid black; */
+  border-collapse: collapse;
+}
+th, td {
+    font-size: 16px;
+    padding: 3px;
+    text-align: left;
+}
+</style>
+</head>
+<body>
+    <div id="header_content1">
+        <img src="http://application.f21c.co.tz/static/images/f21_logo.jpg" style="height: 100px; width: auto;" alt="">
+    </div>
+    <div id="header_content2">
+        <h1>{{school_name}}</h1>
+    </div>
+    <div id="header_content3">
+    <img src="http://application.f21c.co.tz{{school_logo.url}}" style="height: 100px; width: auto;" alt="">
+    </div>
+    <div id="line">
+        <hr class='hrItem' />
+    </div>
+    
+    <div id="school_name">
+        <h3 style="font-size:14px;">Student name: &nbsp;&nbsp;&nbsp; {{student_name}}</h3>
+        <h3 style="font-size:14px">Application to join:&nbsp;&nbsp;&nbsp; {{app_join}}</h3>
+        <h3 style="font-size:14px">Gender: &nbsp;&nbsp;&nbsp;{{gender}}</h3>
+    </div>
+    <div id="passport">
+        <img src="http://application.f21c.co.tz{{passport.url}}" style="height: 100pt; width: 80pt;" alt=""><br><br>
+    </div>
+<div id="content_frame">
+    <table id="t01">
+    <tr>
+        <td><b>Application Date</b></td>
+        <td>{{application_date}}</td>
+    </tr>
+    <tr>
+    <td><b>Student Residence</b></td>
+    <td>{{residence}}</td>
+  </tr>
+  <tr>
+    <td><b>Date of Birth</b></td>
+    <td>{{birthdate}}</td>
+  </tr>
+  <tr>
+        <td><b>Index Number</b></td>
+        <td>{{index_no}}</td> 
+    </tr>
+  <tr>
+    <td><b>Special Requirements</b></td>
+    <td>{{special_requirements}}</td>
+  </tr>
+  <tr>
+    <td><b>Parent/Gurdian Name</b></td>
+    <td>{{parent_name}}</td>
+    </tr>
+    <tr>
+        <td><b>Parent/Gurdian Contact</b></td>
+        <td>{{parent_contact}}</td>
+        </tr>
+
+        <tr>
+            <td><b>Last school attended</b></td>
+            <td>{{last_school}}</td>
+            </tr>
+            <tr>
+                <td><b>Last school attended contact</b></td>
+                <td>{{school_contact}}</td>
+                </tr>
+
+</table>
+
+
+</div>
+
+  <div id="footer_content">
+      <p style="font-size: 12px;"><b>Form number #:</b>  {{form_no}}   | <b>Application ID:</b> {{app_id}} | <b>Payment reference number:</b>  5967905</p>
+  </div>
+</body>
+</html>

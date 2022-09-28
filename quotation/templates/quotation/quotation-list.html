@@ -55,9 +55,12 @@
                                 <a class="delete-quotation bs-modal mr-2" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
                                     <i class="fa fa-trash text-danger mr-2" style="font-size: 22px;cursor:pointer;"></i>
                                 </a>
-                                <a href="{% url 'quotation:download-quotation1' quotation.id %}" style="color:green;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.quote_title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
-                                <a href="{% url 'quotation:download-quotation2' quotation.id %}" style="color:#ff0d33;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.quote_title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
-                                <a href="{% url 'quotation:download-quotation3' quotation.id %}" style="color:#1b75bb;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.quote_title}}"><i class="fa fa-download" aria-hidden="true"></i></a> 
+                                <form action="{% url 'quotation:download-quotation' quotation.id %}" method="post">
+                                  {% csrf_token %}                     
+                                    <button class="btn rare-btn" type='submit' name="rare" style="color:green;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></button>
+                                    <button class="btn jaybla-btn" type='submit' name='jaybla' style="color:#ff0d33;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></button>
+                                    <button class="btn bafro-btn" type='submit' name='bafro'  style="color:#1b75bb;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download" aria-hidden="true"></i></button>
+                                </form> 
                             </td>
                         </tr>
                         {% endfor %}

@@ -267,67 +267,43 @@ def send_quotationbafro(request, quotation_id):
     return redirect(to='quotation:quotation-list')
 
 
-@method_decorator(login_required, name='dispatch')
-class GeneratePdf1(View):
-    def get(self,request, quotation_id):
-        quotation = get_object_or_404(Quotation, pk=quotation_id)
-        customer = quotation.customer.name
-        c=customer.upper()
-        quotation_no = 'JB100R' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2]) + 'Q')
-        due_date = quotation.due_date
+@login_required()
+def download_quotation(request,quotation_id):
+    quote=get_object_or_404(Quotation, pk=quotation_id)
+    if request.method == 'POST':
+        if 'rare' in request.POST:
+            template_name = 'quotation/quotation-pdf-templaterare.html'            
+            quotation = generate_pdf(request, template_name, quotation_id)
+            return quotation           
+        elif 'bafro' in request.POST:
+            template_name = 'quotation/quotation-pdf-templatebafro.html'
+            quotation = generate_pdf(request, template_name, quotation_id)
+            return quotation           
+        else:
+            if quote.orderitem_set.count()>=9:
+                template_name = 'quotation/quotation-pdf-multijaybla.html'
+            else:
+                template_name = 'quotation/quotation-pdf-templatejaybla.html'
+            quotation = generate_pdf(request, template_name, quotation_id)
+            return quotation 
+
+@login_required()
+def generate_pdf(request,template_name,quotation_id):
+    print("template_name", template_name)
+    quotation = get_object_or_404(Quotation, pk=quotation_id)
+    customer = quotation.customer.name
+    c=customer.upper()
+    quotation_no = 'JB100R' + str(quotation.id)+str(c[0]+str(c[1])+str(c[2]))       
+    data = {
+        'quotation':quotation,
+        'quotation_no':quotation_no,
+        'created_at':quotation.date,
+        'base_url':base_url,
+    }
+    pdf = render_to_pdf(template_name, data)
+    return HttpResponse(pdf, content_type='application/pdf')
 
 
-        data = {
-            'quotation':quotation,
-            'quotation_no':quotation_no,
-            'created_at':quotation.date,
-            'due_date':due_date,
-            'base_url':base_url,
-        }
-        pdf = render_to_pdf('quotation/quotation-pdf-templaterare.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
-
-
-@method_decorator(login_required, name='dispatch')
-class GeneratePdf2(View):
-    def get(self,request, quotation_id):
-        quotation = get_object_or_404(Quotation, pk=quotation_id)
-        customer = quotation.customer.name
-        c=customer.upper()
-        quotation_no = 'JB100R' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2]) + 'Q')
-        due_date = quotation.due_date
-
-
-        data = {
-            'quotation':quotation,
-            'quotation_no':quotation_no,
-            'created_at':quotation.date,
-            'due_date':due_date,
-            'base_url':base_url,
-        }
-        pdf = render_to_pdf('quotation/quotation-pdf-templatejaybla.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
-
-
-@method_decorator(login_required, name='dispatch')
-class GeneratePdf3(View):
-    def get(self,request, quotation_id):
-        quotation = get_object_or_404(Quotation, pk=quotation_id)
-        customer = quotation.customer.name
-        c=customer.upper()
-        quotation_no = 'JB100R' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2]) + 'Q')
-        due_date = quotation.due_date
-
-
-        data = {
-            'quotation':quotation,
-            'quotation_no':quotation_no,
-            'created_at':quotation.date,
-            'due_date':due_date,
-            'base_url':base_url,
-        }
-        pdf = render_to_pdf('quotation/quotation-pdf-templatebafro.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
 
 
 @login_required()

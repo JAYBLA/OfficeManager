@@ -24,8 +24,6 @@ urlpatterns = [
     path('<int:quotation_id>/send3/', send_quotationbafro, name='send-quotation3'),
     
     
-                            #Downloading Quotation
-    path('<int:quotation_id>/download1/', GeneratePdf1.as_view(), name='download-quotation1'),
-    path('<int:quotation_id>/download2/', GeneratePdf2.as_view(), name='download-quotation2'),  
-    path('<int:quotation_id>/download3/', GeneratePdf3.as_view(), name='download-quotation3'),    
+                            #Downloading Quotation                        
+    path('quotation/<int:quotation_id>/download/', download_quotation, name='download-quotation'),    
 ]
