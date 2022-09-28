@@ -168,103 +168,67 @@ class OrderItemDeleteView(LoginRequiredMixin, BSModalDeleteView):
 
 
 @login_required()
-def send_quotationjaybla(request, quotation_id):
-    quotation = get_object_or_404(Quotation, pk=quotation_id)
-    email = quotation.customer.email
-    customer = quotation.customer.name
-    c=customer.upper()
-    quotation_no = 'JB100R' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2])+"Q")
-          
-    data = {
-        'quotation':quotation,
-        'quotation_no':quotation_no,
-        'created_at':quotation.date,
-        'base_url':base_url,
-    }
-    
-    pdf = render_to_pdf('quotation/quotation-pdf-templatejaybla.html', data)
+def email_quotation(request,quotation_id):
+    quote=get_object_or_404(Quotation, pk=quotation_id)
+    if request.method == 'POST':
+        if 'rare' in request.POST:
+            template_name = 'quotation/quotation-pdf-templaterare.html'            
+            quotation = send_invoice(request, template_name, quotation_id)
+            return quotation           
+        elif 'bafro' in request.POST:
+            template_name = 'quotation/quotation-pdf-templatebafro.html'
+            quotation = send_invoice(request, template_name, quotation_id)
+            return quotation           
+        else:
+            if quote.orderitem_set.count()>=9:
+                template_name = 'quotation/quotation-pdf-multijaybla.html'
+            else:
+                template_name = 'quotation/quotation-pdf-templatejaybla.html'
+            quotation = send_invoice(request, template_name, quotation_id)
+            return quotation 
 
-    quotation.quotation_file.save(str(datetime.now())+'quotation.pdf', File(BytesIO(pdf.content)))
-    
-    try:
-        mail = EmailMessage('JAYBLA GROUP', "Find the attachment of a quotation below", to=[email], from_email=settings.EMAIL_HOST_USER)
-        mail.content_subtype = 'html'
-        mail.attach('quotation.pdf', pdf.getvalue(), 'application/pdf')
-        mail.send()
-
-        messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
-
-        return redirect(to='quotation:quotation-list')
-    except:
-        messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
-
-    return redirect(to='quotation:quotation-list')
 
 @login_required()
-def send_quotationrare(request, quotation_id):
+def send_invoice(request,template_name, quotation_id):
     quotation = get_object_or_404(Quotation, pk=quotation_id)
     email = quotation.customer.email
     customer = quotation.customer.name
     c=customer.upper()
-    quotation_no = 'JB100R' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2])+"Q")
-          
+    quotation_no = 'JB100R' + str(quotation.id)+str(c[0]+str(c[1])+str(c[2]))
+    due_date = quotation.due_date
+      
     data = {
         'quotation':quotation,
         'quotation_no':quotation_no,
         'created_at':quotation.date,
+        'due_date':due_date,
         'base_url':base_url,
     }
     
-    pdf = render_to_pdf('quotation/quotation-pdf-templaterare.html', data)
+    pdf = render_to_pdf(template_name, data)
 
     quotation.quotation_file.save(str(datetime.now())+'quotation.pdf', File(BytesIO(pdf.content)))
     
     try:
-        mail = EmailMessage('JAYBLA GROUP', "Find the attachment of a quotation below", to=[email], from_email=settings.EMAIL_HOST_USER)
+        mail = EmailMessage(
+        'JAYBLA GROUP',
+        "Find the quotation below",
+        to=[email],
+        from_email=settings.EMAIL_HOST_USER
+        )
         mail.content_subtype = 'html'
         mail.attach('quotation.pdf', pdf.getvalue(), 'application/pdf')
         mail.send()
 
-        messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
+        messages.success(request, 'Sent successfully', extra_tags='alert alert-success')
 
         return redirect(to='quotation:quotation-list')
     except:
-        messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
+        messages.error(request, 'Something went wrong!', extra_tags='alert alert-danger')
 
     return redirect(to='quotation:quotation-list')
 
-@login_required()
-def send_quotationbafro(request, quotation_id):
-    quotation = get_object_or_404(Quotation, pk=quotation_id)
-    email = quotation.customer.email
-    customer = quotation.customer.name
-    c=customer.upper()
-    quotation_no = 'JB100R' + str(quotation.customer.id)+str(c[0]+str(c[1])+str(c[2])+"Q")
-          
-    data = {
-        'quotation':quotation,
-        'quotation_no':quotation_no,
-        'created_at':quotation.date,
-        'base_url':base_url,
-    }
-    
-    pdf = render_to_pdf('quotation/quotation-pdf-templatebafro.html', data)
 
-    quotation.quotation_file.save(str(datetime.now())+'quotation.pdf', File(BytesIO(pdf.content)))
-    
-    try:
-        mail = EmailMessage('JAYBLA GROUP', "Find the attachment of a quotation below", to=[email], from_email=settings.EMAIL_HOST_USER)
-        mail.content_subtype = 'html'
-        mail.attach('quotation.pdf', pdf.getvalue(), 'application/pdf')
-        mail.send()
-
-        messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
-
-        return redirect(to='quotation:quotation-list')
-    except:
-        messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
-
-    return redirect(to='quotation:quotation-list')
 
 
 @login_required()

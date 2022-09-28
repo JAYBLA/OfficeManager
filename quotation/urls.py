@@ -18,11 +18,8 @@ urlpatterns = [
     path('<int:id>/update/', update_quotation, name='update-quotation'),
     path('<int:pk>/delete/', QuotationDeleteView.as_view(), name='delete_quotation'),
     
-                            #Sending Quotation
-    path('<int:quotation_id>/send1/', send_quotationjaybla, name='send-quotation1'),
-    path('<int:quotation_id>/send2/', send_quotationrare, name='send-quotation2'),
-    path('<int:quotation_id>/send3/', send_quotationbafro, name='send-quotation3'),
-    
+                        #SENDING INVOICE ATTACHMENTS
+    path('quotation/<int:quotation_id>/send/', email_quotation, name='email-quotation'),   
     
                             #Downloading Quotation                        
     path('quotation/<int:quotation_id>/download/', download_quotation, name='download-quotation'),    
