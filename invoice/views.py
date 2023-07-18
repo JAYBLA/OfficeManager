@@ -56,6 +56,7 @@ def invoice_create(request):
         customer_id = request.POST['customer_id']
         due_date = request.POST['due_date']
         title = request.POST['title']
+        invoice_type = request.POST['type']
         category = request.POST['category']
                 
         if customer_id=='None':
@@ -88,9 +89,20 @@ def invoice_create(request):
 
 
 @login_required()
-def invoice_list(request):
+def formal_invoice_list(request):
     template = 'invoice/invoice-list.html'    
-    invoices = Invoice.objects.all().order_by('-date')
+    invoices = Invoice.objects.filter(invoice_type="formal").order_by('-date')
+    title = 'All Invoices'
+    context = {			
+        'invoice_list' : invoices,
+        'title':title,		
+    }
+    return render(request, template,context)
+
+@login_required()
+def proforma_invoice_list(request):
+    template = 'invoice/pinvoice-list.html'    
+    invoices = Invoice.objects.filter(invoice_type="proforma").order_by('-date')
     title = 'All Invoices'
     context = {			
         'invoice_list' : invoices,
@@ -142,6 +154,7 @@ def update_invoice(request, invoice_id):
         invoice.title = request.POST['title']
         invoice.status = request.POST['status']
         invoice.category = request.POST['category']
+        invoice.invoice_type = request.POST['type']
         invoice.save()
     except (KeyError, Invoice.DoesNotExist):
         return render(request, template, {
@@ -227,6 +240,11 @@ def send_invoice(request,template_name, invoice_id):
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     email = invoice.customer.email
     customer = invoice.customer.name
+    invoice_type = invoice.invoice_type
+    if invoice_type == 'formal':
+        invoice_head = 'invoice'
+    else:
+        invoice_head = 'proforma invoice'
     c=customer.upper()
     invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))
     due_date = invoice.due_date
@@ -235,6 +253,7 @@ def send_invoice(request,template_name, invoice_id):
         'invoice':invoice,
         'invoice_no':invoice_no,
         'created_at':invoice.date,
+        'invoice_type':invoice_head,
         'due_date':due_date,
         'base_url':base_url,
     }
@@ -279,6 +298,11 @@ def download_invoice(request,invoice_id):
 def generate_pdf(request,template_name,invoice_id):
     print("template_name", template_name)
     invoice = get_object_or_404(Invoice, pk=invoice_id)
+    invoice_type = invoice.invoice_type
+    if invoice_type == 'formal':
+        invoice_head = 'invoice'
+    else:
+        invoice_head = 'proforma invoice'
     customer = invoice.customer.name
     c=customer.upper()
     invoice_no = 'JB100R' + str(invoice.customer.id)+str(c[0]+str(c[1])+str(c[2]))       
@@ -286,6 +310,7 @@ def generate_pdf(request,template_name,invoice_id):
         'invoice':invoice,
         'invoice_no':invoice_no,
         'created_at':invoice.date,
+        'invoice_type':invoice_head,
         'base_url':base_url,
     }
     pdf = render_to_pdf(template_name, data)

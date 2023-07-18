@@ -90,9 +90,15 @@
           </li>
           <li class="nav-header">INVOICES</li>
           <li class="nav-item">
-            <a href="{% url 'invoice:invoice-list' %}" class="nav-link">
-              <i class="nav-icon fa fa-list-alt text-light"></i>
-              <p class="text">Invoices List</p>
+            <a href="{% url 'invoice:formal_invoice_list' %}" class="nav-link">
+              <i class="nav-icon fa fa-bars text-success"></i>
+              <p class="text">Formal Invoices</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'invoice:proforma_invoice_list' %}" class="nav-link">
+              <i class="nav-icon fa fa-bars text-danger"></i>
+              <p class="text">Proforma Invoices</p>
             </a>
           </li>
           <li class="nav-item">

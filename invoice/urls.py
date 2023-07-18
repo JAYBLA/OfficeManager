@@ -12,7 +12,8 @@ urlpatterns = [
     path('invoice/<int:id>/', invoice_detail, name='invoice-detail'),
     path('unpaid-invoices', invoice_unpaid, name='invoice-unpaid'),
     path('paid-invoices', invoice_paid, name='invoice-paid'),
-    path('invoices', invoice_list, name='invoice-list'),
+    path('invoices', formal_invoice_list, name='formal_invoice_list'),
+    path('proformainvoices', proforma_invoice_list, name='proforma_invoice_list'),
     path('draft-invoices', invoice_draft, name='invoice-draft'),
     
     #ITEMS

@@ -22,7 +22,7 @@
     }
     @frame header0_frame {           /* Static frame */
         -pdf-frame-content: document_heading;
-        left: 416pt; width: 600pt; top: 30pt; height: 70pt;
+        left: 410pt; width: 600pt; top: 40pt; height: 70pt;
     }
     @frame header4_frame {           /* Static frame */
         -pdf-frame-content: company_info;
@@ -89,7 +89,7 @@
         text-align: center;
     }
     h1{
-        font-size: 38px;
+        font-size: 20px;
     }
     h4{
         font-size:18px;
@@ -100,10 +100,7 @@
 
 <body>
     <div id="document_heading" style="color:#ffffff;">
-            <h1><strong>INVOICE</strong></h1>
-    </div>
-    <div id="header_content_sub">
-            <h4 style="color:#ff0d33;">{{invoice.title}}</h4>
+            <h1><strong>{{invoice_type |upper}}</strong></h1>
     </div>
     <div id="logo">
         <img src="{{base_url}}static/assets/img/logo.png" style="width: 180px; height: auto;" alt="logo">

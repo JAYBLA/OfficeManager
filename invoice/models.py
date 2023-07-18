@@ -1,12 +1,14 @@
 from django.db import models
 from customer.models import Customer
+from .choices import INVOICE_CATEGORIES,INVOICE_TYPE
 
 
 # Create your models here.
 class Invoice(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField()
-    category=models.CharField(max_length=10, default='others')
+    category=models.CharField(max_length=10,choices=INVOICE_CATEGORIES, default='others')
+    invoice_type = models.CharField(max_length=10,choices=INVOICE_TYPE, default='formal')
     status = models.CharField(max_length=10)
     title = models.CharField(max_length=100)
     due_date = models.DateField()
