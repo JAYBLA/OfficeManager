@@ -229,8 +229,8 @@ def email_invoice(request,invoice_id):
             template_name = 'invoice/pdf-templatebafro.html'
             invoice = send_invoice(request, template_name, invoice_id)
             return invoice           
-        else:
-            template_name = 'invoice/pdf-templatejaybla.html'
+        else:            
+            template_name = 'invoice/pdf-invoicejaybla.html'
             invoice = send_invoice(request, template_name, invoice_id)
             return invoice 
 
@@ -290,7 +290,7 @@ def download_invoice(request,invoice_id):
             invoice = generate_pdf(request, template_name, invoice_id)
             return invoice           
         else:
-            template_name = 'invoice/pdf-templatejaybla.html'
+            template_name = 'invoice/pdf-invoicejaybla.html'
             invoice = generate_pdf(request, template_name, invoice_id)
             return invoice 
 
