@@ -12,7 +12,7 @@ from datetime import timedelta
 base_url = settings.BASE_URL
 
 def my_scheduled_job():
-  invoices = Invoice.objects.filter(category=hosting, status=Unpaid)
+  invoices = Invoice.objects.filter(category='hosting', status='Unpaid', invoice_type='formal')
   for invoice in invoices:
     if (invoice.send_date + timedelta(days=7)) >= timezone.now():
       email = invoice.customer.email
