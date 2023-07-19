@@ -57,7 +57,7 @@
     .table thead tr{
         text-align: left;
         color: #fff;
-        background-color: #ff0d33;       
+        background-color: #008000;       
     }
 
     td, th {
@@ -84,7 +84,7 @@
         background-color: #e7e7e8;
     }
     .GTotalColumn{
-        background-color: #ff0d33;
+        background-color: #008000;
         color: #ffffff;
         font-weight: 700;
     }
@@ -104,13 +104,13 @@
         {% endif %}
    
     <div id="invoice_info" style="color:#000000;">            
-        <b style="color:#ff0d33;">INVOICE NO:</b> &nbsp;<strong>{{invoice_no |upper}}</strong><br>        
-        <b style="color:#ff0d33;">CREATED DATE:</b> {{invoice.date |upper}}<br>
-        <b style="color:#ff0d33;">DUE DATE:</b> {{invoice.due_date |upper}}
+        <b style="color:#008000;">INVOICE NO:</b> &nbsp;<strong>{{invoice_no |upper}}</strong><br>        
+        <b style="color:#008000;">CREATED DATE:</b> {{invoice.date |upper}}<br>
+        <b style="color:#008000;">DUE DATE:</b> {{invoice.due_date |upper}}
     </div>
 
     <div id="customer_info">
-        <strong style="color:#ff0d33;">INVOICE TO:</strong><br>
+        <strong style="color:#008000;">INVOICE TO:</strong><br>
         <strong>{{invoice.customer.name|upper}}</strong><br>
         {{invoice.customer.email}}<br>
         {{invoice.customer.phone}}
