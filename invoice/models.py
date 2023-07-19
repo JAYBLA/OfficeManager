@@ -8,7 +8,7 @@ class Invoice(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField()
     category=models.CharField(max_length=10,choices=INVOICE_CATEGORIES, default='others')
-    invoice_type = models.CharField(max_length=10,choices=INVOICE_TYPE, default='formal')
+    invoice_type = models.CharField(max_length=10,choices=INVOICE_TYPE, default='proforma')
     status = models.CharField(max_length=10)
     title = models.CharField(max_length=100)
     due_date = models.DateField()

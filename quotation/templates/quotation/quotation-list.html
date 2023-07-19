@@ -51,16 +51,22 @@
                             <td>{{ quotation.quote_title }}</td> 
                             <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
                             <td class="text-center">
-                                <a href="{% url 'quotation:quotation-detail' quotation.id %}" style="color:orange;font-size: 22px;cursor:pointer;"><i class="fa fa-edit mr-2" aria-hidden="true"></i></a>
-                                <a class="delete-quotation bs-modal mr-2" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
-                                    <i class="fa fa-trash text-danger mr-2" style="font-size: 22px;cursor:pointer;"></i>
-                                </a>
-                                <form action="{% url 'quotation:download-quotation' quotation.id %}" method="post">
-                                  {% csrf_token %}                     
-                                    <button class="btn rare-btn" type='submit' name="rare" style="color:green;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></button>
-                                    <button class="btn jaybla-btn" type='submit' name='jaybla' style="color:#ff0d33;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></button>
-                                    <button class="btn bafro-btn" type='submit' name='bafro'  style="color:#1b75bb;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download" aria-hidden="true"></i></button>
-                                </form> 
+                              <div class="row">
+                                <div class="col-4">
+                                  <a href="{% url 'quotation:quotation-detail' quotation.id %}" style="color:orange;font-size: 22px;cursor:pointer;"><i class="fa fa-edit mr-2" aria-hidden="true"></i></a>
+                                  <a class="delete-quotation bs-modal mr-2" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
+                                      <i class="fa fa-trash text-danger mr-2" style="font-size: 22px;cursor:pointer;"></i>
+                                  </a>
+                                </div>
+                                <div class="col-8">
+                                  <form action="{% url 'quotation:download-quotation' quotation.id %}" method="post">
+                                    {% csrf_token %}                     
+                                      <button class="btn rare-btn" type='submit' name="rare" style="color:green;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></button>
+                                      <button class="btn jaybla-btn" type='submit' name='jaybla' style="color:#ff0d33;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></button>
+                                      <button class="btn bafro-btn" type='submit' name='bafro'  style="color:#1b75bb;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download" aria-hidden="true"></i></button>
+                                  </form>
+                                </div>
+                              </div>
                             </td>
                         </tr>
                         {% endfor %}
