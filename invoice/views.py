@@ -232,7 +232,7 @@ def send_invoice(request,template_name, invoice_id):
     invoice.invoice_file.save(str(datetime.now())+'invoice.pdf', File(BytesIO(pdf.content)))
     
     try:
-        mail = EmailMessage('JAYBLA GROUP', email_body, from_email=settings.EMAIL_HOST_USER , to=[email], )
+        mail = EmailMessage('JAYBLA GROUP', email_body, from_email='info@jayblagroup.com' , to=[email], )
         mail.content_subtype = 'html'
         mail.attach('invoice.pdf', pdf.getvalue(), 'application/pdf')
         mail.send()
