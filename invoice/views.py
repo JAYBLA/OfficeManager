@@ -68,7 +68,7 @@ def invoice_create(request):
             return render(request, template, context)
         else:
             customer = get_object_or_404(Customer, pk=customer_id)
-            invoice = Invoice(customer=customer, date=date.today(), status='Unpaid', due_date=due_date, title=title, category=category)
+            invoice = Invoice(customer=customer, date=date.today(), status='Unpaid', due_date=due_date, title=title, category=category, invoice_type=invoice_type)
             invoice.save()
             
             invoices = Invoice.objects.order_by('-date')
@@ -238,6 +238,7 @@ def email_invoice(request,invoice_id):
 @login_required()
 def send_invoice(request,template_name, invoice_id):
     invoice = get_object_or_404(Invoice, pk=invoice_id)
+    email_subject = 'Find an Invoice on' +str(invoice.title)
     email = invoice.customer.email
     customer = invoice.customer.name
     invoice_type = invoice.invoice_type
@@ -263,7 +264,7 @@ def send_invoice(request,template_name, invoice_id):
     invoice.invoice_file.save(str(datetime.now())+'invoice.pdf', File(BytesIO(pdf.content)))
     
     try:
-        mail = EmailMessage('JAYBLA GROUP', "Find the invoice below", to=[email], from_email=settings.EMAIL_HOST_USER)
+        mail = EmailMessage('JAYBLA GROUP', subject=email_subject, to=[email], from_email=settings.EMAIL_HOST_USER)
         mail.content_subtype = 'html'
         mail.attach('invoice.pdf', pdf.getvalue(), 'application/pdf')
         mail.send()
