@@ -157,7 +157,7 @@ class InvoiceDeleteView(LoginRequiredMixin,BSModalDeleteView):
     template_name = 'invoice/delete.html'
     success_message = 'Success: Invoice was deleted.'
     context_object_name = 'invoice'
-    success_url = reverse_lazy('invoice:proforma_invoice_list')
+    success_url = reverse_lazy('invoice:invoice_list')
     
 
 @login_required()
@@ -259,11 +259,11 @@ def send_invoice(request,template_name, invoice_id):
 
         messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')
 
-        return redirect(to='invoice:proforma_invoice_list')
+        return redirect(to='invoice:invoice_list')
     except:
         messages.error(request, 'Something went wrong while sending an attachment!', extra_tags='alert alert-danger')
 
-    return redirect(to='invoice:proforma_invoice_list')
+    return redirect(to='invoice:invoice_list')
 
 
 
@@ -316,5 +316,5 @@ def invoice_from_quotation(request,quotation_id):
     for item in quotation_items:
         orderitem = OrderItem(description=item.description,cost=item.cost,qty=item.qty,invoice_id=invoice.id)
         orderitem.save()
-    return redirect(to='invoice:proforma_invoice_list')
+    return redirect(to='invoice:invoice_list')
     
