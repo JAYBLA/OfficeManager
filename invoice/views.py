@@ -89,27 +89,15 @@ def invoice_create(request):
 
 
 @login_required()
-def formal_invoice_list(request):
+def invoice_list(request):
     template = 'invoice/invoice-list.html'    
-    invoices = Invoice.objects.filter(invoice_type="formal").order_by('-date')
+    invoices = Invoice.objects.all().order_by('-date')
     title = 'All Invoices'
     context = {			
         'invoice_list' : invoices,
         'title':title,		
     }
     return render(request, template,context)
-
-@login_required()
-def proforma_invoice_list(request):
-    template = 'invoice/pinvoice-list.html'    
-    invoices = Invoice.objects.filter(invoice_type="proforma").order_by('-date')
-    title = 'All Invoices'
-    context = {			
-        'invoice_list' : invoices,
-        'title':title,		
-    }
-    return render(request, template,context)
-
 
 @login_required()
 def invoice_unpaid(request):
