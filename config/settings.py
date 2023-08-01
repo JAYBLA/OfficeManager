@@ -167,6 +167,7 @@ if not DEBUG:
     EMAIL_PORT = config('EMAIL_PORT', cast=int)
     EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool, default=True)
     EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+    ADMINS=[("Jumanne", "jayblagroup@gmail.com")]
 else:
     EMAIL_HOST_USER = 'noreply@jayblagroup.com'
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
