@@ -185,26 +185,9 @@ class OrderItemDeleteView(LoginRequiredMixin, BSModalDeleteView):
         return reverse_lazy('invoice:invoice-detail', kwargs={ "id": self.kwargs['id'] })  
 
 
-
 @login_required()
-def email_invoice(request,invoice_id):
-    if request.method == 'POST':
-        if 'rare' in request.POST:
-            template_name = 'invoice/pdf-templaterare.html'            
-            invoice = send_invoice(request, template_name, invoice_id)
-            return invoice           
-        elif 'bafro' in request.POST:
-            template_name = 'invoice/pdf-templatebafro.html'
-            invoice = send_invoice(request, template_name, invoice_id)
-            return invoice           
-        else:            
-            template_name = 'invoice/pdf-invoicejaybla.html'
-            invoice = send_invoice(request, template_name, invoice_id)
-            return invoice 
-
-
-@login_required()
-def send_invoice(request,template_name, invoice_id):
+def email_invoice(request, invoice_id):
+    template_name = 'invoice/pdf-invoicejaybla.html'
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     email_body = 'Please find the attachment of invoice on' + ' ' + str(invoice.title)
     email = invoice.customer.email
@@ -232,7 +215,7 @@ def send_invoice(request,template_name, invoice_id):
     invoice.invoice_file.save(str(datetime.now())+'invoice.pdf', File(BytesIO(pdf.content)))
     
     try:
-        mail = EmailMessage('JAYBLA GROUP', email_body, from_email='info@jayblagroup.com' , to=[email], )
+        mail = EmailMessage('JAYBLA GROUP', email_body, from_email='info@jayblagroup.co.tz' , to=[email], )
         mail.content_subtype = 'html'
         mail.attach('invoice.pdf', pdf.getvalue(), 'application/pdf')
         mail.send()
@@ -246,26 +229,9 @@ def send_invoice(request,template_name, invoice_id):
     return redirect(to='invoice:invoice_list')
 
 
-
 @login_required()
 def download_invoice(request,invoice_id):
-    if request.method == 'POST':
-        if 'rare' in request.POST:
-            template_name = 'invoice/pdf-templaterare.html'            
-            invoice = generate_pdf(request, template_name, invoice_id)
-            return invoice           
-        elif 'bafro' in request.POST:
-            template_name = 'invoice/pdf-templatebafro.html'
-            invoice = generate_pdf(request, template_name, invoice_id)
-            return invoice           
-        else:
-            template_name = 'invoice/pdf-invoicejaybla.html'
-            invoice = generate_pdf(request, template_name, invoice_id)
-            return invoice 
-
-@login_required()
-def generate_pdf(request,template_name,invoice_id):
-    print("template_name", template_name)
+    template_name = 'invoice/pdf-invoicejaybla.html'    
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     invoice_type = invoice.invoice_type
     if invoice_type == 'formal':

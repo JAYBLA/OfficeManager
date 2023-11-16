@@ -168,29 +168,12 @@ class OrderItemDeleteView(LoginRequiredMixin, BSModalDeleteView):
 
 
 @login_required()
-def email_quotation(request,quotation_id):
-    quote=get_object_or_404(Quotation, pk=quotation_id)
-    if request.method == 'POST':
-        if 'rare' in request.POST:
-            template_name = 'quotation/quotation-pdf-templaterare.html'            
-            quotation = send_invoice(request, template_name, quotation_id)
-            return quotation           
-        elif 'bafro' in request.POST:
-            template_name = 'quotation/quotation-pdf-templatebafro.html'
-            quotation = send_invoice(request, template_name, quotation_id)
-            return quotation           
-        else:
-            if quote.orderitem_set.count()>=9:
-                template_name = 'quotation/quotation-pdf-multijaybla.html'
-            else:
-                template_name = 'quotation/quotation-pdf-templatejaybla.html'
-            quotation = send_invoice(request, template_name, quotation_id)
-            return quotation 
-
-
-@login_required()
-def send_invoice(request,template_name, quotation_id):
+def email_quotation(request, quotation_id):
     quotation = get_object_or_404(Quotation, pk=quotation_id)
+    if quotation.orderitem_set.count()>=9:
+        template_name = 'quotation/quotation-pdf-multijaybla.html'
+    else:
+        template_name = 'quotation/quotation-pdf-templatejaybla.html'
     email = quotation.customer.email
     customer = quotation.customer.name
     c=customer.upper()
@@ -212,7 +195,7 @@ def send_invoice(request,template_name, quotation_id):
     try:
         mail = EmailMessage(
         'JAYBLA GROUP',
-        "Find the quotation below",
+        "Find the Quotation below",
         to=[email],
         from_email=settings.EMAIL_HOST_USER
         )
@@ -228,33 +211,13 @@ def send_invoice(request,template_name, quotation_id):
 
     return redirect(to='quotation:quotation-list')
 
-
-
-
 @login_required()
-def download_quotation(request,quotation_id):
-    quote=get_object_or_404(Quotation, pk=quotation_id)
-    if request.method == 'POST':
-        if 'rare' in request.POST:
-            template_name = 'quotation/quotation-pdf-templaterare.html'            
-            quotation = generate_pdf(request, template_name, quotation_id)
-            return quotation           
-        elif 'bafro' in request.POST:
-            template_name = 'quotation/quotation-pdf-templatebafro.html'
-            quotation = generate_pdf(request, template_name, quotation_id)
-            return quotation           
-        else:
-            if quote.orderitem_set.count()>=9:
-                template_name = 'quotation/quotation-pdf-multijaybla.html'
-            else:
-                template_name = 'quotation/quotation-pdf-templatejaybla.html'
-            quotation = generate_pdf(request, template_name, quotation_id)
-            return quotation 
-
-@login_required()
-def generate_pdf(request,template_name,quotation_id):
-    print("template_name", template_name)
+def download_quotation(request,quotation_id):    
     quotation = get_object_or_404(Quotation, pk=quotation_id)
+    if quotation.orderitem_set.count()>=9:
+        template_name = 'quotation/quotation-pdf-multijaybla.html'
+    else:
+        template_name = 'quotation/quotation-pdf-templatejaybla.html'
     customer = quotation.customer.name
     c=customer.upper()
     quotation_no = 'JB100R' + str(quotation.id)+str(c[0]+str(c[1])+str(c[2]))       

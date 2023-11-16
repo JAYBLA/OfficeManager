@@ -57,15 +57,8 @@
                           </a>  
                             <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-edit mr-2" aria-hidden="true"></i></a>
                           </div>
-                            <div class="col-8">
-                              <form action="{% url 'invoice:download-invoice' invoice.id %}" method="post">
-                                {% csrf_token %}
-                                
-                                  
-                                    <button class="btn bafro-btn" type='submit' name="rare" style="font-size: 22px;" download="Invoice to {{invoice.customer.name}} Created on {{invoice.date}}"><i class="text-success fa fa-download mr-2" aria-hidden="true"></i></button>
-                                  <button class="btn jaybla-btn" type='submit' name='jaybla' style="color:#ff0d33;font-size: 22px;" download="Invoice to {{invoice.customer.name}} Created on {{invoice.date}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></button>
-                                  <button class="btn bafro-btn" type='submit' name='bafro'  style="color:#1b75bb;font-size: 22px;" download="Invoice to {{invoice.customer.name}} Created on {{invoice.date}}"><i class="fa fa-download" aria-hidden="true"></i></button>                             
-                              </form>
+                          <div class="col-8">
+                              <a href="{% url 'invoice:download-invoice' invoice.id %}" style="color:#ff0d33;font-size: 22px;" download="Invoice to {{invoice.customer.name}} on {{invoice.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
                           </div>  
                         </div>                                                                    
                       </td>

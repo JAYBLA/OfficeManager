@@ -93,12 +93,7 @@
                                     </table>
                                 </div>						  	
                                 <div class="row ml-3 py-3">
-                                    <form action="{% url 'quotation:email-quotation' quotation.id %}" method="post">
-                                        {% csrf_token %}                     
-                                          <button class="btn rare-btn" type='submit' name="rare"><i class="fa fa-2x fa-envelope mr-2" aria-hidden="true"></i></button>
-                                          <button class="btn jaybla-btn" type='submit' name='jaybla'><i class="fa fa-2x fa-envelope mr-2" aria-hidden="true"></i></button>
-                                          <button class="btn bafro-btn" type='submit' name='bafro'><i class="fa fa-2x fa-envelope" aria-hidden="true"></i></button>
-                                    </form> 
+                                    <a href="{% url 'quotation:email-quotation' quotation.id %}"><i class="fa fa-2x fa-envelope" style="color: #ff0d33;"></i></a>
                                 </div>
             </div>
         </div>
@@ -112,8 +107,7 @@
           <div class="modal-content">
           </div>
         </div>
-      </div>
-      
+      </div>      
       <!-- Modal 2 with id="modal" -->
       <div class="modal fade" tabindex="-1" role="dialog" id="modal">
         <div class="modal-dialog" role="document">

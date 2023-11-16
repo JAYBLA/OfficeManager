@@ -59,12 +59,7 @@
                                   </a>
                                 </div>
                                 <div class="col-8">
-                                  <form action="{% url 'quotation:download-quotation' quotation.id %}" method="post">
-                                    {% csrf_token %}                     
-                                      <button class="btn rare-btn" type='submit' name="rare" style="color:green;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></button>
-                                      <button class="btn jaybla-btn" type='submit' name='jaybla' style="color:#ff0d33;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></button>
-                                      <button class="btn bafro-btn" type='submit' name='bafro'  style="color:#1b75bb;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.title}}"><i class="fa fa-download" aria-hidden="true"></i></button>
-                                  </form>
+                                  <a href="{% url 'quotation:download-quotation' quotation.id %}" style="color:#ff0d33;font-size: 22px;" download="Quotation to {{quotation.customer.name}} on {{quotation.quote_title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
                                 </div>
                               </div>
                             </td>

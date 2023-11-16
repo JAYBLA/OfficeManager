@@ -18,7 +18,7 @@ urlpatterns = [
     path('<int:id>/update/', update_quotation, name='update-quotation'),
     path('<int:pk>/delete/', QuotationDeleteView.as_view(), name='delete_quotation'),
     
-                        #SENDING INVOICE ATTACHMENTS
+                        #SENDING QUOTATION ATTACHMENTS
     path('quotation/<int:quotation_id>/send/', email_quotation, name='email-quotation'),   
     
                             #Downloading Quotation                        
