@@ -189,7 +189,7 @@ class OrderItemDeleteView(LoginRequiredMixin, BSModalDeleteView):
 def email_invoice(request, invoice_id):
     template_name = 'invoice/pdf-invoicejaybla.html'
     invoice = get_object_or_404(Invoice, pk=invoice_id)
-    email_body = 'Please find the attachment of invoice on' + ' ' + str(invoice.title)
+    email_body = 'Please find the attachment of an invoice on' + ' ' + str(invoice.title)
     email = invoice.customer.email
     customer = invoice.customer.name
     invoice_type = invoice.invoice_type
@@ -217,7 +217,7 @@ def email_invoice(request, invoice_id):
     try:
         mail = EmailMessage('JAYBLA GROUP', email_body, from_email='info@jayblagroup.co.tz' , to=[email], )
         mail.content_subtype = 'html'
-        mail.attach('invoice.pdf', pdf.getvalue(), 'application/pdf')
+        mail.attach('Invoice on'+ ' ' + str(invoice.title)+'.pdf', pdf.getvalue(), 'application/pdf')
         mail.send()
 
         messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')

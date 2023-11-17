@@ -99,12 +99,12 @@ def send_receipt(request, receipt_id):
     
     pdf = render_to_pdf('receipt/receipt-pdf-template.html', data)
 
-    receipt.receipt_file.save(str(datetime.now())+'receipt.pdf', File(BytesIO(pdf.content)))
+    receipt.receipt_file.save('Receipt On' + str(receipt.description) + str(datetime.now())+'.pdf', File(BytesIO(pdf.content)))
     
     try:
-        mail = EmailMessage('JAYBLA GROUP', "Find the attachment of a receipt below", to=[email], from_email=settings.EMAIL_HOST_USER)
+        mail = EmailMessage('JAYBLA GROUP', "Find the attachment of a receipt on" +' '+ str(receipt.description) , to=[email], from_email=settings.EMAIL_HOST_USER)
         mail.content_subtype = 'html'
-        mail.attach('receipt.pdf', pdf.getvalue(), 'application/pdf')
+        mail.attach('Receipt On' + str(receipt.description) + '.pdf', pdf.getvalue(), 'application/pdf')
         mail.send()
 
         messages.success(request, 'Success, Invoice was Sent successfully', extra_tags='alert alert-success')

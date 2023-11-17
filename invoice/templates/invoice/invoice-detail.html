@@ -128,12 +128,7 @@
                                 <div class="d-flex justify-content-end mb-3"><strong>Total:{{ invoice.total_items }}</strong></div>
                             </table>                                
                         <div class="row ml-3 py-3">
-                            <form action="{% url 'invoice:email-invoice' invoice.id %}" method="post">
-                                {% csrf_token %}                     
-                                  <button class="btn rare-btn" type='submit' name="rare"><i class="fa fa-2x fa-envelope mr-2" aria-hidden="true"></i></button>
-                                  <button class="btn jaybla-btn" type='submit' name='jaybla'><i class="fa fa-2x fa-envelope mr-2" aria-hidden="true"></i></button>
-                                  <button class="btn bafro-btn" type='submit' name='bafro'><i class="fa fa-2x fa-envelope" aria-hidden="true"></i></button>
-                            </form> 
+                            <a href="{% url 'invoice:email-invoice' invoice.id %}"><i class="fa fa-2x fa-envelope" style="color: #ff0d33;"></i></a>
                         </div>
                 </div>
             </div>
