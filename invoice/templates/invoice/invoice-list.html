@@ -58,7 +58,7 @@
                             <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-edit mr-2" aria-hidden="true"></i></a>
                           </div>
                           <div class="col-8">
-                              <a href="{% url 'invoice:download-invoice' invoice.id %}" style="color:#ff0d33;font-size: 22px;" download="Invoice to {{invoice.customer.name}} on {{invoice.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
+                              <a href="{% url 'invoice:download-invoice' invoice.id %}" style="color:green;font-size: 22px;" download="Invoice to {{invoice.customer.name}} on {{invoice.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
                           </div>  
                         </div>                                                                    
                       </td>
