@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -155,8 +156,8 @@ STATICFILES_DIRS = [
 ]
 
 if not DEBUG:
-    MEDIA_ROOT = '/home/jayblaco/officemanager.jaybla.com/media'
-    STATIC_ROOT = '/home/jayblaco/officemanager.jaybla.com/static'
+    MEDIA_ROOT = '/home/jayblaco/officemanager.jayblagroup.co.tz/media'
+    STATIC_ROOT = '/home/jayblaco/officemanager.jayblagroup.co.t/static'
 else:
     MEDIA_ROOT = 'media/'   
     

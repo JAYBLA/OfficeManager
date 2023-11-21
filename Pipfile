@@ -14,6 +14,7 @@ pillow = ">=8.3.2"
 django-crontab = "*"
 xhtml2pdf = "==0.2.5"
 reportlab = "==3.6.6"
+django-cleanup = "*"
 
 [requires]
 python_version = "3.7"
