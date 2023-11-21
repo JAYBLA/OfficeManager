@@ -157,7 +157,7 @@ STATICFILES_DIRS = [
 
 if not DEBUG:
     MEDIA_ROOT = '/home/jayblaco/officemanager.jayblagroup.co.tz/media'
-    STATIC_ROOT = '/home/jayblaco/officemanager.jayblagroup.co.t/static'
+    STATIC_ROOT = '/home/jayblaco/officemanager.jayblagroup.co.tz/static'
 else:
     MEDIA_ROOT = 'media/'   
     
