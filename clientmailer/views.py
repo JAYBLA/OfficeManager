@@ -78,7 +78,7 @@ def send_client_mail(request, mail_id):
     
     subject = mail_subject
     text_content = client_mail.content
-    from_email='info@jayblagroup.com'
+    from_email='info@jayblagroup.co.tz'
     to = recipient_email 
 
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
