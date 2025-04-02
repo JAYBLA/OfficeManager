@@ -1,15 +1,11 @@
-from django.contrib import admin
 from django.urls import path
-from .views import *
-
+from . import views
 
 app_name = 'receipt'
 
-urlpatterns = [    
-    path('new/', ReceiptCreateView.as_view(), name='new-receipt'), 
-    path('list/', receipt_list, name='receipt-list'), 
-    path('receipt/<int:pk>/delete/', ReceiptDeleteView.as_view(), name='delete_receipt'),
-    path('receipt/<int:pk>/update/', ReceiptUpdateView.as_view(), name='update_receipt'),
-    path('<int:receipt_id>/send1/', send_receipt, name='send-receipt'),
-    path('receipt/<int:receipt_id>/download/', DownloadableReceipt.as_view(), name='download-receipt'),  
+urlpatterns = [
+    path('list/', views.receipt_list, name='receipt_list'),
+    path('create/', views.receipt_create, name='receipt_create'),
+    path('update/<int:pk>/', views.receipt_update, name='receipt_update'),
+    path('delete/<int:pk>/', views.receipt_delete, name='receipt_delete'),
 ]

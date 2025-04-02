@@ -29,15 +29,6 @@
                                         <div class="col-md-6 col-sm-6 ">
                                             <input type="text" class="form-control" name="date" id="invoicedate" value="{{ invoice.date|date:"SHORT_DATE_FORMAT" }}">
                                         </div>
-                                        <script type="text/javascript">
-                                            $(function () {
-                                                $('#invoicedate').datepicker({
-                                                    todayBtn: "linked",
-                                                    orientation: "bottom left",
-                                                    autoclose: true
-                                                });
-                                            });
-                                        </script>
                                     </div>
                                     <div class="item form-group">
                                         <label for="middle-name" class="col-md-3 col-sm-3 label-align">Status</label>
@@ -173,4 +164,13 @@
   
     });
   </script>
+  <script type="text/javascript">
+    $(function () {
+        $('#invoicedate').datepicker({
+            todayBtn: "linked",
+            orientation: "bottom left",
+            autoclose: true
+        });
+    });
+</script>
  {% endblock javascript %}

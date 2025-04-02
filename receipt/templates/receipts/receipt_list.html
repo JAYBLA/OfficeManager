@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Receipts{% endblock title %}
+
+{% block stylesheet %}
+
+{% endblock stylesheet %}
+
+
+{% block content %}
+<div class="card">
+    <div class="card-header">   
+        <h2 class="py-2">{{heading}}
+            <button class="btn btn-outline-primary btn-lg float-right create-receipt">New Receipt</button> 
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" id="invoice-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for receipt in receipts %}
+                    <tr>
+                        <td>{{ receipt.id }}</td>
+                        <td>{{ receipt.customer }}</td>
+                        <td>{{ receipt.date }}</td>
+                        <td>{{ receipt.amount }}</td>
+                        <td>{{ receipt.status }}</td>
+                        <td>
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#updateModal{{ receipt.id }}"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ receipt.id }}"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+      </div>
+      </div>
+  </div>
+
+  <!-- THE MODAL-->
+<div class="modal fade" id="modal-receipt" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block javascript %}
+<script>
+    $(function () {
+
+        $(".create-receipt").click(function () {
+          $.ajax({
+            url: "{% url 'receipt:receipt_create' %}",
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function () {
+              $("#modal-receipt").modal("show");
+            },
+            success: function (data) {
+              $("#modal-receipt .modal-content").html(data.html_receipt_form);
+            }
+          });
+        });
+      
+      });
+</script>
+{% endblock javascript %}
+    
+    
