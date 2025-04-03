@@ -11,18 +11,19 @@
 <div class="card">
     <div class="card-header">   
         <h2 class="py-2">{{heading}}
-            <button class="btn btn-outline-primary btn-lg float-right create-receipt">New Receipt</button> 
+            <button class="btn btn-outline-primary btn-lg float-right create-receipt" data-url="{% url 'receipt:receipt_create' %}">New Receipt</button> 
         </h2>
       </div>
       <div class="card-body">
         <div class="table-responsive">
-            <table class="table" id="items-lis-table">
+            <table class="table" id="items-list-table">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Customer</th>
+                        <th>Customer</th>                        
+                        <th>Description</th>
                         <th>Date</th>
-                        <th>Amount</th>
+                        <th>Amount</th>                        
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -47,26 +48,26 @@
 
 {% block javascript %}
 <script>
-    $(function () {
+  //Form Loading Handler
+$(function () {
+  var loadForm = function(){
+    var btn = $(this);
+    $.ajax({
+      url: btn.attr("data-url"),
+      type: 'get',
+      dataType: 'json',
+      beforeSend: function () {
+        $("#modal-receipt").modal("show");
+      },
+      success: function (data) {
+        $("#modal-receipt .modal-content").html(data.html_receipt_form);
+      }
+    });
+  }
 
-        $(".create-receipt").click(function () {
-          $.ajax({
-            url: "{% url 'receipt:receipt_create' %}",
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function () {
-              $("#modal-receipt").modal("show");
-            },
-            success: function (data) {
-              $("#modal-receipt .modal-content").html(data.html_receipt_form);
-            }
-          });
-        });
-      
-      });
-</script>
-<script>
-  $("#modal-receipt").on("submit", ".receipt-create-form", function () {
+
+ //Form Saving Handler
+  var saveForm = function () {
     var form = $(this);
     $.ajax({
       url: form.attr("action"),
@@ -75,7 +76,7 @@
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          $("#items-lis-table tbody").html(data.html_receipt_list);  // <-- Replace the table body
+          $("#items-list-table tbody").html(data.html_receipt_list);  // <-- Replace the table body
           toastr.options = {
             "closeButton": false,
             "debug": false,
@@ -93,9 +94,8 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
           }
-          toastr["success"]("Receipt Created")
-          $("#modal-receipt").modal("hide");
-          form.reset()
+          toastr["success"]("Saved Successfully")
+          $("#modal-receipt").modal("hide");          
         }
 
         else {
@@ -104,7 +104,16 @@
       }
     });
     return false;
-  });
+  };
+
+  // Create book
+  $(".create-receipt").click(loadForm);
+  $("#modal-receipt").on("submit", ".receipt-create-form", saveForm);
+
+  // Update book
+  $("#items-list-table").on("click", ".update-receipt", loadForm);
+  $("#modal-receipt").on("submit", ".receipt-update-form", saveForm);
+});
 </script>
 {% endblock javascript %}
     

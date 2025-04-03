@@ -2,12 +2,14 @@
     <tr>
         <td>{{ receipt.id }}</td>
         <td>{{ receipt.customer }}</td>
-        <td>{{ receipt.date }}</td>
+        <td>{{ receipt.description }}</td>
+        <td>{{ receipt.date }}</td>        
         <td>{{ receipt.amount }}</td>
         <td>{{ receipt.status }}</td>
         <td>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#updateModal{{ receipt.id }}"><i class="fa fa-edit" aria-hidden="true"></i></button>
-            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ receipt.id }}"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            <button class="btn btn-warning btn-sm update-receipt mb-2"
+            data-url="{% url 'receipt:receipt_update' receipt.id %}" ><i class="fa fa-edit" aria-hidden="true"></i></button><br>
+            <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
         </td>
     </tr>
     {% empty %}

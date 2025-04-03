@@ -14,10 +14,9 @@ def receipt_list(request):
     }
     return render(request, template_name, context)
 
-def receipt_create(request):
+def save_receipt_form(request,form,template_name):
     data=dict()
-    if request.method == "POST":
-        form = ReceiptForm(request.POST)
+    if request.method == "POST":        
         if form.is_valid:
             form.save()
             data['form_is_valid']=True
@@ -27,25 +26,27 @@ def receipt_create(request):
             })
         else:
             data['form_is_valid']=False
-    else:
-        form = ReceiptForm()
-        context = {'form': form}
-        template_name = 'receipts/receipt_create_form.html'
+    else:        
+        context = {'form': form}        
         html_receipt_form = render_to_string(template_name,context,request=request)
         data = {'html_receipt_form':html_receipt_form,}
     return JsonResponse(data)
+
+def receipt_create(request):    
+    if request.method == "POST":
+        form = ReceiptForm(request.POST)
+    else:
+        form = ReceiptForm()       
+    return save_receipt_form(request, form, 'receipts/receipt_create_form.html')
 
 
 def receipt_update(request, pk):
     receipt = get_object_or_404(Receipt, pk=pk)
     if request.method == 'POST':
         form = ReceiptForm(request.POST, request.FILES, instance=receipt)
-        if form.is_valid():
-            form.save()
-            return redirect('receipt_list')
     else:
         form = ReceiptForm(instance=receipt)
-    return render(request, 'receipts/receipt_form.html', {'form': form})
+    return save_receipt_form(request, form, 'receipts/receipt_update_form.html')
 
 def receipt_delete(request, pk):
     receipt = get_object_or_404(Receipt, pk=pk)
