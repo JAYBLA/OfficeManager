@@ -16,7 +16,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-            <table class="table" id="invoice-table">
+            <table class="table" id="items-lis-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -28,19 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for receipt in receipts %}
-                    <tr>
-                        <td>{{ receipt.id }}</td>
-                        <td>{{ receipt.customer }}</td>
-                        <td>{{ receipt.date }}</td>
-                        <td>{{ receipt.amount }}</td>
-                        <td>{{ receipt.status }}</td>
-                        <td>
-                            <button class="btn btn-warning" data-toggle="modal" data-target="#updateModal{{ receipt.id }}"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ receipt.id }}"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                {% include 'receipts/includes/receipt_list_body.html' %}
                 </tbody>
             </table>
       </div>
@@ -76,6 +64,47 @@
         });
       
       });
+</script>
+<script>
+  $("#modal-receipt").on("submit", ".receipt-create-form", function () {
+    var form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+          $("#items-lis-table tbody").html(data.html_receipt_list);  // <-- Replace the table body
+          toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          }
+          toastr["success"]("Receipt Created")
+          $("#modal-receipt").modal("hide");
+          form.reset()
+        }
+
+        else {
+          $("#modal-receipt .modal-content").html(data.html_form);
+        }
+      }
+    });
+    return false;
+  });
 </script>
 {% endblock javascript %}
     

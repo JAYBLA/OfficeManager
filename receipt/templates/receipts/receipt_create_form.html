@@ -2,7 +2,7 @@
 {% block stylesheet %}
 {% endblock stylesheet %}
 
-<form method="post">
+<form method="post" class="receipt-create-form" action="{% url 'receipt:receipt_create' %}">
   {% csrf_token %}
   <div class="modal-header">
     <h4 class="modal-title">Create Receipt</h4>

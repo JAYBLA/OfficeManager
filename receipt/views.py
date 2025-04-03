@@ -5,7 +5,7 @@ from .models import Receipt
 from .forms import ReceiptForm
 
 def receipt_list(request):
-    receipts = Receipt.objects.all()
+    receipts = Receipt.objects.all().order_by('-date')
     template_name = 'receipts/receipt_list.html'
     heading = "Receipts"
     context={
@@ -15,11 +15,24 @@ def receipt_list(request):
     return render(request, template_name, context)
 
 def receipt_create(request):
-    form = ReceiptForm()
-    context = {'form': form}
-    template_name = 'receipts/receipt_create_form.html'
-    html_receipt_form = render_to_string(template_name,context,request=request)
-    data = {'html_receipt_form':html_receipt_form,}
+    data=dict()
+    if request.method == "POST":
+        form = ReceiptForm(request.POST)
+        if form.is_valid:
+            form.save()
+            data['form_is_valid']=True
+            receipts = Receipt.objects.all().order_by('-date')
+            data['html_receipt_list'] = render_to_string('receipts/includes/receipt_list_body.html', {
+                'receipts': receipts
+            })
+        else:
+            data['form_is_valid']=False
+    else:
+        form = ReceiptForm()
+        context = {'form': form}
+        template_name = 'receipts/receipt_create_form.html'
+        html_receipt_form = render_to_string(template_name,context,request=request)
+        data = {'html_receipt_form':html_receipt_form,}
     return JsonResponse(data)
 
 

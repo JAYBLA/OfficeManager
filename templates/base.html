@@ -22,7 +22,8 @@
   <link href="{% static 'assets/css/select2.min.css' %}" rel="stylesheet" />  
 
   <!-- Custom Css -->
-  <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" />  
+  <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">  
   {% block stylesheet %}
         
   {% endblock stylesheet %} 
@@ -193,6 +194,8 @@
 
 <!-- jQuery Select2 -->
 <script src="{% static 'assets/js/select2.min.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 
 {% block javascript %}
