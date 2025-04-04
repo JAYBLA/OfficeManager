@@ -50,7 +50,18 @@ def receipt_update(request, pk):
 
 def receipt_delete(request, pk):
     receipt = get_object_or_404(Receipt, pk=pk)
+    data = dict()
     if request.method == 'POST':
         receipt.delete()
-        return redirect('receipt_list')
-    return render(request, 'receipts/receipt_confirm_delete.html', {'receipt': receipt})
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        receipts = Receipt.objects.all()
+        data['html_receipt_list'] = render_to_string('receipts/includes/receipt_list_body.html', {
+            'receipts': receipts
+        })
+    else:
+        context = {'receipt': receipt}
+        data['html_receipt_form'] = render_to_string('receipts/receipt_delete.html',
+            context,
+            request=request,
+        )
+    return JsonResponse(data)

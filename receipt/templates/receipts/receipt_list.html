@@ -106,13 +106,17 @@ $(function () {
     return false;
   };
 
-  // Create book
+  // Create Receipt
   $(".create-receipt").click(loadForm);
   $("#modal-receipt").on("submit", ".receipt-create-form", saveForm);
 
-  // Update book
+  // Update Receipt
   $("#items-list-table").on("click", ".update-receipt", loadForm);
   $("#modal-receipt").on("submit", ".receipt-update-form", saveForm);
+
+    // Delete Receipt
+  $("#items-list-table").on("click", ".delete-receipt", loadForm);
+  $("#modal-receipt").on("submit", ".receipt-delete-form", saveForm);
 });
 </script>
 {% endblock javascript %}

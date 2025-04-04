@@ -9,7 +9,11 @@
         <td>
             <button class="btn btn-warning btn-sm update-receipt mb-2"
             data-url="{% url 'receipt:receipt_update' receipt.id %}" ><i class="fa fa-edit" aria-hidden="true"></i></button><br>
-            <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            <button type="button"
+              class="btn btn-danger btn-sm delete-receipt"
+              data-url="{% url 'receipt:receipt_delete' receipt.id %}">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
         </td>
     </tr>
     {% empty %}
