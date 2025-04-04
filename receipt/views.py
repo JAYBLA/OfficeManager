@@ -1,8 +1,17 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.views.generic import View  # pdf download
+from django.http import  HttpResponse
+from django.conf import settings
 from .models import Receipt
 from .forms import ReceiptForm
+
+from customer.models import Customer
+from .utils import render_to_pdf
+
+from datetime import datetime,timedelta,date
+base_url = settings.BASE_URL
 
 def receipt_list(request):
     receipts = Receipt.objects.all().order_by('-date')
@@ -65,3 +74,19 @@ def receipt_delete(request, pk):
             request=request,
         )
     return JsonResponse(data)
+
+class DownloadableReceipt(View):
+    def get(self,request, receipt_id):
+        receipt = get_object_or_404(Receipt, pk=receipt_id)
+        customer = receipt.customer.name
+        c=customer.upper()
+        receipt_no = 'JB100R' + str(receipt.customer.id)+str(c[0]+str(c[1])+str(c[2]) + 'Q')
+        
+        data = {
+            'receipt':receipt,
+            'receipt_no':receipt_no,
+            'created_at':receipt.date,
+            'base_url':base_url,
+        }
+        pdf = render_to_pdf('receipts/receipt-pdf-template.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')

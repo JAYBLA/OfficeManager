@@ -1,11 +1,13 @@
 from django.urls import path
-from . import views
+from .views import *
+
 
 app_name = 'receipt'
 
 urlpatterns = [
-    path('list/', views.receipt_list, name='receipt_list'),
-    path('create/', views.receipt_create, name='receipt_create'),
-    path('update/<int:pk>/', views.receipt_update, name='receipt_update'),
-    path('delete/<int:pk>/', views.receipt_delete, name='receipt_delete'),
+    path('list/', receipt_list, name='receipt_list'),
+    path('create/', receipt_create, name='receipt_create'),
+    path('update/<int:pk>/', receipt_update, name='receipt_update'),
+    path('delete/<int:pk>/', receipt_delete, name='receipt_delete'),
+    path('receipt/<int:receipt_id>/download/', DownloadableReceipt.as_view(), name='download-receipt'),
 ]
