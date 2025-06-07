@@ -22,47 +22,41 @@
 
 {% block content %}
     
-    <div class="card">
-        <div class="card-header">
-            <h4 class="py-2">All Quotations
-            </h4>
-          </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table" id="quotation-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">S/N</th>
-                            <th scope="col">Customer</th>
-                            <th scope="col">Quote Title</th>
-                            <th scope="col">Date</th>
-                            <th scope="col" class="text-center">Actions</th>
-                
-                        </tr>
-                    </thead>
-                    
-                    
-                    <tbody>
-                        {% for quotation in quotation_list %}
-                        <tr>
-                            <th scope="row">{{forloop.counter}}</th>
-                            <td>{{ quotation.customer }}</td>
-                            <td>{{ quotation.quote_title }}</td> 
-                            <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
-                            <td class="d-inline d-flex align-items-center justify-content-center">                              
-                                  <a href="{% url 'quotation:quotation-detail' quotation.id %}"><i class="fa fa-edit me-3 text-warning fa-2x" aria-hidden="true"></i></a>
-                                  <a class="delete-quotation bs-modal me-3" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
-                                      <i class="fa fa-trash text-danger fa-2x" style="cursor:pointer;"></i>
-                                  </a>
-                                  <a href="{% url 'quotation:download-quotation' quotation.id %}" download="Quotation to {{quotation.customer.name}} on {{quotation.quote_title}}"><i class="fa fa-download me-3 fa-2x text-success-main" aria-hidden="true"></i></a> 
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                   
-                    </table>
-            </div>
-        </div>
+<div class="card basic-data-table">
+    <div class="card-header">
+        <h3 class="card-title mb-0">Quotations</h3>
+    </div>
+    <div class="card-body">
+        <table class="table bordered-table mb-0" id="dataTable" data-page-length='10'>
+            <thead>
+                <tr>
+                  <th scope="col">S/N</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Quote Title</th>
+                  <th scope="col">Date</th>
+                  <th scope="col" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quotation in quotation_list %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ quotation.customer }}</td>
+                    <td>{{ quotation.quote_title }}</td> 
+                    <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
+                    <td class="d-inline d-flex justify-content-center">
+                        <a href="{% url 'quotation:quotation-detail' quotation.id %}"><i class="fa fa-edit fa-2x text-warning me-3" aria-hidden="true"></i></a>
+                        <a class="delete-quotation bs-modal me-3" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}" style="cursor: pointer;">
+                            <i class="fa fa-trash text-danger fa-2x"></i>
+                        </a>
+                        <a class="update-quotation bs-modal" data-form-url="{% url 'quotation:quotation-detail' quotation.id %}">
+                            <i class="fa fa-pencil-square-o text-primary fa-2x" aria-hidden="true"></i></a>
+                            <a href="{% url 'quotation:download-quotation' quotation.id %}"><i class="fa-regular fa-download fa-2x text-success"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -72,7 +66,7 @@
       <div class="modal-content">
       </div>
     </div>
-  </div>
+</div>
   
   <!-- Modal 2 with id="modal" -->
   <div class="modal fade" tabindex="-1" role="dialog" id="modal" data-backdrop="static">
@@ -93,9 +87,7 @@
   </script>
 
 <script>
-  $(document).ready(function() {
-      var table = $('#quotation-table').DataTable();
-  } );
+ let table = new DataTable('#dataTable');
 </script>
 {% endblock javascript %}
     

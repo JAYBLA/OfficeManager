@@ -38,8 +38,8 @@ class CreateUpdateAjaxMixin(object):
     """
 
     def save(self, commit=True):
-        # if not self.request.is_ajax() or self.request.POST.get('closeOnSubmit') == 'False':
-        if not self.request.is_ajax() or self.request.POST.get('asyncUpdate') == 'True':
+        # if not self.request.headers.get('x-requested-with') == 'XMLHttpRequest' or self.request.POST.get('closeOnSubmit') == 'False':
+        if not self.request.headers.get('x-requested-with') == 'XMLHttpRequest' or self.request.POST.get('asyncUpdate') == 'True':
             instance = super(CreateUpdateAjaxMixin, self).save(commit=commit)
         else:
             instance = super(CreateUpdateAjaxMixin, self).save(commit=False)
@@ -52,7 +52,7 @@ class DeleteMessageMixin(object):
     """
 
     def delete(self, request, *args, **kwargs):
-        if not self.request.is_ajax():
+        if not self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             messages.success(request, self.success_message)
             return super(DeleteMessageMixin, self).delete(request, *args, **kwargs)
         else:
@@ -66,7 +66,7 @@ class LoginAjaxMixin(object):
     """
 
     def form_valid(self, form):
-        if not self.request.is_ajax():
+        if not self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             auth_login(self.request, form.get_user())
             messages.success(self.request, self.success_message)
         return HttpResponseRedirect(self.get_success_url())

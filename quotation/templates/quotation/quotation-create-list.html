@@ -15,10 +15,10 @@
 
 {% block content %}
 <div class="row py-4">
-    <div class="col-sm-4 ">        
+    <div class="col-md-4">        
         <div class="card">
             <div class="card-header">
-                <h4 class="py-2">Create Quotation</h4>
+                <h5 class="py-2">Create Quotation</h5>
             </div>
             <div class="card-body">
                 {% if error_message %}
@@ -30,9 +30,9 @@
                 {% endif %}                
                 <form action="{% url 'quotation:create-quotation' %}" method='POST'>
                     {% csrf_token %}
-                    <div class="form-group">
+                    <div class="row mb-24 gy-3 align-items-center">
                         <div class="mb-3">
-                            <select class="form-control form-select select2" name="customer_id">
+                            <select id="my-select" class="form-control select2" style="width: 100%;" name="customer_id">
                                 <option value="None">(Select Customer)</option>
                                 {% if customer_list %}
                                     {% for customer in customer_list %}
@@ -42,20 +42,20 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="row mb-24 gy-3 align-items-center">
                         <label class="form-label">Quote Title</label>
                         <input type="text" class="form-control" name="quote_title">
                     </div>
 
-                    <div class="form-group mb-3">
+                    <div class="row mb-24 gy-3 align-items-center">
                         <label for="quotedescription" class="form-label">Quote Description</label>
                         <textarea class="form-control" id="quotedescription" rows="3" name="quote_description" ></textarea>
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="row mb-24 gy-3 align-items-center">
                         <label class="form-label">Due Date</label>                                                  
                         <input type="date" name="due_date" class="form-control" id="date-picker-example">                  
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="row mb-24 gy-3 align-items-center">
                         <label class="form-label"></label>                                                  
                         <input type="submit" value="Create Quotation" class="btn btn-primary">                   
                     </div>
@@ -65,46 +65,44 @@
     </div>
 
     
-    <div class="col-sm-8">       
+    <div class="col-md-8">       
         <div class="card">
             <div class="card-header">
-                <h4 class="py-2">Created Quotes</h4>
+                <h5 class="py-2">Created Quotations</h5>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table" id="quotation-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">S/N</th>
-                                <th scope="col">Customer</th>
-                                <th scope="col">Quote Title</th>
-                                <th scope="col">Date</th>
-                                <th scope="col" class="text-center">Actions</th>
-                    
-                            </tr>
-                        </thead>
-                        {% if quotation_list %}
-                        <tbody>
-                           
-                            {% for quotation in quotation_list %}
-                            <tr>
-                                <th scope="row">{{forloop.counter}}</th>
-                                <td>{{ quotation.customer }}</td>
-                                <td>{{ quotation.quote_title }}</td> 
-                                <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
-                                <td class="text-center">
-                                    <a href="{% url 'quotation:quotation-detail' quotation.id %}"><i class="fa fa-edit fa-2x text-warning" aria-hidden="true"></i></a>
-                                    <a class="delete-quotation bs-modal mr-2" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
-                                        <i class="fa fa-trash text-danger fa-2x"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
+                <table class="table bordered-table mb-0" id="dataTable" data-page-length='10'>
+                    <thead>
+                        <tr>
+                            <th scope="col">S/N</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Quote Title</th>
+                            <th scope="col">Date</th>
+                            <th scope="col" class="text-center">Actions</th>
+                
+                        </tr>
+                    </thead>
+                    {% if quotation_list %}
+                    <tbody>
                         
-                        {% endif %}
-                      </table>
-                </div>
+                        {% for quotation in quotation_list %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{ quotation.customer }}</td>
+                            <td>{{ quotation.quote_title }}</td> 
+                            <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'quotation:quotation-detail' quotation.id %}"><i class="fa fa-edit fa-2x text-warning" aria-hidden="true"></i></a>
+                                <a class="delete-quotation bs-modal mr-2" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
+                                    <i class="fa fa-trash text-danger fa-2x"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                    {% endif %}
+                    </table>
             </div>
         </div>
     </div>
@@ -140,15 +138,14 @@
 </script>
 
 <script>
-    $(document).ready(function () {
-        $('#quotation-table').DataTable();
-    });
+ let table = new DataTable('#dataTable');
 </script>
 <script>
   $(document).ready(function() {
     $('.select2').select2({
-      width: '100%',  // Make it fill the parent container      
-      allowClear: true
+      width: '100%',  // Make it fill the parent container
+      allowClear: true,
+      placeholder: '(Select Customer)',
     });
   });
 </script>
