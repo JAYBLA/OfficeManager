@@ -22,7 +22,7 @@ from users import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('dashboard.urls', namespace='dashboard')),
+    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
     path('users/', include('users.urls', namespace='users')),
     path('quotation/', include('quotation.urls', namespace='quotation')),
     path('receipt/', include('receipt.urls', namespace='receipt')),

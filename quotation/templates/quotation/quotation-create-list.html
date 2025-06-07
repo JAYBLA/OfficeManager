@@ -18,7 +18,7 @@
     <div class="col-sm-4 ">        
         <div class="card">
             <div class="card-header">
-                <h2 class="py-2">New Quotation</h2>
+                <h4 class="py-2">Create Quotation</h4>
             </div>
             <div class="card-body">
                 {% if error_message %}
@@ -28,11 +28,11 @@
                 {% if error_message %}
                 <div class="alert alert-success">{{ success_message }}</div>
                 {% endif %}                
-                <form action="{% url 'quotation:new-quotation' %}" method='POST'>
+                <form action="{% url 'quotation:create-quotation' %}" method='POST'>
                     {% csrf_token %}
                     <div class="form-group">
                         <div class="mb-3">
-                            <select class="officemanager-customer-select form-control form-select" name="customer_id">
+                            <select class="form-control form-select select2" name="customer_id">
                                 <option value="None">(Select Customer)</option>
                                 {% if customer_list %}
                                     {% for customer in customer_list %}
@@ -68,7 +68,7 @@
     <div class="col-sm-8">       
         <div class="card">
             <div class="card-header">
-                <h2 class="py-2">Created Quotes</h2>
+                <h4 class="py-2">Created Quotes</h4>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -93,9 +93,9 @@
                                 <td>{{ quotation.quote_title }}</td> 
                                 <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
                                 <td class="text-center">
-                                    <a href="{% url 'quotation:quotation-detail' quotation.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                    <a href="{% url 'quotation:quotation-detail' quotation.id %}"><i class="fa fa-edit fa-2x text-warning" aria-hidden="true"></i></a>
                                     <a class="delete-quotation bs-modal mr-2" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
-                                        <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
+                                        <i class="fa fa-trash text-danger fa-2x"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -144,11 +144,14 @@
         $('#quotation-table').DataTable();
     });
 </script>
-  <script>
-    $(document).ready(function() {
-      $('.officemanager-customer-select').select2();
+<script>
+  $(document).ready(function() {
+    $('.select2').select2({
+      width: '100%',  // Make it fill the parent container      
+      allowClear: true
+    });
   });
-  </script>
+</script>
 {% endblock javascript %}
     
     

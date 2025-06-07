@@ -6,10 +6,10 @@ from .views import *
 app_name = 'quotation'
 
 urlpatterns = [    
-    path('new/', quotation_create, name='new-quotation'),    
+    path('create/', quotation_create, name='create-quotation'),    
     path('<int:id>/', quotation_detail, name='quotation-detail'),
     path('copy/<int:quotation_id>/', quotation_copy, name='quotation-copy'),
-    path('quotations', quotation_list, name='quotation-list'),
+    path('list/', quotation_list, name='quotation-list'),
     
     path('<int:id>/item/add/', OrderItemCreateView.as_view(), name='create_item'),
     path('<int:id>/<int:pk>/update/', OrderItemUpdateView.as_view(), name='update_item'),  #ITEMS
