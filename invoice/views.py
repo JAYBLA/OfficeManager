@@ -137,7 +137,7 @@ class InvoiceDeleteView(LoginRequiredMixin,BSModalDeleteView):
     template_name = 'invoice/delete.html'
     success_message = 'Success: Invoice was deleted.'
     context_object_name = 'invoice'
-    success_url = reverse_lazy('invoice:invoice_list')
+    success_url = reverse_lazy('invoice:invoice-list')
     
 
 @login_required()

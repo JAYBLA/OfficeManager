@@ -19,16 +19,14 @@
   
   <div class="card">
     <div class="card-header">   
-        <h2 class="py-2">{{title}}     
-        <a href="{% url 'invoice:new-invoice' %}"class="btn btn-outline-primary btn-lg float-right" type="button" name="button">New Invoice</a>
-        </h2>
+        <h5 class="py-2">{{title}}</h5>
       </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table" id="invoice-table">
               <thead>
                   <tr>
-                      <th scope="col">Invoice</th>
+                      <th scope="col">S/N</th>
                       <th scope="col">Customer</th>
                       <th scope="col">Title</th>
                       <th scope="col">Date</th>
@@ -43,24 +41,20 @@
               <tbody>
                   {% for invoice in invoice_list %}
                   <tr>
-                      <th scope="row">{{forloop.counter}}</th>
+                      <td class="text-center">{{forloop.counter}}</td>
                       <td>{{ invoice.customer }}</td>
                       <td>{{ invoice.title }}</td>
                       <td>{{ invoice.date|date:"SHORT_DATE_FORMAT" }}</td>
                       <td><strong>{{ invoice.invoice_type |upper }}</strong></td>
                       <td><span class="badge {% if invoice.status == 'Paid' %}bg-success{% elif invoice.status == 'Unpaid' %} bg-danger {% else %} bg-warning {% endif %}">{{ invoice.status }}</span></td>                                
-                      <td class="text-center">
-                        <div class="row">
-                          <div class="col-4">
+                      <td class="d-inline d-flex justify-content-center">
                             <a class="delete-invoice bs-modal" data-form-url="{% url 'invoice:invoice-delete' invoice.id %}">
-                              <i class="fa fa-trash text-danger mr-2" style="font-size: 22px; cursor:pointer;"></i>
+                              <i class="fa fa-trash text-danger me-3 fa-2x" style="cursor:pointer;"></i>
                           </a>  
-                            <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-edit mr-2" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="col-8">
-                              <a href="{% url 'invoice:download-invoice' invoice.id %}" style="color:green;font-size: 22px;" download="Invoice to {{invoice.customer.name}} on {{invoice.title}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
-                          </div>  
-                        </div>                                                                    
+                            <a href="{% url 'invoice:invoice-detail' invoice.id %}" ><i class="fa fa-edit me-3 fa-2x text-warning" aria-hidden="true"></i></a>
+
+
+                              <a href="{% url 'invoice:download-invoice' invoice.id %}" download="Invoice to {{invoice.customer.name}} on {{invoice.title}}"><i class="fa fa-download fa-2x text-success" aria-hidden="true"></i></a>                                                                  
                       </td>
                   </tr>
                   {% endfor %}
