@@ -8,8 +8,8 @@
         <td>{{ receipt.status }}</td>
         <td>
             <button class="btn btn-warning btn-sm update-receipt mb-2"
-            data-url="{% url 'receipt:receipt_update' receipt.id %}" ><i class="fa fa-edit" aria-hidden="true"></i></button><br>
-            <button type="button" class="btn btn-danger btn-sm delete-receipt" data-url="{% url 'receipt:receipt_delete' receipt.id %}"><span class="fa fa-trash"></span> Delete</button><br>
+            data-url="{% url 'receipt:update-receipt' receipt.id %}" ><i class="fa fa-edit" aria-hidden="true"></i></button><br>
+            <button type="button" class="btn btn-danger btn-sm delete-receipt" data-url="{% url 'receipt:delete-receipt' receipt.id %}"><span class="fa fa-trash"></span> Delete</button><br>
             <a href="{% url 'receipt:download-receipt' receipt.id %}" style="color:#008000;font-size: 22px;" download="Receipt to {{receipt.customer.name}} on {{receipt.description}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
         </td>
     </tr>

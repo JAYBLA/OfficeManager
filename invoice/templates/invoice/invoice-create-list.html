@@ -36,7 +36,7 @@
         
         <div class="card">
             <div class="card-header">
-                <h2 class="py-2">New Invoice/Order</h2>
+                <h5 class="py-2">New Invoice/Order</h5>
             </div>
             <div class="card-body">
                 {% if error_message %}
@@ -46,8 +46,8 @@
                 {% if error_message %}
                 <div class="alert alert-success">{{ success_message }}</div>
                 {% endif %}
-               
-                <form action="{% url 'invoice:new-invoice' %}" method='POST'>
+
+                <form action="{% url 'invoice:create-invoice' %}" method='POST'>
                     {% csrf_token %}
                     <div class="form-group mb-3">                        
                             <select class="officemanager-customer-select form-control" name="customer_id">
@@ -95,7 +95,7 @@
     <div class="col-sm-8">        
         <div class="card">
             <div class="card-header">
-                <h2 class="py-2">Created Invoices</h2>
+                <h5 class="py-2">Created Invoices</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

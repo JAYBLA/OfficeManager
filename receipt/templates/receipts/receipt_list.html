@@ -10,9 +10,9 @@
 {% block content %}
 <div class="card">
     <div class="card-header">   
-        <h2 class="py-2">{{heading}}
-            <button class="btn btn-outline-primary btn-lg float-right create-receipt" data-url="{% url 'receipt:receipt_create' %}">New Receipt</button> 
-        </h2>
+        <h5 class="py-2">{{heading}}
+            <button class="btn btn-outline-primary btn-lg float-end create-receipt" data-url="{% url 'receipt:create-receipt' %}">New Receipt</button> 
+        </h5>
       </div>
       <div class="card-body">
         <div class="table-responsive">

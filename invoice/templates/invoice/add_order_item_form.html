@@ -4,10 +4,8 @@
     {% csrf_token %}
   
     <div class="modal-header bg-blue text-light">
-      <h3 class="modal-title">Add Item</h3>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <h5 class="modal-title">Add Item</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div> 
   
     <div class="modal-body">
@@ -20,8 +18,8 @@
         <div class="form-group mb-3">
           <label class="mb-2"><b>Description</b></label>
           {% render_field form.description class="form-control" placeholder="Description" rows="3" %}
-          <div class="{% if field.errors %} invalid{% endif %}">
-            {% for error in field.form.description.errors %}
+          <div class="{% if form.description.errors %} invalid{% endif %}">
+            {% for error in form.description.errors %}
               <p class="help-block">{{ error }}</p>
             {% endfor %}
           </div>
@@ -29,8 +27,8 @@
         <div class="form-group mb-3">
           <label class="mb-2"><b>Cost</b></label>
           {% render_field form.cost class="form-control" placeholder="Unit Cost"%}
-          <div class="{% if field.errors %} invalid{% endif %}">
-            {% for error in field.form.cost.errors %}
+          <div class="{% if form.cost.errors %} invalid{% endif %}">
+            {% for error in form.cost.errors %}
               <p class="help-block">{{ error }}</p>
             {% endfor %}
           </div>
@@ -38,8 +36,8 @@
         <div class="form-group mb-3">
           <label class="mb-2"><b>Quantity</b></label>
           {% render_field form.qty class="form-control" placeholder="Quantity"%}
-          <div class="{% if field.errors %} invalid{% endif %}">
-            {% for error in field.form.qty.errors %}
+          <div class="{% if form.qty.errors %} invalid{% endif %}">
+            {% for error in form.qty.errors %}
               <p class="help-block">{{ error }}</p>
             {% endfor %}
           </div>

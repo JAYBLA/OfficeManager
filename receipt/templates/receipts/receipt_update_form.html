@@ -2,48 +2,45 @@
 {% block stylesheet %}
 {% endblock stylesheet %}
 
-<form method="post" class="receipt-update-form" action="{% url 'receipt:receipt_update' form.instance.pk %}">
+<form method="post" class="receipt-update-form" action="{% url 'receipt:update-receipt' form.instance.pk %}">
   {% csrf_token %}
   <div class="modal-header">
     <h4 class="modal-title">Update Receipt</h4>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    
   </div>
   <div class="modal-body">        
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
+        <div class="form-group{% if form.customer.errors %} has-error{% endif %}">
             <label >Customer</label> <br>
             {% render_field form.customer id="customer-select" class="form-control" style="width:100%;" %}        
-            {% for error in field.errors %}
+            {% for error in form.customer.errors %}
                 <p class="help-block">{{ error }}</p>
             {% endfor %}
         </div>
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
+        <div class="form-group{% if form.date.errors %} has-error{% endif %}">
             <label >Date</label>
             {% render_field form.date class="form-control" type="date" %}        
-            {% for error in field.errors %}
+            {% for error in form.date.errors %}
                 <p class="help-block">{{ error }}</p>
             {% endfor %}
         </div>
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
+        <div class="form-group{% if form.description.errors %} has-error{% endif %}">
             <label >Description</label>
             {% render_field form.description class="form-control" rows="4" type="text" %}        
-            {% for error in field.errors %}
+            {% for error in form.description.errors %}
                 <p class="help-block">{{ error }}</p>
             {% endfor %}
         </div>
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
+        <div class="form-group{% if form.amount.errors %} has-error{% endif %}">
             <label >Amount</label>
             {% render_field form.amount class="form-control" type="decimal" %}        
-            {% for error in field.errors %}
+            {% for error in form.amount.errors %}
                 <p class="help-block">{{ error }}</p>
             {% endfor %}
         </div>
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
+        <div class="form-group{% if form.status.errors %} has-error{% endif %}">
             <label >Payment Means</label>
             {% render_field form.status class="form-control" %}        
-            {% for error in field.errors %}
+            {% for error in form.status.errors %}
                 <p class="help-block">{{ error }}</p>
             {% endfor %}
         </div>  
