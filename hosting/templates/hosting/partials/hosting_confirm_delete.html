@@ -1,0 +1,9 @@
+<div class="card">
+    <div class="card-body">
+        <form method="post" id="ajaxForm" action="{% url 'hosting:hosting_delete' object.pk %}">
+            {% csrf_token %}
+            <p>Are you sure you want to delete <strong>{{ object.domain }}</strong>?</p>
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+        </form>
+    </div>
+</div>

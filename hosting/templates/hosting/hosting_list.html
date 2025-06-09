@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+     {{title}}
+{% endblock title %}
+
+
+{% block stylesheet %}
+
+{% endblock stylesheet %}
+  
+    
+{% block content %}
+  <div class="card"> 
+      <div class="card-header">
+        <h5 class="py-2">{{title}}             
+        <a id="createBtn" class="btn btn-outline-primary btn-lg float-end" type="button" name="button">Add Hosting</a>
+        </h5>
+      </div>
+
+      <div class="card-body">
+              <table class="table bordered-table mb-0" data-page-length='10' id="customer-table">
+                  <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Customer</th>
+                        <th>Domain</th>
+                        <th>Registration Date</th>
+                        <th>Expiring Date</th>
+                        <th>Domain Cost</th>
+                        <th>Hosting Cost</th>
+                        <th>Actions</th>
+                    </tr>
+                  </thead>
+                  
+                  
+                  <tbody>
+                    {% for hosting in hostings %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ hosting.customer }}</td>
+                            <td>{{ hosting.domain }}</td>
+                            <td>{{ hosting.registration_date }}</td>
+                            <td>{{ hosting.expiring_date }}</td>
+                            <td>{{ hosting.domain_cost }}</td>
+                            <td>{{ hosting.hosting_cost }}</td>
+                            <td class="text-center">
+                              <a class="text-warning editBtn" data-id="{{ hosting.id }}" style="cursor: pointer;"><i class="fa-solid fa-pen-to-square fa-2x me-3"></i></a>
+                              <a class="text-danger deleteBtn fa-2x" data-id="{{ hosting.id }}" style="cursor: pointer;"><i class="fa-solid fa-trash-xmark"></i></a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center">No hosting records found.</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>                        
+              </table>
+      </div>
+  </div>
+
+<!-- Modal -->
+<div class="modal fade" id="ajaxModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" id="modalContent">
+      <!-- content loads here -->
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block javascript %}
+<script>
+function loadForm(url) {
+    $.get(url, function(data) {
+        $('#modalContent').html(data);
+        new bootstrap.Modal(document.getElementById('ajaxModal')).show();
+    });
+}
+
+function submitForm(form, url) {
+    $.post(url, form.serialize(), function(data) {
+        if (data.success) {
+            location.reload(); // Refresh for simplicity
+        } else {
+            $('#modalContent').html(data); // Re-render with errors
+        }
+    });
+}
+
+$(function () {
+    $('#createBtn').click(() => loadForm("{% url 'hosting:hosting_create' %}"));
+
+    $('.editBtn').click(function () {
+        const id = $(this).data('id');
+        loadForm(`/hosting/${id}/edit/`);
+    });
+
+    $('.deleteBtn').click(function () {
+        const id = $(this).data('id');
+        loadForm(`/hosting/${id}/delete/`);
+    });
+
+    $(document).on('submit', '#ajaxForm', function (e) {
+        e.preventDefault();
+        submitForm($(this), $(this).attr('action'));
+    });
+});
+</script>
+<script>
+ let table = new DataTable('#dataTable');
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const customerSelect = document.getElementById('id_customer_choices');
+    if (customerSelect) {
+        new Choices(customerSelect, {
+            searchEnabled: true,
+            itemSelectText: '',
+            placeholder: true,
+            shouldSort: false
+        });
+    }
+});
+</script>
+{% endblock javascript %}
+    
+    
