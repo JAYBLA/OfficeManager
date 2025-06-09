@@ -35,8 +35,10 @@ def save_receipt_form(request,form,template_name):
             })
         else:
             data['form_is_valid']=False
-    else:        
-        context = {'form': form}        
+    else:             
+        context = {
+            'form': form,           
+            }                
         html_receipt_form = render_to_string(template_name,context,request=request)
         data = {'html_receipt_form':html_receipt_form,}
     return JsonResponse(data)
@@ -45,7 +47,7 @@ def receipt_create(request):
     if request.method == "POST":
         form = ReceiptForm(request.POST)
     else:
-        form = ReceiptForm()       
+        form = ReceiptForm()      
     return save_receipt_form(request, form, 'receipts/receipt_create_form.html')
 
 

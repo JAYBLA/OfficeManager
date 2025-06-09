@@ -52,38 +52,36 @@
                 <h2 class="py-2">Created Quotes</h2>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table" id="quotation-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">S/N</th>
-                                <th scope="col">Customer</th>
-                                <th scope="col">Quote Title</th>
-                                <th scope="col">Date</th>
-                                <th scope="col" class="text-center">Actions</th>
-                    
-                            </tr>
-                        </thead>
-                        {% if quotation_list %}
-                        {% for quotation in quotation_list %}
-                        <tbody>
-                            <tr>
-                                <th scope="row">{{forloop.counter}}</th>
-                                <td>{{ quotation.customer }}</td>
-                                <td>{{ quotation.quote_title }}</td> 
-                                <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
-                                <td class="text-center">
-                                    <a href="{% url 'quotation:quotation-detail' quotation.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                    <a class="delete-quotation bs-modal mr-2" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
-                                        <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                        {% endfor %}
-                        {% endif %}
-                      </table>
-                </div>
+                <table class="table bordered-table mb-0"  data-page-length='10' id="quotation-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">S/N</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Quote Title</th>
+                            <th scope="col">Date</th>
+                            <th scope="col" class="text-center">Actions</th>
+                
+                        </tr>
+                    </thead>
+                    {% if quotation_list %}
+                    {% for quotation in quotation_list %}
+                    <tbody>
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{ quotation.customer }}</td>
+                            <td>{{ quotation.quote_title }}</td> 
+                            <td>{{ quotation.date|date:"SHORT_DATE_FORMAT" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'quotation:quotation-detail' quotation.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                <a class="delete-quotation bs-modal mr-2" data-form-url="{% url 'quotation:delete_quotation' quotation.id %}">
+                                    <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                    {% endif %}
+                </table>
             </div>
         </div>
     </div>

@@ -50,14 +50,14 @@
                 <form action="{% url 'invoice:create-invoice' %}" method='POST'>
                     {% csrf_token %}
                     <div class="form-group mb-3">                        
-                            <select class="officemanager-customer-select form-control" name="customer_id">
-                                <option value="None">(Select Customer)</option>
-                                {% if customer_list %}
-                                    {% for customer in customer_list %}
-                                    <option value="{{ customer.id }}">{{ customer.name }}</option>
-                                    {% endfor %}
-                                {% endif %}
-                            </select>                       
+                        <select class="searchable-select" name="customer_id">
+                            <option value="None">(Select Customer)</option>
+                            {% if customer_list %}
+                                {% for customer in customer_list %}
+                                <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>                       
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Due Date</label>                                                  
@@ -184,10 +184,11 @@
     } );
 </script>
 <script>
-    $(document).ready(function() {
-      $('.officemanager-customer-select').select2();
-  });
-  </script>
+    const element = document.querySelector('.searchable-select');
+    const choices = new Choices(element, {
+    searchEnabled: true,
+    });
+</script>
 {% endblock javascript %}
     
     

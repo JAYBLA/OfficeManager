@@ -2,10 +2,8 @@
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="modal-header bg-blue text-light">
-    <h3 class="modal-title">Add Customer</h3>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <h5 class="modal-title">Add Customer</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </div> 
 
   <div class="modal-body">
@@ -17,8 +15,8 @@
       <div class="form-group mb-3">
         <label class="mb-2"><b>Name</b></label>
         {% render_field form.name class="form-control" placeholder="Enter Customer Name" %}
-        <div class="{% if field.errors %} invalid{% endif %}">
-          {% for error in field.form.name.errors %}
+        <div class="{% if form.name.errors %} invalid{% endif %}">
+          {% for error in form.name.errors %}
             <p class="help-block">{{ error }}</p>
           {% endfor %}
         </div>
@@ -26,8 +24,8 @@
       <div class="form-group mb-3">
         <label class="mb-2"><b>Phone</b></label>
         {% render_field form.phone class="form-control" placeholder="Phone Number"%}
-        <div class="{% if field.errors %} invalid{% endif %}">
-          {% for error in field.form.phone.errors %}
+        <div class="{% if form.phone.errors %} invalid{% endif %}">
+          {% for error in form.phone.errors %}
             <p class="help-block">{{ error }}</p>
           {% endfor %}
         </div>
@@ -35,8 +33,8 @@
       <div class="form-group mb-3">
         <label class="mb-2"><b>Email</b></label>
         {% render_field form.email class="form-control" placeholder="Email"%}
-        <div class="{% if field.errors %} invalid{% endif %}">
-          {% for error in field.form.email.errors %}
+        <div class="{% if form.email.errors %} invalid{% endif %}">
+          {% for error in form.email.errors %}
             <p class="help-block">{{ error }}</p>
           {% endfor %}
         </div>
@@ -44,8 +42,8 @@
       <div class="form-group mb-3">
         <label class="mb-2"><b>Physical Address</b></label>
         {% render_field form.physical_address class="form-control" placeholder="Physical Address"%}
-        <div class="{% if field.errors %} invalid{% endif %}">
-          {% for error in field.form.physical_address.errors %}
+        <div class="{% if form.physical_address.errors %} invalid{% endif %}">
+          {% for error in form.physical_address.errors %}
             <p class="help-block">{{ error }}</p>
           {% endfor %}
         </div>

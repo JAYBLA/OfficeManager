@@ -16,7 +16,13 @@
     </div>
     <div class="sidebar-menu-area">
         <ul class="sidebar-menu" id="sidebar-menu">
-            
+            <li class="sidebar-menu-group-title">CUSTOMERS</li>
+            <li>
+                <a href="{% url 'customer:customer-list' %}">
+                    <i class="fa-regular fa-list-ol"></i>
+                    <span>Customer List</span>
+                </a>
+            </li>            
             <li class="sidebar-menu-group-title">QUOTATIONS</li>
             <li>
                 <a href="{% url 'quotation:create-quotation' %}">
@@ -45,28 +51,9 @@
             </li>
             <li class="sidebar-menu-group-title">RECEIPTS</li>
             <li>
-                <a href="{% url 'receipt:create-receipt' %}">
-                    <i class="fa-solid fa-shield-plus"></i>
-                    <span>Create Receipt</span>
-                </a>
-            </li>
-            <li>
                 <a href="{% url 'receipt:receipt-list' %}">
                     <i class="fa-regular fa-list-ol"></i>
                     <span>Receipt List</span>
-                </a>
-            </li>
-            <li class="sidebar-menu-group-title">DELIVERY NOTES</li>
-            <li>
-                <a href="{# url 'quotation:create-delivery-note' #}">
-                    <i class="fa-solid fa-shield-plus"></i>
-                    <span>Create Delivery Note</span>
-                </a>
-            </li>
-            <li>
-                <a href="{# url 'quotation:delivery-note-list' #}">
-                    <i class="fa-regular fa-list-ol"></i>
-                    <span>Delivery Note List</span>
                 </a>
             </li>
         </ul>

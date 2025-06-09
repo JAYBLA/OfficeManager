@@ -14,14 +14,13 @@
 {% block content %}
   <div class="card"> 
       <div class="card-header">
-        <h2 class="py-2">{{title}}             
-        <a id="create-customer" class="btn btn-outline-primary btn-lg float-right" type="button" name="button">Add Customer</a>
-        </h2>
+        <h5 class="py-2">{{title}}             
+        <a id="create-customer" class="btn btn-outline-primary btn-lg float-end" type="button" name="button">Add Customer</a>
+        </h5>
       </div>
 
       <div class="card-body">
-          <div class="table-responsive">
-              <table class="table" id="customer-table">
+              <table class="table bordered-table mb-0" data-page-length='10' id="customer-table">
                   <thead>
                     <tr>
                       <th scope="col">S/N</th>
@@ -37,7 +36,7 @@
                   <tbody>
                       {% for customer in customers %}
                     <tr>
-                      <th>{{forloop.counter}}</th>
+                      <td>{{forloop.counter}}</td>
                       <td>{{customer.name}}</td>
                       <td>{{customer.phone}}</td>
                       <td>{{customer.email}}</td>
@@ -54,8 +53,7 @@
                     </tr>     
                     {% endfor %}         
                   </tbody>                        
-                </table>
-          </div>
+              </table>
       </div>
   </div>
 <!-- Modal 1 with id="create Modal"-->

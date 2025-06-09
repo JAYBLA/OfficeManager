@@ -32,7 +32,7 @@
                     {% csrf_token %}
                     <div class="row mb-24 gy-3 align-items-center">
                         <div class="mb-3">
-                            <select id="my-select" class="form-control select2" style="width: 100%;" name="customer_id">
+                            <select id="my-select" class="searchable-select" style="width: 100%;" name="customer_id">
                                 <option value="None">(Select Customer)</option>
                                 {% if customer_list %}
                                     {% for customer in customer_list %}
@@ -141,13 +141,10 @@
  let table = new DataTable('#dataTable');
 </script>
 <script>
-  $(document).ready(function() {
-    $('.select2').select2({
-      width: '100%',  // Make it fill the parent container
-      allowClear: true,
-      placeholder: '(Select Customer)',
+    const element = document.querySelector('.searchable-select');
+    const choices = new Choices(element, {
+    searchEnabled: true,
     });
-  });
 </script>
 {% endblock javascript %}
     

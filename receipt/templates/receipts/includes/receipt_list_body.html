@@ -6,11 +6,11 @@
         <td>{{ receipt.date }}</td>        
         <td>{{ receipt.amount }}</td>
         <td>{{ receipt.status }}</td>
-        <td>
-            <button class="btn btn-warning btn-sm update-receipt mb-2"
-            data-url="{% url 'receipt:update-receipt' receipt.id %}" ><i class="fa fa-edit" aria-hidden="true"></i></button><br>
-            <button type="button" class="btn btn-danger btn-sm delete-receipt" data-url="{% url 'receipt:delete-receipt' receipt.id %}"><span class="fa fa-trash"></span> Delete</button><br>
-            <a href="{% url 'receipt:download-receipt' receipt.id %}" style="color:#008000;font-size: 22px;" download="Receipt to {{receipt.customer.name}} on {{receipt.description}}"><i class="fa fa-download mr-2" aria-hidden="true"></i></a>
+        <td class="d-inline d-flex justify-content-center">
+            <a class="text-warning update-receipt mb-2"
+            data-url="{% url 'receipt:update-receipt' receipt.id %}"  style="cursor:pointer;"><i class="fa fa-edit fa-2x me-3" aria-hidden="true"></i></a>
+            <a class="text-danger delete-receipt" data-url="{% url 'receipt:delete-receipt' receipt.id %}" style="cursor:pointer;"><i class="fa fa-trash fa-2x me-3"></i></a>
+            <a href="{% url 'receipt:download-receipt' receipt.id %}" download="Receipt to {{receipt.customer.name}} on {{receipt.description}}"><i class="fa fa-download fa-2x text-success" aria-hidden="true"></i></a>
         </td>
     </tr>
     {% empty %}
