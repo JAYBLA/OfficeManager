@@ -1,0 +1,6 @@
+/home/jayblaco/officemanager
+
+/home/jayblaco/virtualenv/officemanager/3.9/bin/
+
+
+/home/jayblaco/logs/officemanager

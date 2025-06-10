@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django_crontab',
     'clientmailer',
     'hosting',
+    'django_cron',
     
     
     #Django_Apps
@@ -192,6 +193,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #Cron Job Settings
-CRONJOBS = [
-    ('0 0 * * 1-5', 'invoice.cron_job.my_scheduled_job')
+CRON_CLASSES = [
+    'hosting.cron.HostingExpiryNotificationCronJob',
 ]
