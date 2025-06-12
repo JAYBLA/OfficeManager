@@ -4,3 +4,9 @@
 
 
 /home/jayblaco/logs/officemanager
+
+
+CRONJOB COMMAND
+
+cd /home/jayblaco/officemanager && /home/jayblaco/virtualenv/officemanager/3.9/bin/python3 manage.py runcrons >> /home/jayblaco/logs/officemanager/cron.log 2>&1
+

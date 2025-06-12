@@ -82,7 +82,7 @@ def update_customer(request, customer_id):
     c.phone = request.POST['phone']
     c.email = request.POST['email']
     c.address = request.POST['physical_address']
-
+    c.whatsapp_number = request.POST['whatsapp_number']
     c.save()
     customers = Customer.objects.order_by('-modified_at')
     context = {

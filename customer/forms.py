@@ -7,4 +7,4 @@ class CustomerForm(BSModalModelForm):
 	
 	class Meta:
 		model = Customer
-		fields = ['name', 'phone', 'email', 'physical_address',]
+		fields = ['name', 'phone', 'whatsapp_number', 'email', 'physical_address',]
