@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'clientmailer',
     'hosting',
     'django_cron',
+    'phonenumber_field',
     
     
     #Django_Apps

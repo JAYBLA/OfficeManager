@@ -10,7 +10,9 @@ class Customer(models.Model):
     physical_address    = models.CharField(max_length=150)
     whatsapp_number = PhoneNumberField(
         region='TZ',  # optional default country for validation
-        help_text='Enter WhatsApp number with country code.'
+        help_text='Enter WhatsApp number with country code.',
+        blank=True,  # allow blank field
+        null=True,  # allow null value
     )
     created_at          = models.DateTimeField(auto_now_add=True)
     modified_at         = models.DateTimeField(auto_now=True)
