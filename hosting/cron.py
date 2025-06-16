@@ -9,7 +9,7 @@ class HostingExpiryNotificationCronJob(CronJobBase):
     RUN_EVERY_MINS = 1  # For development
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-    code = 'HostingExpiryNotificationCronJob'
+    code = 'HostingManager'
 
     def do(self):        
         today = timezone.now().date()
