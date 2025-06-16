@@ -165,7 +165,7 @@ else:
     MEDIA_ROOT = 'media/'   
     
 if not DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_BACKEND = config('EMAIL_BACKEND')
     EMAIL_HOST = config('EMAIL_HOST')
     EMAIL_HOST_USER = config('EMAIL_HOST_USER')
     EMAIL_PORT = config('EMAIL_PORT', cast=int)
