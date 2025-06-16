@@ -11,17 +11,14 @@ class HostingExpiryNotificationCronJob(CronJobBase):
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'HostingExpiryNotificationCronJob'
 
-    def do(self):
-        with open('/home/jayblaco/logs/officemanager/expiry_cron.txt', 'a') as f:
-            f.write(f"{datetime.datetime.now()} - Cron executed\n")
+    def do(self):        
         today = timezone.now().date()
         expiry_cutoff = today + timezone.timedelta(days=14)
 
         expiring_hostings = Hosting.objects.filter(
             expiring_date__gte=today,          # today or later
             expiring_date__lte=expiry_cutoff   # up to 14 days ahead
-        )
-
+        )        
         for hosting in expiring_hostings:            
             # Only notify if not already notified today
             if not hosting.last_notified or hosting.last_notified != today:                
