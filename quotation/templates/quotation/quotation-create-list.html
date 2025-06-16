@@ -32,7 +32,7 @@
                     {% csrf_token %}
                     <div class="row mb-24 gy-3 align-items-center">
                         <div class="mb-3">
-                            <select id="my-select" class="searchable-select" style="width: 100%;" name="customer_id">
+                            <select  id="slim-select" style="width: 100%;" name="customer_id">
                                 <option value="None">(Select Customer)</option>
                                 {% if customer_list %}
                                     {% for customer in customer_list %}
@@ -141,11 +141,8 @@
  let table = new DataTable('#dataTable');
 </script>
 <script>
-    const element = document.querySelector('.searchable-select');
-    const choices = new Choices(element, {
-    searchEnabled: true,
-    });
+  new SlimSelect({
+    select: '#slim-select'
+  });
 </script>
 {% endblock javascript %}
-    
-    

@@ -114,19 +114,13 @@ $(function () {
 <script>
  let table = new DataTable('#dataTable');
 </script>
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const customerSelect = document.getElementById('id_customer_choices');
-    if (customerSelect) {
-        new Choices(customerSelect, {
-            searchEnabled: true,
-            itemSelectText: '',
-            placeholder: true,
-            shouldSort: false
-        });
-    }
-});
+  new SlimSelect({
+    select: '#id_customer_choices'
+  });
 </script>
+
 {% endblock javascript %}
     
     

@@ -12,7 +12,7 @@
   <div class="modal-body">        
         <div class="form-group{% if field.errors %} has-error{% endif %}">
             <label >Customer</label> <br>
-            {% render_field form.customer id="customer-select" class="searchable-select" style="width:100%;" %}         
+            {% render_field form.customer id="slim-select" %}         
             {% for error in field.errors %}
                 <p class="help-block">{{ error }}</p>
             {% endfor %}
@@ -52,9 +52,8 @@
 </form>
 {% block javascript %}
 <script>
-    const element = document.querySelector('.searchable-select');
-    const choices = new Choices(element, {
-    searchEnabled: true,
-    });
+  new SlimSelect({
+    select: '#slim-select'
+  });
 </script>
 {% endblock javascript %}

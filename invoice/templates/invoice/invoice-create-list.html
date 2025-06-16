@@ -50,7 +50,7 @@
                 <form action="{% url 'invoice:create-invoice' %}" method='POST'>
                     {% csrf_token %}
                     <div class="form-group mb-3">                        
-                        <select class="searchable-select" name="customer_id">
+                        <select id="slim-select" name="customer_id">
                             <option value="None">(Select Customer)</option>
                             {% if customer_list %}
                                 {% for customer in customer_list %}
@@ -184,10 +184,9 @@
     } );
 </script>
 <script>
-    const element = document.querySelector('.searchable-select');
-    const choices = new Choices(element, {
-    searchEnabled: true,
-    });
+  new SlimSelect({
+    select: '#slim-select'
+  });
 </script>
 {% endblock javascript %}
     
