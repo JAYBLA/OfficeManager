@@ -1,8 +1,10 @@
 from django.template.loader import render_to_string
-from weasyprint import HTML
 from io import BytesIO
 from django.core.mail import EmailMessage
 from django.utils import timezone
+
+# Import xhtml2pdf's pisa module
+from xhtml2pdf import pisa
 
 def hosting_expire_email(hosting):
     customer_name = hosting.customer.name
@@ -16,14 +18,20 @@ def hosting_expire_email(hosting):
         f"Please find the attached invoice for renewal.\n\nThank you."
     )
 
-    # Render invoice HTML to PDF
+    # Render invoice HTML
     html_string = render_to_string('hosting/invoice.html', {
         'hosting': hosting,
         'today': timezone.now().date()
     })
 
     pdf_file = BytesIO()
-    HTML(string=html_string).write_pdf(target=pdf_file)
+    # Convert HTML to PDF using xhtml2pdf
+    pisa_status = pisa.CreatePDF(src=html_string, dest=pdf_file)
+
+    if pisa_status.err:
+        print("Error generating PDF")
+        return  # Or handle the error appropriately
+
     pdf_file.seek(0)
 
     try:
@@ -33,7 +41,6 @@ def hosting_expire_email(hosting):
             'management@jayblagroup.co.tz',
             [customer_email],
         )
-
         email.attach(f"invoice_{hosting.id}.pdf", pdf_file.read(), 'application/pdf')
         email.send()
         print(f"Email sent to {customer_email} with dynamic invoice")

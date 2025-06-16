@@ -1,116 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <style>
-        @page {
-            size: A4;
-            margin: 30pt;
-        }
+<style>
+    @page {
+        size: A4;
+        margin: 30pt;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 12pt;
-            color: #333;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 12pt;
+        color: #333;
+        margin: 0;
+    }
 
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    .header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
 
-        .header h1 {
-            font-size: 24pt;
-            margin: 0;
-        }
+    .header h1 {
+        font-size: 24pt;
+        margin: 0;
+    }
 
-        .section {
-            margin-bottom: 30px;
-        }
+    .section {
+        margin-bottom: 30px;
+    }
 
-        .section h2 {
-            font-size: 16pt;
-            margin-bottom: 10px;
-            color: #555;
-        }
+    .section h2 {
+        font-size: 16pt;
+        margin-bottom: 10px;
+        color: #555;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-        table, th, td {
-            border: 1px solid #ccc;
-        }
+    table, th, td {
+        border: 1px solid #ccc;
+    }
 
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
+    th, td {
+        padding: 8px;
+        text-align: left;
+    }
 
-        .totals {
-            text-align: right;
-        }
+    .totals {
+        text-align: right;
+    }
 
-        .footer {
-            text-align: center;
-            font-size: 10pt;
-            color: #777;
-            position: absolute;
-            bottom: 30pt;
-            left: 30pt;
-            right: 30pt;
-        }
+    /* Avoid position absolute */
+    .footer {
+        text-align: center;
+        font-size: 10pt;
+        color: #777;
+        margin-top: 50px;
+        /* position: absolute; bottom: 30pt; left: 30pt; right: 30pt; */
+    }
 
-        .highlight {
-            background-color: #ff0d33;
-            color: #fff;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="header">
-        <h1>Domain and Hosting Expiry Invoice</h1>
-        <p>{{ hosting.created_at|date:"F d, Y" }}</p>
-    </div>
-
-    <div class="section">
-        <h2>Customer Info</h2>
-        <p><strong>Name:</strong> {{ hosting.customer.name }}</p>
-        <p><strong>Email:</strong> {{ hosting.customer.email }}</p>
-        <p><strong>Phone:</strong> {{ hosting.customer.phone }}</p>
-    </div>
-
-    <div class="section">
-        <h2>Description</h2>
-        <table>
-            <thead>
-                <tr class="highlight">
-                    <th>Domain</th>
-                    <th>Expiry Date</th>
-                    <th>Next Due</th>
-                    <th>Domain Cost</th>
-                    <th>Hosting Cost</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ hosting.domain }}</td>
-                    <td>{{ hosting.expiring_date|date:"F d, Y" }}</td>
-                    <td>{{ hosting.next_due|date:"F d, Y" }}</td>
-                    <td>{{ hosting.domain_cost|floatformat:0 }}/=</td>
-                    <td>{{ hosting.hosting_cost|floatformat:0 }}/=</td>
-                    <td>{{ hosting.domain_cost|add:hosting.hosting_cost|floatformat:0 }}/=</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="footer">
-        This is an automatically generated invoice. Please renew your hosting before the due date.
-    </div>
-
-</body>
-</html>
+    .highlight {
+        background-color: #ff0d33;
+        color: #fff;
+    }
+</style>
