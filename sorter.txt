@@ -6,7 +6,6 @@
 /home/jayblaco/logs/officemanager
 
 
-<<<<<<< HEAD
 from hosting.models import Hosting
 from datetime import timedelta
 
@@ -14,9 +13,4 @@ for h in Hosting.objects.all():
     if h.expiring_date:
         h.next_due = h.expiring_date + timedelta(days=365)
         h.save()
-=======
-CRONJOB COMMAND
-
-cd /home/jayblaco/officemanager && /home/jayblaco/virtualenv/officemanager/3.9/bin/python3 manage.py runcrons >> /home/jayblaco/logs/officemanager/cron.log 2>&1
->>>>>>> 96731768ad1b5a6252077ae7ebd0506b12548f78
 
