@@ -31,6 +31,8 @@ def hosting_expire_email(hosting):
     HTML(string=html_string).write_pdf(target=pdf_file)
     pdf_file.seek(0)
 
+    print("Tupoooo")
+
     try:
         email = EmailMessage(
             subject,
