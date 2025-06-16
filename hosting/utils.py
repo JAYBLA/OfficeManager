@@ -14,7 +14,7 @@ def hosting_expire_email(hosting):
     subject = f"Hosting Expiry Notice for {domain_name}"
     message = (
         f"Dear {customer_name},\n\n"
-        f"Your hosting for {domain_name} will expire on {expiring_date}. "
+        f"Your website {domain_name} Hosting and Domain will expire on {expiring_date}. "
         f"Please find the attached invoice for renewal.\n\nThank you."
     )
 

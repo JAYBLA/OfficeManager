@@ -87,8 +87,7 @@
         <h2>Description</h2>
         <table>
             <thead>
-                <tr class="highlight">
-                    <th>Domain</th>
+                <tr class="highlight">                    
                     <th>Expiry Date</th>
                     <th>Next Due</th>
                     <th>Domain Cost</th>
@@ -97,8 +96,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{ hosting.domain }}</td>
+                <tr>                    
                     <td>{{ hosting.expiring_date|date:"F d, Y" }}</td>
                     <td>{{ hosting.next_due|date:"F d, Y" }}</td>
                     <td>{{ hosting.domain_cost|floatformat:0 }}/=</td>
