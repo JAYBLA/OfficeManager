@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice</title>
+  <style>
+    @page {
+    size: A4;
+    margin: 0; /* Let the background cover the full page */
+  }
+
+  body {
+    margin: 0;
+    background-image: url('/static/assets/img/invoicejaybla.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: "DejaVu Sans", sans-serif;
+  }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .left-info {
+      width: 60%;
+      line-height: 1.6em;
+    }
+    .right-title {
+      width: 35%;
+      background: #d00;
+      color: #fff;
+      padding: 10px;
+      text-align: right;
+    }
+    .right-title h2 {
+      font-size: 20px;
+      margin: 0;
+      line-height: 1.3em;
+    }
+    .right-title p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    .invoice-to {
+      margin-top: 20px;
+      line-height: 1.5em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid #888;
+      padding: 8px;
+    }
+    th {
+      background: #d00;
+      color: #fff;
+    }
+    td strong {
+      font-weight: bold;
+    }
+    .total-row td {
+      font-weight: bold;
+      background: #f4dcdc;
+    }
+    .payment {
+      margin-top: 30px;
+    }
+    .payment p {
+      font-size: 13px;
+      line-height: 1.6em;
+    }
+    .stamp {
+      margin-top: 50px;
+    }
+    .stamp img {
+      width: 140px;
+    }
+    .stamp p {
+      margin: 4px 0 0 0;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #aaa;
+      margin-top: 60px;
+      padding-top: 10px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="left-info">
+    <p><strong>INVOICE NO:</strong> JB100R1JUM</p>
+    <p><strong>CREATED DATE:</strong> 2025-06-09</p>
+    <p><strong>DUE DATE:</strong> 2025-06-12</p>
+  </div>
+  <div class="right-title">
+    <h2>PROFORMA<br>INVOICE</h2>
+    <p><strong>JAYBLA GROUP</strong><br>
+    www.jayblagroup.co.tz<br>
+    +255 786 511 891</p>
+  </div>
+</div>
+
+<div class="invoice-to">
+  <p><strong>INVOICE TO:</strong><br>
+  JUMANNE BUGALAMA JOSEPH<br>
+  bugalama28@gmail.com<br>
+  0757690321</p>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>DESCRIPTION</th>
+      <th>QTY</th>
+      <th>UNIT PRICE</th>
+      <th>AMOUNT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><strong>Domain</strong></td>
+      <td>1</td>
+      <td>30,000/=</td>
+      <td>30,000/=</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>Hosting</strong></td>
+      <td>1</td>
+      <td>300,000/=</td>
+      <td>300,000/=</td>
+    </tr>
+    <tr class="total-row">
+      <td colspan="4" style="text-align: right;">TOTAL</td>
+      <td>330,000/=</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

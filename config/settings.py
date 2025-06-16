@@ -171,9 +171,10 @@ if not DEBUG:
     EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool, default=True)
     EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')    
 else:
-    EMAIL_HOST_USER = 'noreply@jayblagroup.co.tz'
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    EMAIL_FILE_PATH = BASE_DIR / 'sent_mails'
+    EMAIL_FILE_PATH = BASE_DIR / "sent_emails"  # make sure this folder exists
+
+
 
 
 #Base URL
@@ -196,3 +197,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRON_CLASSES = [
     'hosting.cron.HostingExpiryNotificationCronJob',
 ]
+
+

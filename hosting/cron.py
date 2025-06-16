@@ -1,20 +1,28 @@
 from django_cron import CronJobBase, Schedule
 from django.utils import timezone
 from hosting.models import Hosting
-from notifications.utils import send_expiry_notification
+from .utils import hosting_expire_email
+
 
 class HostingExpiryNotificationCronJob(CronJobBase):
-    RUN_EVERY_MINS = 1440  # 24 hours
+    RUN_EVERY_MINS = 1  # For development
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-    code = 'hosting.hosting_expiry_notification'  # unique code
+    code = 'HostingExpiryNotificationCronJob'
 
     def do(self):
         today = timezone.now().date()
-        upcoming = today + timezone.timedelta(days=14)
-        expiring_hosting = Hosting.objects.filter(expiring_date__lte=upcoming, notified=False)
+        expiry_cutoff = today + timezone.timedelta(days=14)
 
-        for hosting in expiring_hosting:
-            send_expiry_notification(hosting)
-            hosting.notified = True
-            hosting.save()
+        expiring_hostings = Hosting.objects.filter(
+            expiring_date__gte=today,          # today or later
+            expiring_date__lte=expiry_cutoff   # up to 14 days ahead
+        )
+
+        for hosting in expiring_hostings:            
+            # Only notify if not already notified today
+            if not hosting.last_notified or hosting.last_notified != today:                
+                hosting_expire_email(hosting)                
+                hosting.last_notified = today
+                hosting.save()
+

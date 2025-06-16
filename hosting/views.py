@@ -3,6 +3,9 @@ from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
 from .models import Hosting
 from .forms import HostingForm
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
 
 #  List all hosting records
 def hosting_list(request):
@@ -39,13 +42,21 @@ def hosting_delete(request, pk):
         return JsonResponse({'success': True})
     return render(request, 'hosting/partials/hosting_confirm_delete.html', {'object': hosting})
 
-def send_expiry_notification(hosting):
-    subject = f"Hosting Expiry Notice for {hosting.domain_name}"
-    message = f"Dear {hosting.customer.username},\n\nYour hosting for {hosting.domain_name} will expire on {hosting.expiry_date}. Please renew it in time."
-    send_mail(
-        subject,
-        message,
-        'management@jayblagroup.co.tz',  # from email
-        [hosting.customer.email],
-        fail_silently=False,
-    )
+
+def download_invoice(request):
+    # 1. Render the HTML template with context
+    html_string = render_to_string("hosting/invoice.html", {
+        'invoice_number': 'JB100R1JUM',
+        'customer_name': 'Jumanne Joseph',
+        'total': 330000,
+        # Add other context as needed
+    })
+
+    # 2. Convert HTML to PDF
+    pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri('/')).write_pdf()
+
+    # 3. Return the response as a downloadable file
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="invoice.pdf"'
+
+    return response

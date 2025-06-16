@@ -4,3 +4,13 @@
 
 
 /home/jayblaco/logs/officemanager
+
+
+from hosting.models import Hosting
+from datetime import timedelta
+
+for h in Hosting.objects.all():
+    if h.expiring_date:
+        h.next_due = h.expiring_date + timedelta(days=365)
+        h.save()
+
