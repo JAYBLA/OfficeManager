@@ -5,19 +5,14 @@ from django.core.mail import EmailMessage
 from django.utils import timezone
 
 def hosting_expire_email(hosting):
-    customer_name = getattr(hosting.customer, 'name', 'Valued Customer')
-    customer_email = getattr(hosting.customer, 'email', None)
-    domain = getattr(hosting, 'domain', 'your domain')
-    expiring_date = getattr(hosting, 'expiring_date', None)
-
-    if not customer_email:
-        print(f"Skipping email: No email found for {customer_name}")
-        return
-
-    subject = f"Hosting Expiry Notice for {domain}"
+    customer_name = hosting.customer.name
+    customer_email = hosting.customer.email
+    domain_name = hosting.domain
+    expiring_date = hosting.expiring_date
+    subject = f"Hosting Expiry Notice for {domain_name}"
     message = (
         f"Dear {customer_name},\n\n"
-        f"Your hosting for {domain} will expire on {expiring_date}. "
+        f"Your hosting for {domain_name} will expire on {expiring_date}. "
         f"Please find the attached invoice for renewal.\n\nThank you."
     )
 
@@ -30,8 +25,6 @@ def hosting_expire_email(hosting):
     pdf_file = BytesIO()
     HTML(string=html_string).write_pdf(target=pdf_file)
     pdf_file.seek(0)
-
-    print("Tupoooo")
 
     try:
         email = EmailMessage(
