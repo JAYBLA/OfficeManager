@@ -14,3 +14,14 @@ for h in Hosting.objects.all():
         h.next_due = h.expiring_date + timedelta(days=365)
         h.save()
 
+
+from django.core.mail import send_mail
+
+send_mail(
+    subject='Test Email',
+    message='Hello, this is a test from Django.',
+    from_email='management@jayblagroup.co.tz',
+    recipient_list=['bugalama28@gmail.com'],  # Use your own for testing
+    fail_silently=False
+)
+
