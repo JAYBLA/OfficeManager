@@ -46,7 +46,14 @@
                       <td>{{ invoice.title }}</td>
                       <td>{{ invoice.date|date:"SHORT_DATE_FORMAT" }}</td>
                       <td><strong>{{ invoice.invoice_type |upper }}</strong></td>
-                      <td><span class="badge {% if invoice.status == 'Paid' %}bg-success{% elif invoice.status == 'Unpaid' %} bg-danger {% else %} bg-warning {% endif %}">{{ invoice.status }}</span></td>                                
+                      <td><span
+                        class="badge {% if invoice.status == 'Paid' %}bg-success{% elif invoice.status == 'Unpaid' %}bg-danger{% else %}bg-warning{% endif %}"
+                        data-id="{{ invoice.id }}"
+                        onclick="toggleStatus(this)"
+                        style="cursor: pointer;"
+                      >
+                        {{ invoice.status }}
+                      </span></td>                                
                       <td class="d-inline d-flex justify-content-center">
                             <a class="delete-invoice bs-modal" data-form-url="{% url 'invoice:invoice-delete' invoice.id %}">
                               <i class="fa fa-trash text-danger me-3 fa-2x" style="cursor:pointer;"></i>
@@ -95,6 +102,42 @@ $(document).ready(function () {
       });
     });
   </script>
+  <script>
+function toggleStatus(el) {
+  const invoiceId = el.getAttribute('data-id');
+
+  fetch(`toggle-invoice-status/${invoiceId}/`, {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': '{{ csrf_token }}',
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status) {
+      el.textContent = data.status;
+
+      // Update badge class
+      el.classList.remove('bg-success', 'bg-danger', 'bg-warning');
+      if (data.status === 'Paid') {
+        el.classList.add('bg-success');
+      } else if (data.status === 'Unpaid') {
+        el.classList.add('bg-danger');
+      } else {
+        el.classList.add('bg-warning');
+      }
+    } else {
+      alert(data.error || 'An error occurred');
+    }
+  })
+  .catch(error => {
+    alert('Something went wrong.');
+    console.error(error);
+  });
+}
+</script>
+
 {% endblock javascript %}
     
     

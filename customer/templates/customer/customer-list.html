@@ -24,13 +24,12 @@
               <table class="table bordered-table mb-0" data-page-length='10' id="customer-table">
                   <thead>
                     <tr>
-                      <th scope="col">S/N</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Phone</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Whatsapp Number</th>
-                      <th scope="col">Physical Address</th>
-                      <th scope="col">Actions</th>
+                      <th>S/N</th>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>                      
+                      <th >Physical Address</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   
@@ -41,8 +40,7 @@
                       <td>{{forloop.counter}}</td>
                       <td>{{customer.name}}</td>
                       <td>{{customer.phone}}</td>
-                      <td>{{customer.email}}</td>
-                      <td>{{customer.whatsapp_number}}</td>
+                      <td>{{customer.email}}</td>                      
                       <td>{{customer.physical_address}}</td>
                       <td class="text-center">
                           <a class="update-customer bs-modal mr-2" data-form-url="{% url 'customer:update-customer' customer.id %}" style="cursor:pointer;font-size: 22px">

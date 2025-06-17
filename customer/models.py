@@ -7,13 +7,7 @@ class Customer(models.Model):
     name                = models.CharField(max_length=150,unique=True)
     phone               = models.CharField(max_length=15, blank=True,null=True)
     email               = models.EmailField(max_length=150, blank=True,null=True)
-    physical_address    = models.CharField(max_length=150)
-    whatsapp_number = PhoneNumberField(
-        region='TZ',  # optional default country for validation
-        help_text='Enter WhatsApp number with country code.',
-        blank=True,  # allow blank field
-        null=True,  # allow null value
-    )
+    physical_address    = models.CharField(max_length=150)   
     created_at          = models.DateTimeField(auto_now_add=True)
     modified_at         = models.DateTimeField(auto_now=True)
     

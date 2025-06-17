@@ -14,7 +14,7 @@ urlpatterns = [
     path('paid-invoices/', invoice_paid, name='invoice-paid'),
     path('invoices/', invoice_list, name='invoice-list'),    
     path('draft-invoices/', invoice_draft, name='invoice-draft'),
-    
+    path('invoices/toggle-invoice-status/<int:invoice_id>/', toggle_invoice_status, name='toggle_invoice_status'),
     #ITEMS
     path('invoice/<int:id>/item/add/', OrderItemCreateView.as_view(), name='create_item'),
     path('invoice/<int:id>/<int:pk>/update/', OrderItemUpdateView.as_view(), name='update_item'),

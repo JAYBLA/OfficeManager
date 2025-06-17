@@ -24,6 +24,9 @@ from customer.models import Customer
 from .utils import render_to_pdf
 from datetime import datetime,timedelta,date
 from .forms import *
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 base_url = settings.BASE_URL
 
@@ -263,4 +266,17 @@ def invoice_from_quotation(request,quotation_id):
         orderitem = OrderItem(description=item.description,cost=item.cost,qty=item.qty,invoice_id=invoice.id)
         orderitem.save()
     return redirect(to='invoice:invoice_list')
-    
+
+
+@require_POST
+@login_required
+def toggle_invoice_status(request, invoice_id):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        try:
+            invoice = Invoice.objects.get(id=invoice_id)
+            invoice.status = 'Paid' if invoice.status != 'Paid' else 'Unpaid'
+            invoice.save()
+            return JsonResponse({'status': invoice.status})
+        except Invoice.DoesNotExist:
+            return JsonResponse({'error': 'Invoice not found'}, status=404)
+    return JsonResponse({'error': 'Invalid request'}, status=400)  
