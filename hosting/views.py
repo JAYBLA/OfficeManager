@@ -5,7 +5,7 @@ from .models import Hosting
 from .forms import HostingForm
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from weasyprint import HTML
+
 
 #  List all hosting records
 def hosting_list(request):
