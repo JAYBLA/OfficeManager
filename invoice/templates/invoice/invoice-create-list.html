@@ -61,7 +61,12 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Due Date</label>                                                  
-                        <input type="date" name="due_date" class="form-control" id="date-picker-example">                  
+                        <div class="input-group" id="datepicker-due-wrapper">
+                        <input type="text" name="due_date" value="{{ today|date:'d/m/Y' }}" class="form-control" id="due-date" autocomplete="off" readonly>
+                        <span class="input-group-text" id="calendar-icon-due" style="cursor: pointer;">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                        </div>
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Invoice Title</label>                                                  
@@ -186,6 +191,22 @@
 <script>
   new SlimSelect({
     select: '#slim-select'
+  });
+</script>
+<script>
+  $(function () {
+    // Initialize datepicker manually without auto-show
+    $('#due-date').datepicker({
+      format: 'dd/mm/yyyy',
+      autoclose: true,
+      orientation: 'bottom left',
+      todayHighlight: true
+    });
+
+    // Open when input or icon is clicked
+    $('#due-date, #calendar-icon-due').on('click', function () {
+      $('#due-date').datepicker('show');
+    });
   });
 </script>
 {% endblock javascript %}

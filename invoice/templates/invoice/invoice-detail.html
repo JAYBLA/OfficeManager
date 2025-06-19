@@ -18,16 +18,25 @@
                                 <h5>Customer Information</h5>
                                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="{% url 'invoice:update-invoice' invoice.id %}" method="POST">
                                     {% csrf_token %}
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 ">
-                                            <p class="form-control-static"><a href="#" class=" text-decoration-none">{{ invoice.customer }}</a></p>
-                                        </div>
+                                    <div class="form-group mb-3">
+                                    <label class="form-label">Customer</label>
+                                    <select name="customer" id="slim-select">
+                                        {% for customer in customers %}
+                                        <option value="{{ customer.id }}" {% if customer.id == invoice.customer.id %}selected{% endif %}>{{ customer.name }}</option>
+                                        {% endfor %}
+                                    </select>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 col-sm-3 label-align" for="last-name">Date: <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-6 col-sm-6 ">
-                                            <input type="text" class="form-control" name="date" id="invoicedate" value="{{ invoice.date|date:"SHORT_DATE_FORMAT" }}">
+                                        <div class="col-md-6 col-sm-6 ">   
+                                            <div class="input-group" id="datepicker-date-group">
+                                            <input type="text" name="date" class="form-control" id="invoice-date" readonly
+                                                    value="{{ invoice.date|date:'m/d/Y' }}">
+                                            <span class="input-group-text" id="calendar-icon-date" style="cursor: pointer;">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="item form-group">
@@ -42,7 +51,13 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="form-label">Due Date</label>                                                  
-                                        <input type="text" name="due_date" class="form-control" value="{{invoice.due_date|date:"SHORT_DATE_FORMAT"}}">                  
+                                        <div class="input-group" id="datepicker-due-date-group">
+                                        <input type="text" name="due_date" class="form-control" id="invoice-due-date" readonly
+                                                value="{{ invoice.due_date|date:'m/d/Y' }}">
+                                        <span class="input-group-text" id="calendar-icon-due" style="cursor: pointer;">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        </div>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="form-label">Invoice Title</label>                                                  
@@ -164,13 +179,34 @@
   
     });
   </script>
-  <script type="text/javascript">
-    $(function () {
-        $('#invoicedate').datepicker({
-            todayBtn: "linked",
-            orientation: "bottom left",
-            autoclose: true
-        });
+<script>
+  $(function () {
+    // Date field
+    $('#invoice-date').datepicker({
+      format: "mm/dd/yyyy",
+      autoclose: true,
+      orientation: "bottom left"
     });
+
+    $('#calendar-icon-date').on('click', function () {
+      $('#invoice-date').datepicker('show');
+    });
+
+    // Due date field
+    $('#invoice-due-date').datepicker({
+      format: "mm/dd/yyyy",
+      autoclose: true,
+      orientation: "bottom left"
+    });
+
+    $('#calendar-icon-due').on('click', function () {
+      $('#invoice-due-date').datepicker('show');
+    });
+  });
+</script>
+<script>
+  new SlimSelect({
+    select: '#slim-select'
+  });
 </script>
  {% endblock javascript %}

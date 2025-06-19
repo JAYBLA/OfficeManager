@@ -64,9 +64,11 @@ def invoice_create(request):
     else:
         invoices = Invoice.objects.order_by('-date')
         customers = Customer.objects.order_by('name')
+        today = datetime.today()
         context = {			
             'invoice_list' : invoices,
-            'customer_list' : customers,			
+            'customer_list' : customers,
+            'today': today
         }
         return render(request, template, context)
 
@@ -119,21 +121,28 @@ def invoice_draft(request):
 def update_invoice(request, invoice_id):
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     template = 'invoice/invoice-detail.html'
+
     try:
+        # Parse and assign values from the form
         invoice.date = datetime.strptime(request.POST['date'], "%m/%d/%Y")
         invoice.due_date = datetime.strptime(request.POST['due_date'], "%m/%d/%Y")
         invoice.title = request.POST['title']
         invoice.status = request.POST['status']
         invoice.category = request.POST['category']
         invoice.invoice_type = request.POST['type']
+        
+        # Update the customer
+        customer_id = request.POST.get('customer')
+        invoice.customer = get_object_or_404(Customer, pk=customer_id)
+
         invoice.save()
-    except (KeyError, Invoice.DoesNotExist):
+    except (KeyError, Invoice.DoesNotExist, Customer.DoesNotExist):
         return render(request, template, {
             'invoice': invoice,
             'error_message': 'Not able to update invoice!',
         })
     else:
-        return redirect(to='invoice:invoice-detail',id=invoice_id)
+        return redirect('invoice:invoice-detail', id=invoice_id)
 
 class InvoiceDeleteView(LoginRequiredMixin,BSModalDeleteView):
     model = Invoice
@@ -147,9 +156,11 @@ class InvoiceDeleteView(LoginRequiredMixin,BSModalDeleteView):
 def invoice_detail(request, id):
     template = 'invoice/invoice-detail.html'
     invoice = get_object_or_404(Invoice, pk=id)
+    customers = Customer.objects.all()
     context = {
         'title' : 'Invoice ' + str(id),
         'invoice' : invoice,
+        'customers': customers,
     }
     return render(request, template, context)
 
