@@ -34,40 +34,59 @@ base_url = settings.BASE_URL
 @login_required()
 def invoice_create(request):
     template = 'invoice/invoice-create-list.html'
-    # If no customer_id is defined, create a new invoice
-    if request.method=='POST':
+    
+    if request.method == 'POST':
         customer_id = request.POST['customer_id']
-        due_date = request.POST['due_date']
+        due_date_str = request.POST['due_date']  # This will be in DD/MM/YYYY format
         title = request.POST['title']
         invoice_type = request.POST['type']
         category = request.POST['category']
-                
-        if customer_id=='None':
+        
+        try:
+            # Convert DD/MM/YYYY to YYYY-MM-DD
+            due_date = datetime.strptime(due_date_str, '%d/%m/%Y').date()
+        except ValueError:
             customers = Customer.objects.order_by('name')
             context = {
-                'customer_list' : customers,
-                'error_message' : 'Please select a customer.',
+                'customer_list': customers,
+                'error_message': 'Invalid due date format. Please use DD/MM/YYYY.',
+            }
+            return render(request, template, context)
+        
+        if customer_id == 'None':
+            customers = Customer.objects.order_by('name')
+            context = {
+                'customer_list': customers,
+                'error_message': 'Please select a customer.',
             }
             return render(request, template, context)
         else:
             customer = get_object_or_404(Customer, pk=customer_id)
-            invoice = Invoice(customer=customer, date=date.today(), status='Unpaid', due_date=due_date, title=title, category=category, invoice_type=invoice_type)
+            invoice = Invoice(
+                customer=customer,
+                date=date.today(),
+                status='Unpaid',
+                due_date=due_date,
+                title=title,
+                category=category,
+                invoice_type=invoice_type
+            )
             invoice.save()
             
             invoices = Invoice.objects.order_by('-date')
             customers = Customer.objects.order_by('name')
             context = {			
-            'invoice_list' : invoices,
-            'customer_list' : customers,		
+                'invoice_list': invoices,
+                'customer_list': customers,		
             }
-        return render(request, template, context) 
+            return render(request, template, context)
     else:
         invoices = Invoice.objects.order_by('-date')
         customers = Customer.objects.order_by('name')
         today = datetime.today()
         context = {			
-            'invoice_list' : invoices,
-            'customer_list' : customers,
+            'invoice_list': invoices,
+            'customer_list': customers,
             'today': today
         }
         return render(request, template, context)
@@ -144,12 +163,17 @@ def update_invoice(request, invoice_id):
     else:
         return redirect('invoice:invoice-detail', id=invoice_id)
 
-class InvoiceDeleteView(LoginRequiredMixin,BSModalDeleteView):
+class InvoiceDeleteView(LoginRequiredMixin, BSModalDeleteView):
     model = Invoice
     template_name = 'invoice/delete.html'
     success_message = 'Success: Invoice was deleted.'
     context_object_name = 'invoice'
-    success_url = reverse_lazy('invoice:invoice-list')
+    success_url = reverse_lazy('invoice:invoice-list')  # used only if JS is disabled
+
+    def form_valid(self, form):
+        invoice = self.get_object()       
+        return super().form_valid(form)
+
     
 
 @login_required()

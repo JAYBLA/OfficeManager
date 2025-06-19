@@ -55,12 +55,12 @@
                         {{ invoice.status }}
                       </span></td>                                
                       <td class="d-inline d-flex justify-content-center">
-                            <a class="delete-invoice bs-modal" data-form-url="{% url 'invoice:invoice-delete' invoice.id %}">
-                              <i class="fa fa-trash text-danger me-3 fa-2x" style="cursor:pointer;"></i>
-                          </a>  
-                            <a href="{% url 'invoice:invoice-detail' invoice.id %}" ><i class="fa fa-edit me-3 fa-2x text-warning" aria-hidden="true"></i></a>
+                      <a class="delete-invoice bs-modal" data-form-url="{% url 'invoice:invoice-delete' invoice.id %}">
+                          <i class="fa fa-trash text-danger me-3" style="font-size: 22px;"></i>
+                      </a>  
+                      <a href="{% url 'invoice:invoice-detail' invoice.id %}" ><i class="fa fa-edit me-3 text-warning" aria-hidden="true" style="font-size: 22px;"></i></a>
 
-                              <a href="{% url 'invoice:download-invoice' invoice.id %}" download="Invoice to {{invoice.customer.name}} on {{invoice.title}}"><i class="fa fa-download fa-2x text-success" aria-hidden="true"></i></a>                                                                  
+                        <a href="{% url 'invoice:download-invoice' invoice.id %}" download="Invoice to {{invoice.customer.name}} on {{invoice.title}}"><i class="fa fa-download text-success" aria-hidden="true" style="font-size: 22px;"></i></a>                                                                  
                       </td>
                   </tr>
                   {% endfor %}
@@ -79,11 +79,12 @@
   </div>
   
   <!-- Modal 2 with id="modal" -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="modal" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content"></div>
-    </div>
+<!-- Modal container -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
   </div>
+</div>
 {% endblock content %}
 
 
@@ -95,12 +96,24 @@ $(document).ready(function () {
 });
 </script>
 <script>
-    $(function () {  
-      $(".delete-invoice").each(function () {
-          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
-      });
+$(function () {
+    $(".delete-invoice").each(function () {
+        $(this).modalForm({
+            formURL: $(this).data("form-url"),
+            isDeleteForm: true,
+            modalID: "#modal",
+            asyncUpdate: true,
+            asyncSettings: {
+                closeModal: true,
+                successMessage: 'Invoice deleted successfully!',
+                reloadPage: false,
+                updateElementId: "#invoice-table",
+                updateUrl: window.location.href  // re-fetch current list
+            }
+        });
     });
-  </script>
+});
+</script>
   <script>
 function toggleStatus(el) {
   const invoiceId = el.getAttribute('data-id');
