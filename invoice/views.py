@@ -27,6 +27,7 @@ from .forms import *
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.views.generic import DeleteView
 
 base_url = settings.BASE_URL
 
@@ -163,17 +164,15 @@ def update_invoice(request, invoice_id):
     else:
         return redirect('invoice:invoice-detail', id=invoice_id)
 
-class InvoiceDeleteView(LoginRequiredMixin, BSModalDeleteView):
+class InvoiceDeleteAjaxView(LoginRequiredMixin, DeleteView):
     model = Invoice
-    template_name = 'invoice/delete.html'
-    success_message = 'Success: Invoice was deleted.'
-    context_object_name = 'invoice'
-    success_url = reverse_lazy('invoice:invoice-list')  # used only if JS is disabled
 
-    def form_valid(self, form):
-        invoice = self.get_object()       
-        return super().form_valid(form)
-
+    def post(self, request, *args, **kwargs):
+        invoice = self.get_object()
+        invoice.delete()
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False}, status=400)
     
 
 @login_required()

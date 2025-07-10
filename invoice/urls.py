@@ -20,7 +20,7 @@ urlpatterns = [
     path('invoice/<int:id>/<int:pk>/update/', OrderItemUpdateView.as_view(), name='update_item'),
     path('invoice/<int:id>/<int:pk>/delete/', OrderItemDeleteView.as_view(), name='delete_item'),
     path('invoice/<int:invoice_id>/update/', update_invoice, name='update-invoice'),
-    path('invoice/<int:pk>/delete/', InvoiceDeleteView.as_view(), name='invoice-delete'),
+    path('invoice/<int:pk>/delete/', InvoiceDeleteAjaxView.as_view(), name='invoice-delete'),
     
                         #SENDING INVOICE ATTACHMENTS
     path('invoice/<int:invoice_id>/send/', email_invoice, name='email-invoice'),
