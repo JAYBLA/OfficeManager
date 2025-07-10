@@ -154,15 +154,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 if not DEBUG:
-    MEDIA_ROOT = '/home/jayblaco/officemanager.jayblagroup.co.tz/media'
     STATIC_ROOT = '/home/jayblaco/officemanager.jayblagroup.co.tz/static'
+    MEDIA_ROOT = '/home/jayblaco/officemanager.jayblagroup.co.tz/media'
 else:
-    MEDIA_ROOT = 'media/'   
+    STATIC_ROOT = BASE_DIR / 'staticfiles'  # optional for dev
+    MEDIA_ROOT = BASE_DIR / 'media'   
     
 if not DEBUG:
     EMAIL_BACKEND = config('EMAIL_BACKEND')
