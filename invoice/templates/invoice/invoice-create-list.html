@@ -128,7 +128,7 @@
                                 <td>{{ invoice.status }}</td>                                
                                 <td class="text-center">
                                     <a href="{% url 'invoice:invoice-detail' invoice.id %}" style="color:orange;font-size: 22px;"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                    <a class="delete-invoice bs-modal mr-2" data-form-url="{% url 'invoice:invoice-delete' invoice.id %}">
+                                    <a class="delete-invoice bs-modal mr-2" data-form-url="{% url 'invoice:delete_invoice' invoice.id %}">
                                         <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
                                     </a>
                                 </td>
