@@ -164,15 +164,12 @@ def update_invoice(request, invoice_id):
     else:
         return redirect('invoice:invoice-detail', id=invoice_id)
 
-class InvoiceDeleteAjaxView(LoginRequiredMixin, DeleteView):
+class InvoiceDeleteView(LoginRequiredMixin,BSModalDeleteView):
     model = Invoice
-
-    def post(self, request, *args, **kwargs):
-        invoice = self.get_object()
-        invoice.delete()
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return JsonResponse({'success': True})
-        return JsonResponse({'success': False}, status=400)
+    template_name = 'invoice/delete.html'
+    success_message = 'Success: Invoice was deleted.'
+    context_object_name = 'invoice'
+    success_url = reverse_lazy('invoice:invoice-list')
     
 
 @login_required()

@@ -55,9 +55,9 @@
                         {{ invoice.status }}
                       </span></td>                                
                       <td class="d-inline d-flex justify-content-center">
-                      <a href="#" class="delete-invoice-btn" data-id="{{ invoice.id }}">
-                        <i class="fa fa-trash text-danger me-3" style="font-size: 22px;"></i>
-                      </a>  
+                          <a class="delete-invoice bs-modal me-2" data-form-url="{% url 'invoice:delete_invoice' invoice.id %}">
+                              <i class="fa fa-trash text-danger" style="font-size: 22px; cursor:pointer;"></i>
+                          </a> 
                       <a href="{% url 'invoice:invoice-detail' invoice.id %}" ><i class="fa fa-edit me-3 text-warning" aria-hidden="true" style="font-size: 22px;"></i></a>
 
                         <a href="{% url 'invoice:download-invoice' invoice.id %}" download="Invoice to {{invoice.customer.name}} on {{invoice.title}}"><i class="fa fa-download text-success" aria-hidden="true" style="font-size: 22px;"></i></a>                                                                  
@@ -113,65 +113,6 @@ $(document).ready(function () {
     $('#invoice-table').DataTable();
 });
 </script>
-<script>
-  let invoiceToDelete = null;
-
-  // Capture delete button click
-  document.querySelectorAll('.delete-invoice-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      invoiceToDelete = this.dataset.id;
-      const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-      modal.show();
-    });
-  });
-
-  // CSRF setup
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-      document.cookie.split(';').forEach(cookie => {
-        const trimmed = cookie.trim();
-        if (trimmed.startsWith(name + '=')) {
-          cookieValue = decodeURIComponent(trimmed.substring(name.length + 1));
-        }
-      });
-    }
-    return cookieValue;
-  }
-
-  // Confirm delete
-  document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
-    if (!invoiceToDelete) return;
-
-    fetch(`/invoice/${invoiceToDelete}/delete/`, {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-    })
-    .then(response => {
-      if (!response.ok) throw new Error('Network error');
-      return response.json();
-    })
-    .then(data => {
-      if (data.success) {
-        // Remove row from table
-        const row = document.querySelector(`[data-id="${invoiceToDelete}"]`).closest('tr');
-        if (row) row.remove();
-
-        bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal')).hide();
-      } else {
-        alert('Delete failed.');
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      alert('Something went wrong.');
-    });
-  });
-</script>
   <script>
 function toggleStatus(el) {
   const invoiceId = el.getAttribute('data-id');
@@ -207,7 +148,13 @@ function toggleStatus(el) {
   });
 }
 </script>
-
+<script>
+      $(function () {  
+      $(".delete-invoice").each(function () {
+          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+      });
+    });
+</script>
 {% endblock javascript %}
     
     
