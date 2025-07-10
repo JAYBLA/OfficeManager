@@ -296,7 +296,7 @@ def invoice_from_quotation(request,quotation_id):
     for item in quotation_items:
         orderitem = OrderItem(description=item.description,cost=item.cost,qty=item.qty,invoice_id=invoice.id)
         orderitem.save()
-    return redirect(to='invoice:invoice_list')
+    return redirect(to='invoice:invoice-list')
 
 
 @require_POST
