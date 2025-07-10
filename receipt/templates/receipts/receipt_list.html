@@ -14,8 +14,9 @@
             <button class="btn btn-outline-primary btn-lg float-end create-receipt" data-url="{% url 'receipt:create-receipt' %}">New Receipt</button> 
         </h5>
       </div>
+      <div class="table-responsive">
       <div class="card-body">
-                    <table class="table bordered-table mb-0" data-page-length='10' id="items-list-table">
+                    <table class="table bordered-table mb-0" data-page-length='10' id="receipt-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -23,7 +24,7 @@
                         <th>Description</th>
                         <th>Date</th>
                         <th>Amount</th>                        
-                        <th>Status</th>
+                        <th>Payment Means</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -31,6 +32,7 @@
                 {% include 'receipts/includes/receipt_list_body.html' %}
                 </tbody>
             </table>
+      </div>
       </div>
   </div>
 
@@ -45,6 +47,11 @@
 
 
 {% block javascript %}
+<script>
+$(document).ready(function () {
+    $('#receipt-table').DataTable();
+});
+</script>
 <script>
   //Form Loading Handler
 $(function () {
@@ -74,7 +81,7 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          $("#items-list-table tbody").html(data.html_receipt_list);  // <-- Replace the table body
+          $("#receipt-table tbody").html(data.html_receipt_list);  // <-- Replace the table body
           toastr.options = {
             "closeButton": false,
             "debug": false,
@@ -109,11 +116,11 @@ $(function () {
   $("#modal-receipt").on("submit", ".receipt-create-form", saveForm);
 
   // Update Receipt
-  $("#items-list-table").on("click", ".update-receipt", loadForm);
+  $("#receipt-table").on("click", ".update-receipt", loadForm);
   $("#modal-receipt").on("submit", ".receipt-update-form", saveForm);
 
     // Delete Receipt
-  $("#items-list-table").on("click", ".delete-receipt", loadForm);
+  $("#receipt-table").on("click", ".delete-receipt", loadForm);
   $("#modal-receipt").on("submit", ".receipt-delete-form", saveForm);
 });
 </script>
