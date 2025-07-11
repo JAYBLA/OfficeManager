@@ -79,13 +79,15 @@
 
 {% block javascript %}
 <script>
-    $(function () {  
-      $(".delete-quotation").each(function () {
-          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
-      });
+    document.addEventListener('DOMContentLoaded', function () {
+    $('.delete-quotation').each(function () {
+        $(this).modalForm({
+        formURL: $(this).data('form-url'),
+        isDeleteForm: true
+        });
     });
-  </script>
-
+    });
+</script>
 <script>
   $(document).ready(function () {
     $('#data-table').DataTable({

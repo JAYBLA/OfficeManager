@@ -87,12 +87,15 @@
 </script>
 
 <script>
-    $(function () {  
-      $(".delete-customer").each(function () {
-          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+    document.addEventListener('DOMContentLoaded', function () {
+      $('.delete-customer').each(function () {
+          $(this).modalForm({
+          formURL: $(this).data('form-url'),
+          isDeleteForm: true
+          });
       });
-    });
-    $("#create-customer").modalForm({
+
+        $("#create-customer").modalForm({
           formURL: "{% url 'customer:customer-create' %}",
           modalID: "#create-modal"
       });
@@ -101,6 +104,7 @@
             formURL: $(this).data('form-url')
         });
       });
+    });
   </script>
 {% endblock javascript %}
     
