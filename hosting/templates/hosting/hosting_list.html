@@ -19,43 +19,45 @@
         </h5>
       </div>
             <div class="card-body">
-          <table id="data-table" class="table bordered-table mb-0" style="width:100%">
-              <thead>
-                <tr>
-                    <th>S/N</th>
-                    <th>Customer</th>
-                    <th>Domain</th>
-                    <th>Registration Date</th>
-                    <th>Expiring Date</th>
-                    <th>Domain Cost</th>
-                    <th>Hosting Cost</th>
-                    <th>Actions</th>
-                </tr>
-              </thead>
-              
-              
-              <tbody>
-                {% for hosting in hostings %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ hosting.customer }}</td>
-                        <td>{{ hosting.domain }}</td>
-                        <td>{{ hosting.registration_date }}</td>
-                        <td>{{ hosting.expiring_date }}</td>
-                        <td>{{ hosting.domain_cost }}</td>
-                        <td>{{ hosting.hosting_cost }}</td>
-                        <td class="text-center">
-                          <a class="text-warning editBtn" data-id="{{ hosting.id }}" style="cursor: pointer;"><i class="fa-solid fa-pen-to-square fa-2x me-3"></i></a>
-                          <a class="text-danger deleteBtn fa-2x" data-id="{{ hosting.id }}" style="cursor: pointer;"><i class="fa-solid fa-trash-xmark"></i></a>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="8" class="text-center">No hosting records found.</td>
-                    </tr>
-                {% endfor %}
-              </tbody>                        
-          </table>
+              <div class="table-responsive">
+                <table id="data-table" class="table bordered-table mb-0" style="width:100%">
+                    <thead>
+                      <tr>
+                          <th>S/N</th>
+                          <th>Customer</th>
+                          <th>Domain</th>
+                          <th>Registration Date</th>
+                          <th>Expiring Date</th>
+                          <th>Domain Cost</th>
+                          <th>Hosting Cost</th>
+                          <th>Actions</th>
+                      </tr>
+                    </thead>
+                    
+                    
+                    <tbody>
+                      {% for hosting in hostings %}
+                          <tr>
+                              <td>{{ forloop.counter }}</td>
+                              <td>{{ hosting.customer }}</td>
+                              <td>{{ hosting.domain }}</td>
+                              <td>{{ hosting.registration_date }}</td>
+                              <td>{{ hosting.expiring_date }}</td>
+                              <td>{{ hosting.domain_cost }}</td>
+                              <td>{{ hosting.hosting_cost }}</td>
+                              <td class="text-center">
+                                <a class="text-warning editBtn" data-id="{{ hosting.id }}" style="cursor: pointer;"><i class="fa-solid fa-pen-to-square fa-2x me-3"></i></a>
+                                <a class="text-danger deleteBtn fa-2x" data-id="{{ hosting.id }}" style="cursor: pointer;"><i class="fa-solid fa-trash-xmark"></i></a>
+                              </td>
+                          </tr>
+                      {% empty %}
+                          <tr>
+                              <td colspan="8" class="text-center">No hosting records found.</td>
+                          </tr>
+                      {% endfor %}
+                    </tbody>                        
+                </table>
+              </div>
       </div>
   </div>
 

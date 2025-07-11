@@ -19,40 +19,42 @@
         </h5>
       </div>
             <div class="card-body">
-          <table id="data-table" class="table bordered-table mb-0" style="width:100%">
-              <thead>
-                <tr>
-                  <th>S/N</th>
-                  <th>Name</th>
-                  <th>Phone</th>
-                  <th>Email</th>                      
-                  <th >Physical Address</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              
-              
-              <tbody>
-                  {% for customer in customers %}
-                <tr>
-                  <td>{{forloop.counter}}</td>
-                  <td>{{customer.name}}</td>
-                  <td>{{customer.phone}}</td>
-                  <td>{{customer.email}}</td>                      
-                  <td>{{customer.physical_address}}</td>
-                  <td class="text-center">
-                      <a class="update-customer bs-modal mr-2" data-form-url="{% url 'customer:update-customer' customer.id %}" style="cursor:pointer;font-size: 22px">
-                        <i class="fa fa-edit text-warning"></i>
-                      </a>
+              <div class="table-responsive">
+                <table id="data-table" class="table bordered-table mb-0" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th>S/N</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>                      
+                        <th >Physical Address</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    
+                    
+                    <tbody>
+                        {% for customer in customers %}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.phone}}</td>
+                        <td>{{customer.email}}</td>                      
+                        <td>{{customer.physical_address}}</td>
+                        <td class="text-center">
+                            <a class="update-customer bs-modal mr-2" data-form-url="{% url 'customer:update-customer' customer.id %}" style="cursor:pointer;font-size: 22px">
+                              <i class="fa fa-edit text-warning"></i>
+                            </a>
 
-                      <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'customer:delete_customer' customer.id %}">
-                          <i class="fa fa-trash text-danger" style="font-size: 22px; cursor:pointer;"></i>
-                      </a>                               
-                  </td>
-                </tr>     
-                {% endfor %}         
-              </tbody>                        
-          </table>
+                            <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'customer:delete_customer' customer.id %}">
+                                <i class="fa fa-trash text-danger" style="font-size: 22px; cursor:pointer;"></i>
+                            </a>                               
+                        </td>
+                      </tr>     
+                      {% endfor %}         
+                    </tbody>                        
+                </table>
+              </div>
       </div>
   </div>
 <!-- Modal 1 with id="create Modal"-->

@@ -17,64 +17,65 @@
     
 {% block content %}
   
-  <div class="card">
+<div class="card">
     <div class="card-header">   
         <h5 class="py-2">{{title}}</h5>
-      </div>
-      <div class="card-body">
-                  <table id="data-table" class="table bordered-table mb-0" style="width:100%">
-              <thead>
-                  <tr>
-                      <th scope="col">S/N</th>
-                      <th scope="col">Customer</th>
-                      <th scope="col">Title</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Type</th>
-                      <th scope="col">Status</th>
-                      <th scope="col" class="text-center">Actions</th>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="data-table" class="table bordered-table mb-0" style="width:100%">
+          <thead>
+              <tr>
+                  <th scope="col">S/N</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Status</th>
+                  <th scope="col" class="text-center">Actions</th>          
+              </tr>
+          </thead>
           
-                  </tr>
-              </thead>
-              
-             
-              <tbody>
-                  {% for invoice in invoice_list %}
-                  <tr>
-                      <td class="text-center">{{forloop.counter}}</td>
-                      <td>{{ invoice.customer }}</td>
-                      <td>{{ invoice.title }}</td>
-                      <td>{{ invoice.date|date:"SHORT_DATE_FORMAT" }}</td>
-                      <td><strong>{{ invoice.invoice_type |upper }}</strong></td>
-                      <td><span
-                        class="badge {% if invoice.status == 'Paid' %}bg-success{% elif invoice.status == 'Unpaid' %}bg-danger{% else %}bg-warning{% endif %}"
-                        data-id="{{ invoice.id }}"
-                        onclick="toggleStatus(this)"
-                        style="cursor: pointer;"
-                      >
-                        {{ invoice.status }}
-                      </span></td>                                
-                      <td class="d-inline d-flex justify-content-center">
-                          <a class="delete-invoice bs-modal me-3" data-form-url="{% url 'invoice:delete_invoice' invoice.id %}">
-                              <i class="fa fa-trash text-danger" style="font-size: 22px; cursor:pointer;"></i>
-                          </a> 
-                      <a href="{% url 'invoice:invoice-detail' invoice.id %}" ><i class="fa fa-edit me-3 text-warning" aria-hidden="true" style="font-size: 22px;"></i></a>
+          
+          <tbody>
+              {% for invoice in invoice_list %}
+              <tr>
+                  <td class="text-center">{{forloop.counter}}</td>
+                  <td>{{ invoice.customer }}</td>
+                  <td>{{ invoice.title }}</td>
+                  <td>{{ invoice.date|date:"SHORT_DATE_FORMAT" }}</td>
+                  <td><strong>{{ invoice.invoice_type |upper }}</strong></td>
+                  <td><span
+                    class="badge {% if invoice.status == 'Paid' %}bg-success{% elif invoice.status == 'Unpaid' %}bg-danger{% else %}bg-warning{% endif %}"
+                    data-id="{{ invoice.id }}"
+                    onclick="toggleStatus(this)"
+                    style="cursor: pointer;"
+                  >
+                    {{ invoice.status }}
+                  </span></td>                                
+                  <td class="d-inline d-flex justify-content-center">
+                      <a class="delete-invoice bs-modal me-3" data-form-url="{% url 'invoice:delete_invoice' invoice.id %}">
+                          <i class="fa fa-trash text-danger" style="font-size: 22px; cursor:pointer;"></i>
+                      </a> 
+                  <a href="{% url 'invoice:invoice-detail' invoice.id %}" ><i class="fa fa-edit me-3 text-warning" aria-hidden="true" style="font-size: 22px;"></i></a>
 
-                        <a href="{% url 'invoice:download-invoice' invoice.id %}" download="Invoice to {{invoice.customer.name}} on {{invoice.title}}"><i class="fa fa-download text-success" aria-hidden="true" style="font-size: 22px;"></i></a>                                                                  
-                      </td>
-                  </tr>
-                  {% endfor %}
-              </tbody>
-             
-          </table>
+                    <a href="{% url 'invoice:download-invoice' invoice.id %}" download="Invoice to {{invoice.customer.name}} on {{invoice.title}}"><i class="fa fa-download text-success" aria-hidden="true" style="font-size: 22px;"></i></a>                                                                  
+                  </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+          
+      </table>
       </div>
-  </div>
+    </div>
+</div>
   <!-- Modal 1 with id="create Modal"-->
 <div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
       </div>
     </div>
-  </div>
+</div>
   
   <!-- Modal 2 with id="modal" -->
 <!-- Modal container -->
@@ -105,64 +106,63 @@
 
 
 {% block javascript %}
-
-<script>
-  $(document).ready(function () {
-    $('#data-table').DataTable({
-      responsive: true,
-      pageLength: 10,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Search..."
-      }
-    });
-  });
-</script>
   <script>
-function toggleStatus(el) {
-  const invoiceId = el.getAttribute('data-id');
-
-  fetch(`toggle-invoice-status/${invoiceId}/`, {
-    method: 'POST',
-    headers: {
-      'X-CSRFToken': '{{ csrf_token }}',
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.status) {
-      el.textContent = data.status;
-
-      // Update badge class
-      el.classList.remove('bg-success', 'bg-danger', 'bg-warning');
-      if (data.status === 'Paid') {
-        el.classList.add('bg-success');
-      } else if (data.status === 'Unpaid') {
-        el.classList.add('bg-danger');
-      } else {
-        el.classList.add('bg-warning');
-      }
-    } else {
-      alert(data.error || 'An error occurred');
-    }
-  })
-  .catch(error => {
-    alert('Something went wrong.');
-    console.error(error);
-  });
-}
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  $('.delete-invoice').each(function () {
-    $(this).modalForm({
-      formURL: $(this).data('form-url'),
-      isDeleteForm: true
+    $(document).ready(function () {
+      $('#data-table').DataTable({
+        responsive: true,
+        pageLength: 10,
+        language: {
+          search: "_INPUT_",
+          searchPlaceholder: "Search..."
+        }
+      });
     });
-  });
-});
-</script>
+  </script>
+  <script>
+    function toggleStatus(el) {
+      const invoiceId = el.getAttribute('data-id');
+
+      fetch(`toggle-invoice-status/${invoiceId}/`, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status) {
+          el.textContent = data.status;
+
+          // Update badge class
+          el.classList.remove('bg-success', 'bg-danger', 'bg-warning');
+          if (data.status === 'Paid') {
+            el.classList.add('bg-success');
+          } else if (data.status === 'Unpaid') {
+            el.classList.add('bg-danger');
+          } else {
+            el.classList.add('bg-warning');
+          }
+        } else {
+          alert(data.error || 'An error occurred');
+        }
+      })
+      .catch(error => {
+        alert('Something went wrong.');
+        console.error(error);
+      });
+    }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      $('.delete-invoice').each(function () {
+        $(this).modalForm({
+          formURL: $(this).data('form-url'),
+          isDeleteForm: true
+        });
+      });
+    });
+  </script>
 {% endblock javascript %}
     
     
