@@ -1,6 +1,6 @@
     {% for receipt in receipts %}
     <tr>
-        <td>{{ receipt.id }}</td>
+        <td>{{ forloop.counter }}</td>
         <td>{{ receipt.customer }}</td>
         <td>{{ receipt.description }}</td>
         <td>{{ receipt.date }}</td>        
