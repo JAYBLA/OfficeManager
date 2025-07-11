@@ -14,9 +14,8 @@
             <button class="btn btn-outline-primary btn-lg float-end create-receipt" data-url="{% url 'receipt:create-receipt' %}">New Receipt</button> 
         </h5>
       </div>
-      <div class="table-responsive">
       <div class="card-body">
-                    <table class="table bordered-table mb-0" data-page-length='10' id="receipt-table">
+            <table class="table bordered-table mb-0" id="data-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -33,7 +32,6 @@
                 </tbody>
             </table>
       </div>
-      </div>
   </div>
 
   <!-- THE MODAL-->
@@ -48,9 +46,16 @@
 
 {% block javascript %}
 <script>
-$(document).ready(function () {
-    $('#receipt-table').DataTable();
-});
+  $(document).ready(function () {
+    $('#data-table').DataTable({
+      responsive: true,
+      pageLength: 10,
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search..."
+      }
+    });
+  });
 </script>
 <script>
   //Form Loading Handler

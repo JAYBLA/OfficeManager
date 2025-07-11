@@ -103,8 +103,7 @@
                 <h5 class="py-2">Created Invoices</h5>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table" id="invoice-table">
+                    <table class="table bordered-table mb-0" id="data-table">
                         <thead>
                             <tr>
                                 <th scope="col">Invoice</th>
@@ -120,7 +119,7 @@
                         <tbody>
                             {% for invoice in invoice_list %}
                             <tr>
-                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{forloop.counter}}</td>
                                 <td>{{ invoice.customer }}</td>
                                 <td>{{ invoice.title }}</td>
                                 <td>{{ invoice.date|date:"SHORT_DATE_FORMAT" }}</td>
@@ -136,8 +135,7 @@
                             {% endfor %}
                         </tbody> 
                         {% endif %}                      
-                      </table>
-                </div>
+                    </table>
             </div>
         </div>
     </div>
@@ -171,22 +169,16 @@
   </script>
 
 <script>
-    $(document).ready(function() {
-        var table = $('#invoice-table').DataTable( {
-        dom: 'Bfrtip',
-            buttons: ['excel', 'pdf','print'],
-            initComplete: function() {
-            $('.buttons-excel').html('<i class="fa table-buttons fa-file-excel-o text-success"/>')
-            $('.buttons-pdf').html('<i class="fa table-buttons fa-file-pdf-o text-danger"/>')
-            $('.buttons-print').html('<i class="fa table-buttons fa-print text-dark"/>')
-            }
-        } );
-    
-        table.buttons().container()
-            .appendTo( '#invoice-table_wrapper .col-md-6:eq(0)' );
-
-        
-    } );
+  $(document).ready(function () {
+    $('#data-table').DataTable({
+      responsive: true,
+      pageLength: 10,
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search..."
+      }
+    });
+  });
 </script>
 <script>
   new SlimSelect({

@@ -18,44 +18,41 @@
         <a id="create-customer" class="btn btn-outline-primary btn-lg float-end" type="button" name="button">Add Customer</a>
         </h5>
       </div>
+            <div class="card-body">
+          <table class="table bordered-table mb-0" id="data-table">
+              <thead>
+                <tr>
+                  <th>S/N</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Email</th>                      
+                  <th >Physical Address</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              
+              
+              <tbody>
+                  {% for customer in customers %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{customer.name}}</td>
+                  <td>{{customer.phone}}</td>
+                  <td>{{customer.email}}</td>                      
+                  <td>{{customer.physical_address}}</td>
+                  <td class="text-center">
+                      <a class="update-customer bs-modal mr-2" data-form-url="{% url 'customer:update-customer' customer.id %}" style="cursor:pointer;font-size: 22px">
+                        <i class="fa fa-edit text-warning"></i>
+                      </a>
 
-      <div class="table-responsive">
-              <div class="card-body">
-              <table class="table bordered-table mb-0" data-page-length='10' id="customer-table">
-                  <thead>
-                    <tr>
-                      <th>S/N</th>
-                      <th>Name</th>
-                      <th>Phone</th>
-                      <th>Email</th>                      
-                      <th >Physical Address</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  
-                  
-                  <tbody>
-                      {% for customer in customers %}
-                    <tr>
-                      <td>{{forloop.counter}}</td>
-                      <td>{{customer.name}}</td>
-                      <td>{{customer.phone}}</td>
-                      <td>{{customer.email}}</td>                      
-                      <td>{{customer.physical_address}}</td>
-                      <td class="text-center">
-                          <a class="update-customer bs-modal mr-2" data-form-url="{% url 'customer:update-customer' customer.id %}" style="cursor:pointer;font-size: 22px">
-                            <i class="fa fa-edit text-warning"></i>
-                          </a>
-
-                          <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'customer:delete_customer' customer.id %}">
-                              <i class="fa fa-trash text-danger" style="font-size: 22px; cursor:pointer;"></i>
-                          </a>                               
-                      </td>
-                    </tr>     
-                    {% endfor %}         
-                  </tbody>                        
-              </table>
-      </div>
+                      <a class="delete-customer bs-modal mr-2" data-form-url="{% url 'customer:delete_customer' customer.id %}">
+                          <i class="fa fa-trash text-danger" style="font-size: 22px; cursor:pointer;"></i>
+                      </a>                               
+                  </td>
+                </tr>     
+                {% endfor %}         
+              </tbody>                        
+          </table>
       </div>
   </div>
 <!-- Modal 1 with id="create Modal"-->
@@ -77,22 +74,16 @@
 
 {% block javascript %}
 <script>
-  $(document).ready(function() {
-  var table = $('#customer-table').DataTable( {
-  dom: 'Bfrtip',
-      buttons: ['excel', 'pdf','print'],
-      initComplete: function() {
-      $('.buttons-excel').html('<i class="fa table-buttons fa-file-excel-o text-success"/>')
-      $('.buttons-pdf').html('<i class="fa table-buttons fa-file-pdf-o text-danger"/>')
-      $('.buttons-print').html('<i class="fa table-buttons fa-print text-dark"/>')
+  $(document).ready(function () {
+    $('#data-table').DataTable({
+      responsive: true,
+      pageLength: 10,
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search..."
       }
-  } );
-
-  table.buttons().container()
-      .appendTo( '#customer-table_wrapper .col-md-6:eq(0)' );
-
-  
-} );
+    });
+  });
 </script>
 
 <script>

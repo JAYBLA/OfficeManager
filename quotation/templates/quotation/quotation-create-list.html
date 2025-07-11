@@ -71,7 +71,7 @@
                 <h5 class="py-2">Created Quotations</h5>
             </div>
             <div class="card-body">
-                <table class="table bordered-table mb-0" id="dataTable" data-page-length='10'>
+                <table class="table bordered-table mb-0" id="data-table">
                     <thead>
                         <tr>
                             <th scope="col">S/N</th>
@@ -138,7 +138,16 @@
 </script>
 
 <script>
- let table = new DataTable('#dataTable');
+  $(document).ready(function () {
+    $('#data-table').DataTable({
+      responsive: true,
+      pageLength: 10,
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search..."
+      }
+    });
+  });
 </script>
 <script>
   new SlimSelect({

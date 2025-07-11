@@ -18,47 +18,44 @@
         <a id="createBtn" class="btn btn-outline-primary btn-lg float-end" type="button" name="button">Add Hosting</a>
         </h5>
       </div>
-
-      <div class="table-responsive">
-              <div class="card-body">
-              <table class="table bordered-table mb-0" data-page-length='10' id="customer-table">
-                  <thead>
+            <div class="card-body">
+          <table class="table bordered-table mb-0" id="data-table">
+              <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Customer</th>
+                    <th>Domain</th>
+                    <th>Registration Date</th>
+                    <th>Expiring Date</th>
+                    <th>Domain Cost</th>
+                    <th>Hosting Cost</th>
+                    <th>Actions</th>
+                </tr>
+              </thead>
+              
+              
+              <tbody>
+                {% for hosting in hostings %}
                     <tr>
-                        <th>S/N</th>
-                        <th>Customer</th>
-                        <th>Domain</th>
-                        <th>Registration Date</th>
-                        <th>Expiring Date</th>
-                        <th>Domain Cost</th>
-                        <th>Hosting Cost</th>
-                        <th>Actions</th>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ hosting.customer }}</td>
+                        <td>{{ hosting.domain }}</td>
+                        <td>{{ hosting.registration_date }}</td>
+                        <td>{{ hosting.expiring_date }}</td>
+                        <td>{{ hosting.domain_cost }}</td>
+                        <td>{{ hosting.hosting_cost }}</td>
+                        <td class="text-center">
+                          <a class="text-warning editBtn" data-id="{{ hosting.id }}" style="cursor: pointer;"><i class="fa-solid fa-pen-to-square fa-2x me-3"></i></a>
+                          <a class="text-danger deleteBtn fa-2x" data-id="{{ hosting.id }}" style="cursor: pointer;"><i class="fa-solid fa-trash-xmark"></i></a>
+                        </td>
                     </tr>
-                  </thead>
-                  
-                  
-                  <tbody>
-                    {% for hosting in hostings %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ hosting.customer }}</td>
-                            <td>{{ hosting.domain }}</td>
-                            <td>{{ hosting.registration_date }}</td>
-                            <td>{{ hosting.expiring_date }}</td>
-                            <td>{{ hosting.domain_cost }}</td>
-                            <td>{{ hosting.hosting_cost }}</td>
-                            <td class="text-center">
-                              <a class="text-warning editBtn" data-id="{{ hosting.id }}" style="cursor: pointer;"><i class="fa-solid fa-pen-to-square fa-2x me-3"></i></a>
-                              <a class="text-danger deleteBtn fa-2x" data-id="{{ hosting.id }}" style="cursor: pointer;"><i class="fa-solid fa-trash-xmark"></i></a>
-                            </td>
-                        </tr>
-                    {% empty %}
-                        <tr>
-                            <td colspan="8" class="text-center">No hosting records found.</td>
-                        </tr>
-                    {% endfor %}
-                  </tbody>                        
-              </table>
-      </div>
+                {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center">No hosting records found.</td>
+                    </tr>
+                {% endfor %}
+              </tbody>                        
+          </table>
       </div>
   </div>
 
@@ -112,7 +109,16 @@ $(function () {
 });
 </script>
 <script>
- let table = new DataTable('#dataTable');
+  $(document).ready(function () {
+    $('#data-table').DataTable({
+      responsive: true,
+      pageLength: 10,
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search..."
+      }
+    });
+  });
 </script>
 {% endblock javascript %}
     

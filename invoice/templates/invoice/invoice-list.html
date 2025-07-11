@@ -22,8 +22,7 @@
         <h5 class="py-2">{{title}}</h5>
       </div>
       <div class="card-body">
-        <div class="table-responsive">
-          <table class="table" id="invoice-table">
+                  <table class="table bordered-table mb-0" id="data-table">
               <thead>
                   <tr>
                       <th scope="col">S/N</th>
@@ -66,8 +65,7 @@
                   {% endfor %}
               </tbody>
              
-            </table>
-      </div>
+          </table>
       </div>
   </div>
   <!-- Modal 1 with id="create Modal"-->
@@ -109,9 +107,16 @@
 {% block javascript %}
 
 <script>
-$(document).ready(function () {
-    $('#invoice-table').DataTable();
-});
+  $(document).ready(function () {
+    $('#data-table').DataTable({
+      responsive: true,
+      pageLength: 10,
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search..."
+      }
+    });
+  });
 </script>
   <script>
 function toggleStatus(el) {
@@ -149,11 +154,14 @@ function toggleStatus(el) {
 }
 </script>
 <script>
-      $(function () {  
-      $(".delete-invoice").each(function () {
-          $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
-      });
+document.addEventListener('DOMContentLoaded', function () {
+  $('.delete-invoice').each(function () {
+    $(this).modalForm({
+      formURL: $(this).data('form-url'),
+      isDeleteForm: true
     });
+  });
+});
 </script>
 {% endblock javascript %}
     
